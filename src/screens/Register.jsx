@@ -40,7 +40,7 @@ const Register = () => {
                             email: '',
                             password1: '',
                             password2: '',
-                              textChange: 'Submitted'
+                            textChange: 'Submitted'
                         });
 
                         toast.success(res.data.message);
