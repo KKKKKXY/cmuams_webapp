@@ -13,7 +13,7 @@ const {
 const {
     registerController,
     activationController,
-    // signinController,
+    signinController,
     // forgotPasswordController,
     // resetPasswordController,
     // googleController,
@@ -22,12 +22,9 @@ const {
 
 
 
-router.post('/register',
-    validSign,
-    registerController)
+router.post('/register', validSign, registerController)
 
-// router.post('/login',
-//     validLogin, signinController)
+router.post('/login', validLogin, signinController)
 
 router.post('/activation', activationController)
 
