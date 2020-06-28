@@ -365,30 +365,30 @@ exports.signinController = (req, res) => {
   }
 };
 
-// exports.requireSignin = expressJwt({
-//   secret: process.env.JWT_SECRET // req.user._id
-// });
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET // req.user._id
+});
 
-// exports.adminMiddleware = (req, res, next) => {
-//   User.findById({
-//     _id: req.user._id
-//   }).exec((err, user) => {
-//     if (err || !user) {
-//       return res.status(400).json({
-//         error: 'User not found'
-//       });
-//     }
+exports.adminMiddleware = (req, res, next) => {
+  User.findById({
+    _id: req.user._id
+  }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: 'User not found'
+      });
+    }
 
-//     if (user.role !== 'admin') {
-//       return res.status(400).json({
-//         error: 'Admin resource. Access denied.'
-//       });
-//     }
+    if (user.role !== 'admin') {
+      return res.status(400).json({
+        error: 'Admin resource. Access denied.'
+      });
+    }
 
-//     req.profile = user;
-//     next();
-//   });
-// };
+    req.profile = user;
+    next();
+  });
+};
 
 exports.forgotPasswordController = (req, res) => {
   const { email } = req.body;
