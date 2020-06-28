@@ -14,8 +14,8 @@ const Activate = ({ match }) => {
     });
 
     useEffect(() => {
-        /** Get token from params like /active/token 
-         *  Then decode this token and get name
+        /** Get token from params like /active/token
+         * Then decode this token and get name
         */
         let token = match.params.token;
         let { name } = jwt.decode(token);
@@ -23,10 +23,9 @@ const Activate = ({ match }) => {
         if (token) {
             setFormData({ ...formData, name, token });
         }
-    },[])
 
-    //     console.log(token, name);
-    // }, [match.params]);
+        console.log(token, name);
+    }, [match.params]);
     const { name, token, show } = formData;
 
     const handleSubmit = e => {
@@ -93,8 +92,13 @@ const Activate = ({ match }) => {
                         </form>
                     </div>
                 </div>
+                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
+                    <div
+                        className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
+                        style={{ backgroundImage: `url(${authSvg})` }}
+                    ></div>
+                </div>
             </div>
-      ;
         </div>
     );
 };

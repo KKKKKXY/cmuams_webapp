@@ -36,8 +36,6 @@ const Login = ({ history }) => {
               password1: '',
               textChange: 'Submitted'
             });
-            // If authenticate but not admin redirect to /private
-            // If admin redirect to /admin
             isAuth() && isAuth().role === 'admin'
               ? history.push('/admin')
               : history.push('/private');
