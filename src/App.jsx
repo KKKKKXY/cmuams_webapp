@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect,Router } from 'react-router-dom';
 import { signout } from './helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -11,7 +11,7 @@ function App({ history }) {
         <div className='lg:w-1/2 xl:w-8/12 p-6 sm:p-12'>
           <div className='mt-12 flex flex-col items-center'>
             <h1 className='text-2xl xl:text-2xl font-extrabold  text-center '>
-            Welcome To Activity Management System!
+              Welcome To Activity Management System!
             </h1>
             <div className='w-full flex-1 mt-8 text-indigo-500'>
               <div className='my-12 border-b text-center'>
@@ -42,7 +42,7 @@ function App({ history }) {
                   <span className='ml-3'>Profile Dashbaord</span>
                 </Link>
                 <Link
-                  to='/admin'
+                  to='/usersInfo'
                   className='mt-5 tracking-wide font-semibold bg-green-500 text-gray-100 w-full py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                 >
                   <i className='fas fa-sign-in-alt  w-6  -ml-2' />
@@ -65,7 +65,6 @@ function App({ history }) {
           </div>
         </div>
       </div>
-      ;
     </div>
   );
 }
