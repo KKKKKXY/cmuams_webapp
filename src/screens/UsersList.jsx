@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
+import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 
 
 const UserAccounts = props => (
@@ -9,9 +10,9 @@ const UserAccounts = props => (
     <td>{props.user.email}</td>
     <td>{props.user.hashed_password}</td>
     <td>{props.user.role}</td>
-    {/* <td>
-      <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-    </td> */}
+    <td>
+      <a href="#" onClick={() => { props.deleteUser(props.user._id) }}>delete</a>
+    </td>
   </tr>
 )
 
@@ -19,7 +20,7 @@ export default class UsersList extends Component {
   constructor(props) {
     super(props);
 
-    // this.deleteExercise = this.deleteExercise.bind(this)
+    this.deleteUser = this.deleteUser.bind(this)
 
     this.state = {users: []};
   }
@@ -34,18 +35,18 @@ export default class UsersList extends Component {
       })
   }
 
-//   deleteExercise(id) {
-//     axios.delete('http://localhost:5000/exercises/'+id)
-//       .then(response => { console.log(response.data)});
-
-//     this.setState({
-//       exercises: this.state.exercises.filter(el => el._id !== id)
-//     })
-//   }
+  deleteUser(id) {
+    axios.delete(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
+      .then(response => { console.log(response.data)});
+    this.setState({
+      users: this.state.users.filter(el => el._id !== id)
+    })
+  }
 
   userList() {
     return this.state.users.map(currentuser => {
-      return <UserAccounts user={currentuser}/>;
+      // return <UserAccounts user={currentuser}/>;
+      return <UserAccounts user={currentuser} deleteUser={this.deleteUser} key={currentuser._id}/>;
     })
   }
 
@@ -87,6 +88,7 @@ export default class UsersList extends Component {
               <th>Email</th>
               <th>Password</th>
               <th>Role</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>

@@ -87,7 +87,7 @@ const Admin = ({ history }) => {
               <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
               <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/usersInfo">Update Profile</Nav.Link>
+            <Nav.Link href="/admin">Update Profile</Nav.Link>
 
             <NavItem>
               <NavLink className='nav-link' exact to='/logout'>
@@ -181,7 +181,7 @@ const Admin = ({ history }) => {
             ></div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
   );
 };
