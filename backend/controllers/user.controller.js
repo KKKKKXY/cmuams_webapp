@@ -16,7 +16,7 @@ exports.readController = (req, res) => {
 };
 
 exports.updateController = (req, res) => {
-    
+
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
     const { name, password } = req.body;
 
@@ -55,5 +55,28 @@ exports.updateController = (req, res) => {
             updatedUser.salt = undefined;
             res.json(updatedUser);
         });
+    });
+};
+
+exports.viewController = (req, res) => {
+    User.find().exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User not found'
+            });
+        }
+        res.json(user);
+    });
+};
+
+exports.deleteController = (req, res) => {
+    const userId = req.params.id;
+    User.findByIdAndDelete(userId).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User not found'
+            });
+        }
+        res.json('User deleted!');
     });
 };

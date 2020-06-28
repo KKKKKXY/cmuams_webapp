@@ -13,6 +13,9 @@ import ResetPassword from './screens/ResetPassword.jsx';
 import PrivateRoute from './Routes/PrivateRoute';
 import AdminRoute from './Routes/AdminRoute';
 import 'react-toastify/dist/ReactToastify.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import UsersList from './screens/UsersList';
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -24,18 +27,10 @@ ReactDOM.render(
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
       <PrivateRoute path="/private" exact component={Private} />
       <AdminRoute path="/admin" exact component={Admin} />
+      <AdminRoute path="/usersInfo" exact component={UsersList} />
+      {/* <Route path='/usersInfo' exact render={props => <UsersList {...props} />} /> */}
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
 );
-
-
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from './App';
-
-// ReactDOM.render(
-//     <App />,
-//   document.getElementById('root')
-// );
