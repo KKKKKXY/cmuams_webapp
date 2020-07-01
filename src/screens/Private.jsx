@@ -3,6 +3,8 @@ import authSvg from '../assets/update.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
+import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
+
 
 const Private = ({ history }) => {
   const [formData, setFormData] = useState({
@@ -73,6 +75,36 @@ const Private = ({ history }) => {
   };
 
   return (
+    <div className="container">
+      <Navbar className="navbar navbar-dark bg-primary" expand="lg">
+        <Navbar.Brand href="#home">AMS</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <NavDropdown title="Activity" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
+              <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href="/private">Account</Nav.Link>
+
+            <NavItem>
+              <NavLink className='nav-link' exact to='/logout'>
+                <i className='fa fa-sign-out'></i>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className='nav-link' exact to='/login'>
+                <i className='fa fa-sign-in'></i>
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <button onClick={() => {signout(() => {toast.error('Signout Successfully');history.push('/');});}}>
+                  <i className='fas fa-sign-out-alt  w-6  -ml-2' />
+                  <span className='ml-3'>Signout</span></button>
+
+        </Navbar.Collapse>
+      </Navbar>
     <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
       <ToastContainer />
       <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
@@ -144,14 +176,12 @@ const Private = ({ history }) => {
           </div>
         </div>
         <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
-          <div
-            className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
-            style={{ backgroundImage: `url(${authSvg})` }}
-          ></div>
+          <div className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'style={{ backgroundImage: `url(${authSvg})` }}></div>
         </div>
       </div>
       ;
     </div>
+  </div>
   );
 };
 
