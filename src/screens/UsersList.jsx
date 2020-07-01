@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 const UserAccounts = props => (
@@ -59,12 +61,12 @@ export default class UsersList extends Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/usersInfo">User Manage</Nav.Link>
+            <Nav.Link href="/usersInfo">User Management</Nav.Link>
             <NavDropdown title="Activity" id="basic-nav-dropdown">
               <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
               <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/usersInfo">Update Profile</Nav.Link>
+            <Nav.Link href="/admin">Account</Nav.Link>
 
             <NavItem>
               <NavLink className='nav-link' exact to='/logout'>
@@ -77,7 +79,6 @@ export default class UsersList extends Component {
               </NavLink>
             </NavItem>
           </Nav>
-
         </Navbar.Collapse>
       </Navbar>
         <div></div>

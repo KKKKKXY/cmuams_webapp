@@ -82,12 +82,12 @@ const Admin = ({ history }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/usersInfo">User Manage</Nav.Link>
+            <Nav.Link href="/usersInfo">User Management</Nav.Link>
             <NavDropdown title="Activity" id="basic-nav-dropdown">
               <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
               <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/admin">Update Profile</Nav.Link>
+            <Nav.Link href="/admin">Account</Nav.Link>
 
             <NavItem>
               <NavLink className='nav-link' exact to='/logout'>
@@ -100,6 +100,9 @@ const Admin = ({ history }) => {
               </NavLink>
             </NavItem>
           </Nav>
+          <button onClick={() => {signout(() => {toast.error('Signout Successfully');history.push('/');});}}>
+                  <i className='fas fa-sign-out-alt  w-6  -ml-2' />
+                  <span className='ml-3'>Signout</span></button>
 
         </Navbar.Collapse>
       </Navbar>
@@ -110,7 +113,7 @@ const Admin = ({ history }) => {
           <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
             <div className='mt-12 flex flex-col items-center'>
               <h1 className='text-2xl xl:text-3xl font-extrabold'>
-                Admin Update
+              Account update
             </h1>
 
               <form
