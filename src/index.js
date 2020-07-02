@@ -15,6 +15,7 @@ import AdminRoute from './Routes/AdminRoute';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import UsersList from './screens/UsersList';
+import AddActivity from './screens/AddActivity';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -28,7 +29,7 @@ ReactDOM.render(
       <PrivateRoute path="/private" exact component={Private} />
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
-      {/* <Route path='/usersInfo' exact render={props => <UsersList {...props} />} /> */}
+      <AdminRoute path="/addActivity" exact component={AddActivity} />
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,

@@ -117,7 +117,7 @@ const Admin = ({ history }) => {
                 className='w-full flex-1 mt-8 text-indigo-500'
                 onSubmit={handleSubmit}
               >
-                <div className='mx-auto max-w-xs relative '>
+                <div className='mx-auto max-w-xs relative'>
                   <input
                     disabled
                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
