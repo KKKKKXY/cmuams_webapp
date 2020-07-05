@@ -14,7 +14,7 @@ exports.readController = (req, res) => {
 
 exports.ListController = (req, res) => {
     Activity.find().exec((err, activity) => {
-        if (err || !exercise) {
+        if (err || !activity) {
             return res.status(400).json({
                 error: 'Activity not found'
             });
@@ -25,26 +25,26 @@ exports.ListController = (req, res) => {
 
 exports.AddController = (req, res) => {
     const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = req.body;
-    // const errors = validationResult(req);
+    const errors = validationResult(req);
 
     const activity = new Activity({
         activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant
     });
-    activity.save()
-    .then(() => res.json('Activity added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-    // activity.save((err, activity) => {
-    //     if (err) {
-    //         console.log('Save error', errorHandler(err));
-    //         return res.status(401).json({
-    //             errors: errorHandler(err)
-    //         });
-    //     } else {
-    //         return res.json({
-    //             success: true,
-    //             message: 'Add activity success',
-    //             activity
-    //         });
-    //     }
-    // });
+    // activity.save()
+    // .then(() => res.json('Activity added!'))
+    // .catch(err => res.status(400).json('Error: ' + err));
+    activity.save((err, activity) => {
+        if (err) {
+            console.log('Save error', errorHandler(err));
+            return res.status(401).json({
+                errors: errorHandler(err)
+            });
+        } else {
+            return res.json({
+                success: true,
+                message: 'Add activity success',
+                activity
+            });
+        }
+    });
 };
