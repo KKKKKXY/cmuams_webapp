@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import UsersList from './screens/UsersList';
 import AddActivity from './screens/AddActivity';
+import ViewActivity from './screens/ViewActivity';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -30,6 +31,7 @@ ReactDOM.render(
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />
+      <AdminRoute path="/activitylist" exact component={ViewActivity} />
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
