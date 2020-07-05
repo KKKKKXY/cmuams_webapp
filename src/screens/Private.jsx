@@ -83,7 +83,7 @@ const Private = ({ history }) => {
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Activity" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/activitylist">All activities List</NavDropdown.Item>
+              <NavDropdown.Item href="/activitylist">All activities</NavDropdown.Item>
               <NavDropdown.Item href="/addActivity">Registered activities</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/private">Account</Nav.Link>
