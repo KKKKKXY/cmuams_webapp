@@ -7,13 +7,16 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const UserAccounts = props => (
+
   <tr>
     <td>{props.user.name}</td>
     <td>{props.user.email}</td>
-    <td>{props.user.hashed_password}</td>
+    {/* <td>{props.user.hashed_password}</td> */}
+    <td>{props.user.createdAt}</td>
+    <td>{props.user.updatedAt}</td>
     <td>{props.user.role}</td>
     <td>
-      <a href="#" onClick={() => { props.deleteUser(props.user._id) }}>delete</a>
+      <a href="#" onClick={() => { props.deleteUser(props.user._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
     </td>
   </tr>
 )
@@ -38,7 +41,7 @@ export default class UsersList extends Component {
   }
 
   deleteUser(id) {
-    axios.delete(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
+    axios.delete(`${process.env.REACT_APP_API_URL}/user/${id}`)
       .then(response => { console.log(response.data)});
     this.setState({
       users: this.state.users.filter(el => el._id !== id)
@@ -82,12 +85,14 @@ export default class UsersList extends Component {
         </Navbar.Collapse>
       </Navbar>
         <div></div>
-        <table className="table">
+        <table className="table" class="table table-bordered">
           <thead className="thead-light">
             <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Password</th>
+              <th>Name</th>
+              <th>E-mail address</th>
+              {/* <th>Password</th> */}
+              <th>Created time</th>
+              <th>Updated time</th>
               <th>Role</th>
               <th>Delete</th>
             </tr>
