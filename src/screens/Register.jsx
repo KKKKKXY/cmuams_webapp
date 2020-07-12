@@ -11,7 +11,7 @@ const Register = () => {
         email: '',
         password1: '',
         password2: '',
-        textChange: 'Sign Up'
+        textChange: 'Submit'
     });
 
     const { name, email, password1, password2, textChange } = formData;
@@ -52,7 +52,7 @@ const Register = () => {
                                       email: '',
                                       password1: '',
                                       password2: '',
-                                      textChange: 'Sign Up'
+                                      textChange: 'Submit'
                                     });
                                     console.log(err.response);
                         toast.error(err.response.data.errors);
