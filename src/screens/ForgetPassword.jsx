@@ -77,7 +77,6 @@ const ForgetPassword = ({history}) => {
           ></div>
         </div>
       </div>
-      ;
     </div>
   );
 };

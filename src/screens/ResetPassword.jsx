@@ -95,7 +95,6 @@ const ResetPassword = ({ match }) => {
                     ></div>
                 </div>
             </div>
-      ;
         </div>
     );
 };
