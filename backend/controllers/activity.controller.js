@@ -48,3 +48,15 @@ exports.AddController = (req, res) => {
         }
     });
 };
+
+exports.deleteController = (req, res) => {
+    const activityId = req.params.id;
+    Activity.findByIdAndDelete(activityId).exec((err, activity) => {
+        if (err || !activity) {
+            return res.status(400).json({
+                error: 'The activity not found'
+            });
+        }
+        res.json('The activity deleted!');
+    });
+};

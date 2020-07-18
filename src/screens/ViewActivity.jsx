@@ -14,13 +14,16 @@ const Activities = props => (
         <td>{props.activity.responsiblePerson}</td>
         <td>{props.activity.phoneNo}</td>
         <td>{props.activity.limitParticipant}</td>
+        <td><a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+        <td><a href="#" onClick={() => { props.editActivity(props.user._id) }}><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
     </tr>
 )
 
 export default class ViewActivity extends Component {
     constructor(props) {
         super(props);
-
+        
+        this.deleteActivity = this.deleteActivity.bind(this)
 
         this.state = { activities: [] };
     }
@@ -35,11 +38,20 @@ export default class ViewActivity extends Component {
             })
     }
 
+    deleteActivity(id) {
+        axios.delete(`${process.env.REACT_APP_API_URL}/activity/${id}`)
+          .then(response => { console.log(response.data)});
+        this.setState({
+          activities: this.state.activities.filter(el => el._id !== id)
+        })
+      }
+    
+
 
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} key={currentactivity._id} />;
-            //   return <Activities user={currentuser} deleteUser={this.deleteUser} key={currentuser._id}/>;
+            //return <Activities activity={currentactivity} key={currentactivity._id} />;
+            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} key={currentactivity._id}/>;
         })
     }
 
@@ -73,7 +85,7 @@ export default class ViewActivity extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div></div>
-                <table className="table">
+                <table className="table" class="table table-bordered">
                     <thead className="thead-light">
                         <tr>
                             <td>Name</td>
@@ -84,6 +96,8 @@ export default class ViewActivity extends Component {
                             <td>Responsible Person</td>
                             <td>Phone No</td>
                             <td>Limit Participant</td>
+                            <td>Delete</td>
+                            <td>Edit</td>
                         </tr>
                     </thead>
                     <tbody>
