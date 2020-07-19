@@ -46,15 +46,15 @@ const Register = () => {
                         toast.success(res.data.message);
                     })
                     .catch(err => {
-                                    setFormData({
-                                      ...formData,
-                                      name: '',
-                                      email: '',
-                                      password1: '',
-                                      password2: '',
-                                      textChange: 'Submit'
-                                    });
-                                    console.log(err.response);
+                        setFormData({
+                            ...formData,
+                            name: '',
+                            email: '',
+                            password1: '',
+                            password2: '',
+                            textChange: 'Submit'
+                        });
+                        console.log(err.response);
                         toast.error(err.response.data.errors);
                     });
             } else {
@@ -118,7 +118,7 @@ const Register = () => {
                             </div>
                             <div className='my-12 border-b text-center'>
                                 <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>
-                </div>
+                                </div>
                             </div>
                             <div className='flex flex-col items-center'>
                                 <a
@@ -131,14 +131,14 @@ const Register = () => {
                                     <span className='ml-4'>Sign In</span>
                                 </a>
                                 <a
-                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
+                                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
-                    href='/'
-                    target='_self'
-                  >
-                    <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-indigo-500' />
-                    <span className='ml-4'>Home</span>
-                  </a>
+                                    href='/'
+                                    target='_self'
+                                >
+                                    <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-indigo-500' />
+                                    <span className='ml-4'>Home</span>
+                                </a>
                             </div>
                         </form>
                     </div>

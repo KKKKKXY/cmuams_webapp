@@ -3,7 +3,7 @@ import authSvg from '../assets/forget.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
-const ForgetPassword = ({history}) => {
+const ForgetPassword = ({ }) => {
   const [formData, setFormData] = useState({
     email: '',
     textChange: 'Submit'
@@ -21,17 +21,17 @@ const ForgetPassword = ({history}) => {
           email
         })
         .then(res => {
-          
-            setFormData({
-              ...formData,
-              email: '',
-            });
-            toast.success(`Please check your email`);
-            toast.success(res.data.message);
-          
+
+          setFormData({
+            ...formData,
+            email: '',
+          });
+          toast.success(`Please check your email`);
+          toast.success(res.data.message);
+
         })
         .catch(err => {
-        console.log(err.response)
+          console.log(err.response)
           toast.error(err.response.data.error);
         });
     } else {
@@ -48,7 +48,7 @@ const ForgetPassword = ({history}) => {
               Forget Password
             </h1>
             <div className='w-full flex-1 mt-8 text-indigo-500'>
-              
+
               <form
                 className='mx-auto max-w-xs relative '
                 onSubmit={handleSubmit}
