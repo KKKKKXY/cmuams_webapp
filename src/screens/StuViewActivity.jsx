@@ -54,8 +54,8 @@ export default class StuViewActivity extends Component {
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/usersInfo">User Management</Nav.Link>
                             <NavDropdown title="Activity" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
-                                <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
+                                <NavDropdown.Item href="/activitylist">All Activities</NavDropdown.Item>
+                                <NavDropdown.Item href="/addActivity">Create Activity</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link href="/admin">Account</Nav.Link>
 
