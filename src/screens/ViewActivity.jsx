@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
+import AdminNavbar from './AdminNavbar';
 
 
 
@@ -22,7 +22,7 @@ const Activities = props => (
 export default class ViewActivity extends Component {
     constructor(props) {
         super(props);
-        
+
         this.deleteActivity = this.deleteActivity.bind(this)
 
         this.state = { activities: [] };
@@ -40,50 +40,25 @@ export default class ViewActivity extends Component {
 
     deleteActivity(id) {
         axios.delete(`${process.env.REACT_APP_API_URL}/activity/${id}`)
-          .then(response => { console.log(response.data)});
+            .then(response => { console.log(response.data) });
         this.setState({
-          activities: this.state.activities.filter(el => el._id !== id)
+            activities: this.state.activities.filter(el => el._id !== id)
         })
-      }
-    
+    }
+
 
 
     activityList() {
         return this.state.activities.map(currentactivity => {
             //return <Activities activity={currentactivity} key={currentactivity._id} />;
-            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} key={currentactivity._id}/>;
+            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} key={currentactivity._id} />;
         })
     }
 
     render() {
         return (
             <div className="container">
-                <Navbar className="navbar navbar-dark bg-primary" expand="lg">
-                    <Navbar.Brand href="#home">AMS</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/usersInfo">User Management</Nav.Link>
-                            <NavDropdown title="Activity" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/activitylist">All Activities</NavDropdown.Item>
-                                <NavDropdown.Item href="/addActivity">Create Activity</NavDropdown.Item>
-                            </NavDropdown>
-                            <Nav.Link href="/admin">Account</Nav.Link>
-
-                            <NavItem>
-                                <NavLink className='nav-link' exact to='/logout'>
-                                    <i className='fa fa-sign-out'></i>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className='nav-link' exact to='/login'>
-                                    <i className='fa fa-sign-in'></i>
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
+                <AdminNavbar />
                 <div></div>
                 <table className="table" class="table table-bordered">
                     <thead className="thead-light">

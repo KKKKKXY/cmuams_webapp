@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import authSvg from '../assets/update.svg';
+import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
-import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
+import { updateUser, getCookie } from '../helpers/auth';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import AdminNavbar from './AdminNavbar';
 
-const AddActivity = ({ history }) => {
+
+const AddActivity = ({ }) => {
     const [formData, setFormData] = useState({
         activityName: '',
         description: '',
@@ -26,12 +26,10 @@ const AddActivity = ({ history }) => {
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
-    const onChangeDate = text => date =>  {
+    const onChangeDate = text => date => {
         setFormData({ ...formData, [text]: date });
     };
-    // const onChangeBidEndDate = text => date =>  {
-    //     setFormData({ ...formData, [text]: date });
-    // }
+
     const handleSubmit = e => {
         const token = getCookie('token');
         console.log(token);
@@ -69,33 +67,7 @@ const AddActivity = ({ history }) => {
 
     return (
         <div className="container">
-            <Navbar className="navbar navbar-dark bg-primary" expand="lg">
-                <Navbar.Brand href="#home">AMS</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/usersInfo">User Manage</Nav.Link>
-                        <NavDropdown title="Activity" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/activitylist">All Activities</NavDropdown.Item>
-                            <NavDropdown.Item href="/addActivity">Create Activity</NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link href="/admin">Update Profile</Nav.Link>
-
-                        <NavItem>
-                            <NavLink className='nav-link' exact to='/logout'>
-                                <i className='fa fa-sign-out'></i>
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className='nav-link' exact to='/login'>
-                                <i className='fa fa-sign-in'></i>
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-
-                </Navbar.Collapse>
-            </Navbar>
+            <AdminNavbar />
 
             <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
                 <ToastContainer />

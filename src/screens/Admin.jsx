@@ -3,7 +3,7 @@ import authSvg from '../assets/update.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
-import { Nav, Navbar, NavDropdown, NavLink, FormControl, Button, Collapse, NavItem, FormGroup } from 'react-bootstrap';
+import AdminNavbar from './AdminNavbar';
 
 
 const Admin = ({ history }) => {
@@ -76,44 +76,14 @@ const Admin = ({ history }) => {
 
   return (
     <div className="container">
-      <Navbar className="navbar navbar-dark bg-primary" expand="lg">
-        <Navbar.Brand href="#home">AMS</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/usersInfo">User Management</Nav.Link>
-            <NavDropdown title="Activity" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/activitylist">All activities</NavDropdown.Item>
-              <NavDropdown.Item href="/addActivity">Create Activity</NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="/admin">Account</Nav.Link>
-
-            <NavItem>
-              <NavLink className='nav-link' exact to='/logout'>
-                <i className='fa fa-sign-out'></i>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className='nav-link' exact to='/login'>
-                <i className='fa fa-sign-in'></i>
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <button onClick={() => {signout(() => {toast.error('Signout Successfully');history.push('/');});}}>
-                  <i className='fas fa-sign-out-alt  w-6  -ml-2' />
-                  <span className='ml-3'>Signout</span></button>
-
-        </Navbar.Collapse>
-      </Navbar>
-
+      <AdminNavbar />
       <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
         <ToastContainer />
         <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
           <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
             <div className='mt-12 flex flex-col items-center'>
               <h1 className='text-2xl xl:text-3xl font-extrabold'>
-              Account update
+                Account update
             </h1>
 
               <form
