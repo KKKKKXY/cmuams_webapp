@@ -17,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import UsersList from './screens/UsersList';
 import AddActivity from './screens/AddActivity';
 import ViewActivity from './screens/ViewActivity';
+import EditActivity from './screens/EditActivity';
 
 import StuViewActivity from './screens/StuViewActivity';
 import AdminNavbar from './screens/AdminNavbar';
@@ -37,6 +38,7 @@ ReactDOM.render(
       <AdminRoute path="/addActivity" exact component={AddActivity} />
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
       <AdminRoute path="/bar" exact component={AdminNavbar} />
+      <AdminRoute path="/editActivity" exact component={EditActivity}/>
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
