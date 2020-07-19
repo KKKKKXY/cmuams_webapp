@@ -19,6 +19,7 @@ import AddActivity from './screens/AddActivity';
 import ViewActivity from './screens/ViewActivity';
 
 import StuViewActivity from './screens/StuViewActivity';
+import AdminNavbar from './screens/AdminNavbar';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -30,11 +31,12 @@ ReactDOM.render(
       <Route path='/users/password/reset/:token' exact render={props => <ResetPassword {...props} />} />
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
       <PrivateRoute path="/private" exact component={Private} />
-      <PrivateRoute path="/viewactivity" exact component={StuViewActivity} />
+      <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
+      <AdminRoute path="/bar" exact component={AdminNavbar} />
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
