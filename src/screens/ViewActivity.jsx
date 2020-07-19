@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import AdminNavbar from './AdminNavbar';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+
+import Tooltip from '@material-ui/core/Tooltip';
+
+const useStyles = makeStyles((theme) => ({
+    fab: {
+        paddingLeft: theme.spacing(2),
+    }
+}));
 
 
 const Activities = props => (
@@ -14,8 +25,14 @@ const Activities = props => (
         <td>{props.activity.responsiblePerson}</td>
         <td>{props.activity.phoneNo}</td>
         <td>{props.activity.limitParticipant}</td>
-        <td><a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        <td><a href="#" onClick={() => { props.editActivity(props.user._id) }}><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
+        <td>
+            <Tooltip title="Delete" placement="top">
+                    <a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </Tooltip>
+            <Tooltip title="Edit" placement="top" className={useStyles().fab}>
+                    <a href="#" onClick={() => { props.editActivity(props.activity._id) }}><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+            </Tooltip>
+        </td>
     </tr>
 )
 
@@ -71,8 +88,7 @@ export default class ViewActivity extends Component {
                             <td>Responsible Person</td>
                             <td>Phone No</td>
                             <td>Limit Participant</td>
-                            <td>Delete</td>
-                            <td>Edit</td>
+                            <td>Action</td>
                         </tr>
                     </thead>
                     <tbody>

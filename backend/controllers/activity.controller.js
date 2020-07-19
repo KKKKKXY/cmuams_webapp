@@ -1,4 +1,5 @@
 const Activity = require('../models/activity.model');
+const { validationResult } = require('express-validator');
 
 exports.readController = (req, res) => {
     const activityId = req.params.id;
