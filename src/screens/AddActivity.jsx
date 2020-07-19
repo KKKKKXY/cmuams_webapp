@@ -20,7 +20,9 @@ const AddActivity = ({ history }) => {
         textChange: 'Add',
     });
 
-    const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant, textChange } = formData;
+    const { activityName, description, location, responsiblePerson, phoneNo, limitParticipant, textChange } = formData;
+    const [startDate, setStartDate] = useState(null);
+    const [bidEndDate, setBidEndDate] = useState(null);
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
@@ -75,8 +77,8 @@ const AddActivity = ({ history }) => {
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/usersInfo">User Manage</Nav.Link>
                         <NavDropdown title="Activity" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/activitylist">List</NavDropdown.Item>
-                            <NavDropdown.Item href="/addActivity">Add Activity</NavDropdown.Item>
+                            <NavDropdown.Item href="/activitylist">All Activities</NavDropdown.Item>
+                            <NavDropdown.Item href="/addActivity">Create Activity</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="/admin">Update Profile</Nav.Link>
 
@@ -124,20 +126,22 @@ const AddActivity = ({ history }) => {
                                         value={description}
                                     />
                                     <div className="form-group">
-                                        <label>Start Date: </label>
                                         <div>
                                             <DatePicker
+                                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                                placeholderText="Start Date"
                                                 selected={startDate}
-                                                onChange={onChangeDate('startDate')}
+                                                onChange={date => setStartDate(date)}
                                                 />
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label>Bid End Date: </label>
                                         <div>
                                             <DatePicker
+                                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                                placeholderText="Biding End Date"
                                                 selected={bidEndDate}
-                                                onChange={onChangeDate('bidEndDate')}
+                                                onChange={date => setBidEndDate(date)}
                                             />
                                         </div>
                                     </div>
