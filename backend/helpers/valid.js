@@ -45,5 +45,28 @@ exports.resetPasswordValidator = [
         .not()
         .isEmpty()
         .isLength({ min: 6 })
-        .withMessage('Password must be at least  6 characters long')
+        .withMessage('Password must contain at least 6 characters').matches(/\d/).withMessage('password must contain a number')
+];
+
+// Edit Activity
+exports.ActivityValidator = [
+    check('activityName', 'Name is required').notEmpty()
+        .isAlphanumeric()
+        .withMessage('The activity name cannot include special characters or space.'),
+    check('description', 'Description is required').notEmpty(),
+    check('startDate', 'Start date is required').notEmpty(),
+    check('bidEndDate', 'Bid end date is required').notEmpty(),
+    check('location', 'Location is required').notEmpty()
+        .matches(/^[0-9a-zA-Z \b]+$/)
+        .withMessage('Please fill in correct location address.'),
+    check('responsiblePerson', 'Responsible person name is required').notEmpty(),
+    check('phoneNo', 'Phone number is required').notEmpty()
+        .isNumeric()
+        .withMessage('Please fill in correct format.'),
+    check('phoneNo')
+        .isLength({ min: 9 })
+        .withMessage('Phone number must contain at least 9 digits'),
+    check('limitParticipant', 'Limit participant is required').notEmpty()
+        .isNumeric()
+        .withMessage('Only digit.')
 ];

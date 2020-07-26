@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import authSvg from '../assets/auth.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { authenticate, isAuth } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
+import { isAuth } from '../helpers/auth';
+import { Redirect } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -17,7 +17,6 @@ const Register = () => {
     const { name, email, password1, password2, textChange } = formData;
     // Handle change from inputs
     const handleChange = text => e => {
-        // console.log(name, email, password1, password2)
         setFormData({ ...formData, [text]: e.target.value });
     };
 
@@ -42,7 +41,6 @@ const Register = () => {
                             password2: '',
                             textChange: 'Submitted'
                         });
-
                         toast.success(res.data.message);
                     })
                     .catch(err => {
@@ -55,6 +53,7 @@ const Register = () => {
                             textChange: 'Submit'
                         });
                         console.log(err.response);
+                        toast.error(err.response.data.error);
                         toast.error(err.response.data.errors);
                     });
             } else {
@@ -128,7 +127,7 @@ const Register = () => {
                                     target='_self'
                                 >
                                     <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-indigo-500' />
-                                    <span className='ml-4'>Sign In</span>
+                                    <span className='ml-4'>Log In</span>
                                 </a>
                                 <a
                                     className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
@@ -149,9 +148,7 @@ const Register = () => {
                         style={{ backgroundImage: `url(${authSvg})` }}
                     ></div>
                 </div>
-
             </div>
-
         </div>
     );
 };

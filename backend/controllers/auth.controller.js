@@ -256,6 +256,7 @@ exports.registerController = (req, res) => {
       .send(emailData)
       .then(sent => {
         return res.json({
+          success: true,
           message: `Email has been sent to ${email}`
         });
       })
@@ -354,12 +355,15 @@ exports.signinController = (req, res) => {
 
       return res.json({
         token,
+        // success: true,
+        // message: 'Hey ${name}, Welcome back!',
         user: {
           _id,
           name,
           email,
           role
-        }
+        },
+
       });
     });
   }
@@ -676,7 +680,7 @@ exports.resetPasswordController = (req, res) => {
     });
   } else {
     if (resetPasswordLink) {
-      jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function(
+      jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function (
         err,
         decoded
       ) {

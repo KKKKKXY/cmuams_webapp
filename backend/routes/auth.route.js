@@ -18,14 +18,9 @@ const {
     resetPasswordController
 } = require('../controllers/auth.controller')
 
-
-
 router.post('/register', validSign, registerController)
-
 router.post('/login', validLogin, signinController)
-
 router.post('/activation', activationController)
-
 // forgot reset password
 router.put('/forgotpassword', forgotPasswordValidator, forgotPasswordController);
 router.put('/resetpassword', resetPasswordValidator, resetPasswordController);

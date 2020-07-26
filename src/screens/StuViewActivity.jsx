@@ -31,11 +31,9 @@ export default class StuViewActivity extends Component {
             })
     }
 
-
     activityList() {
         return this.state.activities.map(currentactivity => {
             return <Activities activity={currentactivity} key={currentactivity._id} />;
-            //   return <Activities user={currentuser} deleteUser={this.deleteUser} key={currentuser._id}/>;
         })
     }
 

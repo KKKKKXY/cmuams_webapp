@@ -5,7 +5,6 @@ import axios from 'axios';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 import PrivateNavbar from './PrivateNavbar';
 
-
 const Private = ({ history }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -40,10 +39,12 @@ const Private = ({ history }) => {
         }
       });
   };
+
   const { name, email, password1, textChange, role } = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
+
   const handleSubmit = e => {
     const token = getCookie('token');
     console.log(token);
@@ -65,12 +66,14 @@ const Private = ({ history }) => {
       )
       .then(res => {
         updateUser(res, () => {
-          toast.success('Profile Updated Successfully');
+          toast.success(res.data.message);
           setFormData({ ...formData, textChange: 'Update' });
         });
       })
       .catch(err => {
         console.log(err.response);
+        toast.error(err.response.data.error);
+        toast.error(err.response.data.errors);
       });
   };
 
@@ -151,8 +154,7 @@ const Private = ({ history }) => {
             <div className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat' style={{ backgroundImage: `url(${authSvg})` }}></div>
           </div>
         </div>
-      ;
-    </div>
+      </div>
     </div>
   );
 };
