@@ -1,5 +1,6 @@
 const User = require('../models/auth.model');
-const expressJwt = require('express-jwt');
+const { validationResult } = require('express-validator');
+
 
 exports.readController = (req, res) => {
     const userId = req.params.id;
@@ -16,46 +17,57 @@ exports.readController = (req, res) => {
 };
 
 exports.updateController = (req, res) => {
-
-    // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
     const { name, password } = req.body;
+    const errors = validationResult(req);
 
-    User.findOne({ _id: req.user._id }, (err, user) => {
-        if (err || !user) {
-            return res.status(400).json({
-                error: 'User not found'
-            });
-        }
-        if (!name) {
-            return res.status(400).json({
-                error: 'Name is required'
-            });
-        } else {
-            user.name = name;
-        }
-
-        if (password) {
-            if (password.length < 6) {
+    if (!errors.isEmpty()) {
+        const firstError = errors.array().map(error => error.msg)[0];
+        return res.status(422).json({
+            error: firstError
+        });
+    } else {
+        User.findOne({ _id: req.user._id }, (err, user) => {
+            if (err || !user) {
                 return res.status(400).json({
-                    error: 'Password should be min 6 characters long'
+                    error: 'User not found'
+                });
+            }
+
+            if (!name) {
+                return res.status(400).json({
+                    error: 'Name is required'
                 });
             } else {
-                user.password = password;
+                user.name = name;
             }
-        }
 
-        user.save((err, updatedUser) => {
-            if (err) {
-                console.log('USER UPDATE ERROR', err);
-                return res.status(400).json({
-                    error: 'User update failed'
-                });
+            if (password) {
+                if (password.length < 6) {
+                    return res.status(400).json({
+                        error: 'Password must contain at least 6 characters'
+                    });
+                } else {
+                    user.password = password;
+                }
             }
-            updatedUser.hashed_password = undefined;
-            updatedUser.salt = undefined;
-            res.json(updatedUser);
+
+            user.save((err, updatedUser) => {
+                if (err) {
+                    console.log('USER UPDATE ERROR', err);
+                    return res.status(400).json({
+                        error: 'User update failed'
+                    });
+                }
+                updatedUser.hashed_password = undefined;
+                updatedUser.salt = undefined;
+                return res.json({
+                    success: true,
+                    message: 'Profile Updated Successfully',
+                    updatedUser
+                });
+            });
         });
-    });
+    }
 };
 
 exports.viewController = (req, res) => {
@@ -77,6 +89,9 @@ exports.deleteController = (req, res) => {
                 error: 'User not found'
             });
         }
-        res.json('User deleted!');
+        return res.json({
+            success: true,
+            message: 'User deleted!'
+        });
     });
 };

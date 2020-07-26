@@ -1,10 +1,10 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { signout } from '../helpers/auth';
-import { Nav, Navbar} from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 
 
-const PrivateNavbar = ({ }) => {
+const PrivateNavbar = ({ history }) => {
     return (
         <Navbar className="navbar navbar-dark bg-primary" expand="lg">
             <Navbar.Brand href="#home">AMS</Navbar.Brand>

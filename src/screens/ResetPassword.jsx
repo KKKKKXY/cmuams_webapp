@@ -9,6 +9,7 @@ const ResetPassword = ({ match }) => {
         token: '',
         textChange: 'Submit'
     });
+
     const { password1, password2, textChange, token } = formData;
 
     useEffect(() => {
@@ -16,11 +17,12 @@ const ResetPassword = ({ match }) => {
         if (token) {
             setFormData({ ...formData, token, })
         }
-
     }, [])
+
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
+
     const handleSubmit = e => {
         console.log(password1, password2)
         e.preventDefault();
@@ -36,18 +38,20 @@ const ResetPassword = ({ match }) => {
                     setFormData({
                         ...formData,
                         password1: '',
-                        password2: ''
+                        password2: '',
+                        textChange: 'Submit'
                     });
                     toast.success(res.data.message);
-
                 })
                 .catch(err => {
-                    toast.error(`${err.response.data.error}`);
+                    toast.error(err.response.data.error);
+                    toast.error(err.response.data.errors);
                 });
         } else {
-            toast.error('Passwords don\'t matches');
+            toast.error("Passwords don't match");
         }
     };
+
     return (
         <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
             <ToastContainer />
@@ -56,13 +60,13 @@ const ResetPassword = ({ match }) => {
                     <div className='mt-12 flex flex-col items-center'>
                         <h1 className='text-2xl xl:text-3xl font-extrabold'>
                             Reset Your Password
-            </h1>
-                        <div className='w-full flex-1 mt-8 text-indigo-500'>
+                        </h1>
 
-                            <form
-                                className='mx-auto max-w-xs relative '
-                                onSubmit={handleSubmit}
-                            >
+                        <form
+                            className='w-full flex-1 mt-8 text-indigo-500'
+                            onSubmit={handleSubmit}
+                        >
+                            <div className='mx-auto max-w-xs relative'>
                                 <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
                                     type='password'
@@ -82,10 +86,10 @@ const ResetPassword = ({ match }) => {
                                     className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                                 >
                                     <i className='fas fa-sign-in-alt  w-6  -ml-2' />
-                                    <span className='ml-3'>Submit</span>
+                                    <span className='ml-3'>{textChange}</span>
                                 </button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
