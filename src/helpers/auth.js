@@ -1,5 +1,4 @@
 import cookie from 'js-cookie'
-// import { GoogleLogout } from 'react-google-login';
 
 // Set in Cookie
 export const setCookie = (key, value) => {
@@ -7,9 +6,10 @@ export const setCookie = (key, value) => {
         cookie.set(key, value, {
             // 1 Day
             expires: 1
-        }) 
+        })
     }
 }
+
 // remove from cookie
 export const removeCookie = key => {
     if (window !== 'undefined') {
@@ -18,7 +18,6 @@ export const removeCookie = key => {
         });
     }
 };
-
 
 // Get from cookie such as stored token
 // Will be useful when we need to make request to server with token
@@ -80,3 +79,45 @@ export const updateUser = (response, next) => {
     }
     next();
 };
+
+export const setActivityLocalStorage = (response, next) => {
+    console.log('HELPER ON EDIT RESPONSE', response);
+    removeLocalStorage('activity');
+    removeCookie('activity');
+    setCookie('activity', response.data.activity);
+    setLocalStorage('activity', response.data.activity);
+    next();
+};
+
+export const setDeleteActivityLocalStorage = (response, next) => {
+    console.log('HELPER ON DELETE RESPONSE', response);
+    if (typeof response.data.activity !== 'undefined') {
+        setCookie('activity', response.data.activity);
+        setLocalStorage('activity', response.data.activity);
+    }
+    next();
+};
+
+export const activityId = () => {
+    if (window !== 'undefined') {
+        const cookieChecked = getCookie('activity');
+        if (cookieChecked) {
+            if (localStorage.getItem('activity')) {
+                return JSON.parse(localStorage.getItem('activity'));
+            } else {
+                return false;
+            }
+        }
+    }
+};
+
+export const updateActivity = (response, next) => {
+    console.log('UPDATE ACTIVITY IN LOCALSTORAGE HELPERS', response);
+    if (typeof window !== 'undefined') {
+        let activity = JSON.parse(localStorage.getItem('activity'));
+        activity = response.data;
+        localStorage.setItem('activity', JSON.stringify(activity));
+    }
+    next();
+};
+

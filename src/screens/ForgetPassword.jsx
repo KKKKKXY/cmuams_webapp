@@ -3,15 +3,17 @@ import authSvg from '../assets/forget.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
-const ForgetPassword = ({ }) => {
+const ForgetPassword = ({ history }) => {
   const [formData, setFormData] = useState({
     email: '',
     textChange: 'Submit'
   });
+  
   const { email, textChange } = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     if (email) {
@@ -21,23 +23,24 @@ const ForgetPassword = ({ }) => {
           email
         })
         .then(res => {
-
           setFormData({
             ...formData,
             email: '',
+            textChange: 'Submit'
           });
           toast.success(`Please check your email`);
           toast.success(res.data.message);
-
         })
         .catch(err => {
           console.log(err.response)
           toast.error(err.response.data.error);
+          toast.error(err.response.data.errors);
         });
     } else {
       toast.error('Please fill all fields');
     }
   };
+
   return (
     <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
       <ToastContainer />
@@ -65,7 +68,7 @@ const ForgetPassword = ({ }) => {
                   className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                 >
                   <i className='fas fa-sign-in-alt  w-6  -ml-2' />
-                  <span className='ml-3'>Submit</span>
+                  <span className='ml-3'>{textChange}</span>
                 </button>
               </form>
             </div>

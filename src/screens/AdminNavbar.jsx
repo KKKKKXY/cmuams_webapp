@@ -3,8 +3,7 @@ import { toast } from 'react-toastify';
 import { signout } from '../helpers/auth';
 import { Nav, Navbar } from 'react-bootstrap';
 
-
-const AdminNavbar = ({ }) => {
+const AdminNavbar = ({ history }) => {
   return (
     <Navbar className="navbar navbar-dark bg-primary" expand="lg">
       <Navbar.Brand href="#home">AMS</Navbar.Brand>
@@ -19,7 +18,6 @@ const AdminNavbar = ({ }) => {
         <button onClick={() => { signout(() => { toast.error('Signout Successfully'); window.location.href = '/' }); }}>
           <i className='fas fa-sign-out-alt  w-6  -ml-2' />
           <span className='ml-3'>Signout</span></button>
-
       </Navbar.Collapse>
     </Navbar>
   );

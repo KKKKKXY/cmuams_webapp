@@ -6,8 +6,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import AdminNavbar from './AdminNavbar';
 
-
-const AddActivity = ({ }) => {
+const AddActivity = ({ history }) => {
     const [formData, setFormData] = useState({
         activityName: '',
         description: '',
@@ -25,9 +24,6 @@ const AddActivity = ({ }) => {
     const [bidEndDate, setBidEndDate] = useState(null);
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
-    };
-    const onChangeDate = text => date => {
-        setFormData({ ...formData, [text]: date });
     };
 
     const handleSubmit = e => {
@@ -56,19 +52,20 @@ const AddActivity = ({ }) => {
             )
             .then(res => {
                 updateUser(res, () => {
-                    toast.success('Activity Added Successfully');
+                    toast.success(res.data.message);
                     setFormData({ ...formData, textChange: 'Add' });
                 });
             })
             .catch(err => {
                 console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
             });
     };
 
     return (
         <div className="container">
             <AdminNavbar />
-
             <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
                 <ToastContainer />
                 <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
@@ -77,7 +74,6 @@ const AddActivity = ({ }) => {
                             <h1 className='text-2xl xl:text-3xl font-extrabold'>
                                 Create New Activity
             </h1>
-
                             <form
                                 className='w-full flex-1 mt-8 text-indigo-500'
                                 onSubmit={handleSubmit}
@@ -104,7 +100,7 @@ const AddActivity = ({ }) => {
                                                 placeholderText="Start Date"
                                                 selected={startDate}
                                                 onChange={date => setStartDate(date)}
-                                                />
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group">

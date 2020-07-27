@@ -29,6 +29,7 @@ const Admin = ({ history }) => {
       })
       .then(res => {
         const { role, name, email } = res.data;
+        console.log(res.data);
         setFormData({ ...formData, role, name, email });
       })
       .catch(err => {
@@ -40,10 +41,12 @@ const Admin = ({ history }) => {
         }
       });
   };
+
   const { name, email, password1, textChange, role } = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
+
   const handleSubmit = e => {
     const token = getCookie('token');
     console.log(token);
@@ -65,12 +68,14 @@ const Admin = ({ history }) => {
       )
       .then(res => {
         updateUser(res, () => {
-          toast.success('Profile Updated Successfully');
+          toast.success(res.data.message);
           setFormData({ ...formData, textChange: 'Update' });
         });
       })
       .catch(err => {
         console.log(err.response);
+        toast.error(err.response.data.error);
+        toast.error(err.response.data.errors);
       });
   };
 
@@ -85,7 +90,6 @@ const Admin = ({ history }) => {
               <h1 className='text-2xl xl:text-3xl font-extrabold'>
                 Account update
             </h1>
-
               <form
                 className='w-full flex-1 mt-8 text-indigo-500'
                 onSubmit={handleSubmit}

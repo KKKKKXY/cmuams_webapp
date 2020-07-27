@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AdminNavbar from './AdminNavbar';
-
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const UserAccounts = props => (
 
@@ -21,9 +20,7 @@ const UserAccounts = props => (
 export default class UsersList extends Component {
   constructor(props) {
     super(props);
-
     this.deleteUser = this.deleteUser.bind(this)
-
     this.state = { users: [] };
   }
 
@@ -39,7 +36,15 @@ export default class UsersList extends Component {
 
   deleteUser(id) {
     axios.delete(`${process.env.REACT_APP_API_URL}/user/${id}`)
-      .then(response => { console.log(response.data) });
+      .then(response => {
+        toast.success(response.data.message);
+      })
+      .catch(err => {
+        console.log(err.response);
+        toast.error(err.response.data.error);
+        toast.error(err.response.data.errors);
+      });
+
     this.setState({
       users: this.state.users.filter(el => el._id !== id)
     })
@@ -47,7 +52,6 @@ export default class UsersList extends Component {
 
   userList() {
     return this.state.users.map(currentuser => {
-      // return <UserAccounts user={currentuser}/>;
       return <UserAccounts user={currentuser} deleteUser={this.deleteUser} key={currentuser._id} />;
     })
   }
@@ -57,6 +61,7 @@ export default class UsersList extends Component {
       <div className="container">
         <AdminNavbar />
         <div></div>
+        <ToastContainer />
         <table className="table" class="table table-bordered">
           <thead className="thead-light">
             <tr>

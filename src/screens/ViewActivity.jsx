@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AdminNavbar from './AdminNavbar';
-
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-
 import Tooltip from '@material-ui/core/Tooltip';
+import { setActivityLocalStorage } from '../helpers/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import { green } from '@material-ui/core/colors';
+import Icon from '@material-ui/core/Icon';
+import Add from '@material-ui/icons/Add'
 
 const useStyles = makeStyles((theme) => ({
     fab: {
         paddingLeft: theme.spacing(2),
     }
 }));
-
 
 const Activities = props => (
     <tr>
@@ -27,10 +27,10 @@ const Activities = props => (
         <td>{props.activity.limitParticipant}</td>
         <td>
             <Tooltip title="Delete" placement="top">
-                    <a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fa fa-trash" aria-hidden="true"></i></a>
             </Tooltip>
             <Tooltip title="Edit" placement="top" className={useStyles().fab}>
-                    <a href="#" onClick={() => { props.editActivity(props.activity._id) }}><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                <a href="#" onClick={() => props.editActivity(props.activity._id)}><i className="fas fa-pencil-alt" aria-hidden="true"></i></a>
             </Tooltip>
         </td>
     </tr>
@@ -39,9 +39,8 @@ const Activities = props => (
 export default class ViewActivity extends Component {
     constructor(props) {
         super(props);
-
-        this.deleteActivity = this.deleteActivity.bind(this)
-
+        this.deleteActivity = this.deleteActivity.bind(this);
+        this.editActivity = this.editActivity.bind(this);
         this.state = { activities: [] };
     }
 
@@ -57,18 +56,33 @@ export default class ViewActivity extends Component {
 
     deleteActivity(id) {
         axios.delete(`${process.env.REACT_APP_API_URL}/activity/${id}`)
-            .then(response => { console.log(response.data) });
+            .then(response => {
+                toast.success(response.data.message);
+            })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
         this.setState({
             activities: this.state.activities.filter(el => el._id !== id)
         })
     }
 
-
+    editActivity(id) {
+        axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
+            .then(res => {
+                setActivityLocalStorage(res, () => { });
+                console.log(id);
+                if (localStorage.getItem('activity')) {
+                    window.location.href = '/editActivity'
+                }
+            })
+    }
 
     activityList() {
         return this.state.activities.map(currentactivity => {
-            //return <Activities activity={currentactivity} key={currentactivity._id} />;
-            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} key={currentactivity._id} />;
+            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} editActivity={this.editActivity} key={currentactivity._id} />;
         })
     }
 
@@ -76,8 +90,13 @@ export default class ViewActivity extends Component {
         return (
             <div className="container">
                 <AdminNavbar />
-                <div></div>
-                <table className="table" class="table table-bordered">
+                <ToastContainer />
+                <div style={{ float: 'right' }}>
+                    <Tooltip title="Create New Activity" placement="left">
+                        <Icon className="fa fa-plus-circle" style={{ color: green[500], fontSize: 50, margin: 10 }} onClick={() => window.location.href = '/addActivity'}></Icon>
+                    </Tooltip>
+                </div>
+                <table className="table table-bordered">
                     <thead className="thead-light">
                         <tr>
                             <td>Name</td>
@@ -96,6 +115,7 @@ export default class ViewActivity extends Component {
                     </tbody>
                 </table>
             </div>
+
         )
     }
 }

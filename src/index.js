@@ -9,7 +9,6 @@ import Private from './screens/Private.jsx';
 import Admin from './screens/Admin.jsx';
 import ForgetPassword from './screens/ForgetPassword.jsx';
 import ResetPassword from './screens/ResetPassword.jsx';
-
 import PrivateRoute from './Routes/PrivateRoute';
 import AdminRoute from './Routes/AdminRoute';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +20,6 @@ import EditActivity from './screens/EditActivity';
 import EnrollList from "./screens/EnrolledList";
 
 import StuViewActivity from './screens/StuViewActivity';
-import AdminNavbar from './screens/AdminNavbar';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -39,8 +37,8 @@ ReactDOM.render(
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
-      <AdminRoute path="/bar" exact component={AdminNavbar} />
-      <AdminRoute path="/editActivity" exact component={EditActivity}/>
+      <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
+
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
