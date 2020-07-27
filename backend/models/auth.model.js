@@ -27,6 +27,9 @@ const userScheama = new mongoose.Schema(
     resetPasswordLink: {
       data: String,
       default: ''
+    },
+    enrolled: {
+      data: Array
     }
   },
   {

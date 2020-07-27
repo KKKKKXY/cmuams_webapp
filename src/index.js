@@ -18,6 +18,7 @@ import UsersList from './screens/UsersList';
 import AddActivity from './screens/AddActivity';
 import ViewActivity from './screens/ViewActivity';
 import EditActivity from './screens/EditActivity';
+import EnrollList from "./screens/EnrolledList";
 
 import StuViewActivity from './screens/StuViewActivity';
 import AdminNavbar from './screens/AdminNavbar';
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
       <PrivateRoute path="/private" exact component={Private} />
       <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
+      <PrivateRoute path="/enrolllist" exact component={EnrollList}/>
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />
