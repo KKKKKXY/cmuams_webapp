@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const Activities = props => (
     <tr>
@@ -12,6 +14,11 @@ const Activities = props => (
         <td>{props.activity.responsiblePerson}</td>
         <td>{props.activity.phoneNo}</td>
         <td>{props.activity.limitParticipant}</td>
+        <td>
+            <Tooltip title="Enroll" placement="top">
+            <a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fas fa-plus-square" aria-hidden="true"></i></a>
+            </Tooltip>
+        </td>
     </tr>
 )
 
@@ -53,6 +60,7 @@ export default class StuViewActivity extends Component {
                             <td>Responsible Person</td>
                             <td>Phone No</td>
                             <td>Limit Participant</td>
+                            <td>Enroll</td>
                         </tr>
                     </thead>
                     <tbody>

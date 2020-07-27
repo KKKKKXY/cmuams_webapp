@@ -107,7 +107,7 @@ export default class ViewActivity extends Component {
                             <td>Responsible Person</td>
                             <td>Phone No</td>
                             <td>Limit Participant</td>
-                            <td>Action</td>
+                            <td>Delete/Edit</td>
                         </tr>
                     </thead>
                     <tbody>
