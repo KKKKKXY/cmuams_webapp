@@ -74,7 +74,7 @@ exports.viewController = (req, res) => {
     User.find().exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
-                error: 'User not found'
+                error: 'Users not found'
             });
         }
         res.json(user);

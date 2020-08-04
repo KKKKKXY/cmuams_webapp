@@ -10,7 +10,7 @@ exports.validSign = [
             min: 4,
             max: 32
         }).withMessage('name must be between 4 to 32 characters'),
-    check('email')
+    check('email', 'Email is required').notEmpty()
         .isEmail()
         .withMessage('Must be a valid email address'),
     check('password', 'password is required').notEmpty(),
@@ -21,7 +21,7 @@ exports.validSign = [
 
 // Login
 exports.validLogin = [
-    check('email')
+    check('email','Email is required').notEmpty()
         .isEmail()
         .withMessage('Must be a valid email address'),
     check('password', 'password is required').notEmpty(),
@@ -51,13 +51,13 @@ exports.resetPasswordValidator = [
 // Edit Activity
 exports.ActivityValidator = [
     check('activityName', 'Name is required').notEmpty()
-        .isAlphanumeric()
-        .withMessage('The activity name cannot include special characters or space.'),
+        .matches(/^[.0-9a-zA-Z \b]+$/)
+        .withMessage('The activity name cannot include special characters.'),
     check('description', 'Description is required').notEmpty(),
     check('startDate', 'Start date is required').notEmpty(),
     check('bidEndDate', 'Bid end date is required').notEmpty(),
     check('location', 'Location is required').notEmpty()
-        .matches(/^[0-9a-zA-Z \b]+$/)
+        .matches(/^[.0-9a-zA-Z \b]+$/)
         .withMessage('Please fill in correct location address.'),
     check('responsiblePerson', 'Responsible person name is required').notEmpty(),
     check('phoneNo', 'Phone number is required').notEmpty()

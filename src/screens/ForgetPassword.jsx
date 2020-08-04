@@ -28,7 +28,7 @@ const ForgetPassword = ({ history }) => {
             email: '',
             textChange: 'Submit'
           });
-          toast.success(`Please check your email`);
+          // toast.success(`Please check your email`);
           toast.success(res.data.message);
         })
         .catch(err => {

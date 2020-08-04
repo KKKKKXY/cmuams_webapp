@@ -7,7 +7,6 @@ import { setActivityLocalStorage } from '../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import { green } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
-import Add from '@material-ui/icons/Add'
 
 const useStyles = makeStyles((theme) => ({
     fab: {
