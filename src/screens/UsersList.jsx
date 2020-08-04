@@ -12,7 +12,7 @@ const UserAccounts = props => (
     <td>{props.user.updatedAt}</td>
     <td>{props.user.role}</td>
     <td>
-      <a href="#" onClick={() => { props.deleteUser(props.user._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
+      <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.user.name + ') ?')) props.deleteUser(props.user._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
     </td>
   </tr>
 )

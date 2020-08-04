@@ -47,7 +47,7 @@ export default class UsersList extends Component {
       <div className="container">
         <AdminNavbar />
         <div></div>
-        <table className="table" class="table table-bordered">
+        <table className="table table-bordered">
           <thead className="thead-light">
             <tr>
                 <td>Name</td>

@@ -9,7 +9,7 @@ const ResetPassword = ({ match }) => {
         token: '',
         textChange: 'Submit'
     });
-
+    
     const { password1, password2, textChange, token } = formData;
 
     useEffect(() => {
@@ -22,7 +22,6 @@ const ResetPassword = ({ match }) => {
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
-
     const handleSubmit = e => {
         console.log(password1, password2)
         e.preventDefault();
