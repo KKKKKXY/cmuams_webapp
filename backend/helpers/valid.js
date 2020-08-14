@@ -32,18 +32,14 @@ exports.validLogin = [
 
 // Forget Password
 exports.forgotPasswordValidator = [
-    check('email')
-        .not()
-        .isEmpty()
+    check('email','Email is required').notEmpty()
         .isEmail()
         .withMessage('Must be a valid email address')
 ];
 
 // Reset Password
 exports.resetPasswordValidator = [
-    check('newPassword')
-        .not()
-        .isEmpty()
+    check('newPassword','password is required').notEmpty()
         .isLength({ min: 6 })
         .withMessage('Password must contain at least 6 characters').matches(/\d/).withMessage('password must contain a number')
 ];

@@ -77,6 +77,11 @@ export default class ViewActivity extends Component {
                     window.location.href = '/editActivity'
                 }
             })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
     }
 
     activityList() {

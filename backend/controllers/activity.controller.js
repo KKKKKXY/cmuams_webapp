@@ -1,7 +1,8 @@
 const Activity = require('../models/activity.model');
 const { validationResult } = require('express-validator');
+const { errorHandler } = require('../helpers/dbErrorHandling');
 
-exports.readController = (req, res) => {
+exports.readActivityController = (req, res) => {
     const activityId = req.params.id;
     Activity.findById(activityId).exec((err, activity) => {
         if (err || !activity) {
@@ -26,18 +27,18 @@ exports.readController = (req, res) => {
     });
 };
 
-exports.ListController = (req, res) => {
+exports.listActivityController = (req, res) => {
     Activity.find().exec((err, activity) => {
-        if (err || !activity) {
+        if (err || !activity || activity == "") {
             return res.status(400).json({
-                error: 'Activity not found'
+                error: 'Activities not found'
             });
         }
         res.json(activity);
     });
 };
 
-exports.AddController = (req, res) => {
+exports.addActivityController = (req, res) => {
     const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = req.body;
     const errors = validationResult(req);
     const activity = new Activity({
@@ -50,24 +51,24 @@ exports.AddController = (req, res) => {
             error: firstError
         });
     } else {
-        activity.save((err, activity) => {
-            if (err) {
-                console.log('Save error', errorHandler(err));
-                return res.status(401).json({
-                    errors: errorHandler(err)
-                });
-            } else {
-                return res.json({
-                    success: true,
-                    message: 'Activity Added Successfully',
-                    activity
-                });
-            }
-        });
+    activity.save((err, activity) => {
+        if (err) {
+            console.log('Save error', errorHandler(err));
+            return res.status(401).json({
+                errors: errorHandler(err)
+            });
+        } else {
+            return res.json({
+                success: true,
+                message: 'Activity Added Successfully',
+                activity
+            });
+        }
+    });
     }
 };
 
-exports.deleteController = (req, res) => {
+exports.deleteActivityController = (req, res) => {
     const activityId = req.params.id;
     Activity.findByIdAndDelete(activityId).exec((err, activity) => {
         if (err || !activity) {
@@ -82,7 +83,7 @@ exports.deleteController = (req, res) => {
     });
 };
 
-exports.editController = (req, res) => {
+exports.editActivityController = (req, res) => {
     const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = req.body;
     const activityId = req.params.id;
     const errors = validationResult(req);
