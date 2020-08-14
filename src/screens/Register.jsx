@@ -23,7 +23,7 @@ const Register = () => {
     // Submit data to backend
     const handleSubmit = e => {
         e.preventDefault();
-        if (name && email && password1) {
+        if (name && email && password1 && password2) {
             if (password1 === password2) {
                 setFormData({ ...formData, textChange: 'Submitting' });
                 axios

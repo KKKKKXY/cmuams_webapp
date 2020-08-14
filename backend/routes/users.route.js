@@ -8,12 +8,12 @@ const {
 
 // import controller
 const { requireSignin, adminMiddleware } = require('../controllers/auth.controller');
-const { readController, updateController, viewController, deleteController } = require('../controllers/user.controller');
+const { readUserController, updateUserController, viewUsersController, deleteUserController } = require('../controllers/user.controller');
 
-router.get('/users', viewController);
-router.get('/user/:id', requireSignin, readController);
-router.put('/user/update', requireSignin, validSign, updateController);
-router.put('/admin/update', requireSignin, validSign, adminMiddleware, updateController);
-router.delete('/user/:id', deleteController);
+router.get('/users', viewUsersController);
+router.get('/user/:id', readUserController);
+router.put('/user/update', requireSignin, validSign, updateUserController);
+router.put('/admin/update', requireSignin, validSign, adminMiddleware, updateUserController);
+router.delete('/user/:id', deleteUserController);
 
 module.exports = router;

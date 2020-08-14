@@ -8,12 +8,12 @@ const {
 
 // import controller
 const { requireSignin } = require('../controllers/auth.controller');
-const { ListController, readController, AddController, deleteController, editController } = require('../controllers/activity.controller');
+const { listActivityController, readActivityController, addActivityController, deleteActivityController, editActivityController } = require('../controllers/activity.controller');
 
-router.get('/activities', ListController);
-router.get('/activity/:id', readController);
-router.post('/activity/add', ActivityValidator, AddController);
-router.delete('/activity/:id', deleteController);
-router.put('/activity/update', ActivityValidator, editController);
+router.get('/activities', listActivityController);
+router.get('/activity/:id', readActivityController);
+router.post('/activity/add', ActivityValidator, addActivityController);
+router.delete('/activity/:id', deleteActivityController);
+router.put('/activity/update', ActivityValidator, editActivityController);
 
 module.exports = router;

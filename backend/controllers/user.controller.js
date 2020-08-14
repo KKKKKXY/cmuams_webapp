@@ -2,7 +2,7 @@ const User = require('../models/auth.model');
 const { validationResult } = require('express-validator');
 
 
-exports.readController = (req, res) => {
+exports.readUserController = (req, res) => {
     const userId = req.params.id;
     User.findById(userId).exec((err, user) => {
         if (err || !user) {
@@ -16,7 +16,7 @@ exports.readController = (req, res) => {
     });
 };
 
-exports.updateController = (req, res) => {
+exports.updateUserController = (req, res) => {
     const { name, password } = req.body;
     const errors = validationResult(req);
 
@@ -70,9 +70,9 @@ exports.updateController = (req, res) => {
     }
 };
 
-exports.viewController = (req, res) => {
+exports.viewUsersController = (req, res) => {
     User.find().exec((err, user) => {
-        if (err || !user) {
+        if (err || !user || user == "") {
             return res.status(400).json({
                 error: 'Users not found'
             });
@@ -81,7 +81,7 @@ exports.viewController = (req, res) => {
     });
 };
 
-exports.deleteController = (req, res) => {
+exports.deleteUserController = (req, res) => {
     const userId = req.params.id;
     User.findByIdAndDelete(userId).exec((err, user) => {
         if (err || !user) {
