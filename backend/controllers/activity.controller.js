@@ -94,7 +94,7 @@ exports.editActivityController = (req, res) => {
             error: firstError
         });
     } else {
-        Activity.findOne(activityId).exec((err, activity) => {
+        Activity.findById(activityId).exec((err, activity) => {
             if (err || !activity) {
                 return res.status(400).json({
                     error: 'The activity not found'
