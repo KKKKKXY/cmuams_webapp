@@ -43,18 +43,11 @@ const AddActivity = ({ history }) => {
                     responsiblePerson,
                     phoneNo,
                     limitParticipant
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
                 }
             )
             .then(res => {
-                updateUser(res, () => {
                     toast.success(res.data.message);
-                    setFormData({ ...formData, textChange: 'Add' });
-                });
+                    setFormData({ ...formData, textChange: 'Add' });                
             })
             .catch(err => {
                 console.log(err.response);

@@ -57,7 +57,7 @@ const EditActivity = ({ history }) => {
     setFormData({ ...formData, textChange: 'Submitting' });
     axios
       .put(
-        `${process.env.REACT_APP_API_URL}/activity/update`,
+        `${process.env.REACT_APP_API_URL}/activity/update/${activityId()._id}`,
         {
           activityName,
           description,

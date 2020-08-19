@@ -14,6 +14,6 @@ router.get('/activities', listActivityController);
 router.get('/activity/:id', readActivityController);
 router.post('/activity/add', ActivityValidator, addActivityController);
 router.delete('/activity/:id', deleteActivityController);
-router.put('/activity/update', ActivityValidator, editActivityController);
+router.put('/activity/update/:id', ActivityValidator, editActivityController);
 
 module.exports = router;

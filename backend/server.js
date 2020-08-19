@@ -25,7 +25,6 @@ app.use(bodyParser.json())
 const authRouter = require('./routes/auth.route')
 const userRouter = require('./routes/users.route')
 const activityRouter = require('./routes/activities.route')
-const tRouter = require('./routes/test.route')
 
 // const studentRouter = require('./routes/student.route')
 
@@ -41,7 +40,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', authRouter)
 app.use('/api', userRouter)
 app.use('/api', activityRouter)
-app.use('/api', tRouter)
 app.use((req, res) => {
     res.status(404).json({
         success: false,

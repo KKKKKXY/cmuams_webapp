@@ -42,7 +42,7 @@ exports.registerController = (req, res) => {
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
       {
-        expiresIn: '15m'
+        expiresIn: '5m'
       }
     );
 
@@ -348,7 +348,7 @@ exports.signinController = (req, res) => {
         process.env.JWT_SECRET,
         {
           // Token valid in 7 days you can set remember me in front and set it for 30 daya
-          expiresIn: '7d'
+          expiresIn: '1d'
         }
       );
       const { _id, name, email, role,enrolled } = user;
@@ -424,7 +424,7 @@ exports.forgotPasswordController = (req, res) => {
           },
           process.env.JWT_RESET_PASSWORD,
           {
-            expiresIn: '10m'
+            expiresIn: '5m'
           }
         );
 

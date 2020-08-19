@@ -65,7 +65,9 @@ export const isAuth = () => {
 
 export const signout = next => {
     removeCookie('token');
+    removeCookie('activity');
     removeLocalStorage('user');
+    removeLocalStorage('activity');
     next();
 };
 
@@ -82,8 +84,10 @@ export const updateUser = (response, next) => {
 
 export const setActivityLocalStorage = (response, next) => {
     console.log('HELPER ON EDIT RESPONSE', response);
-    removeLocalStorage('activity');
-    removeCookie('activity');
+    if(getCookie('activity') || JSON.parse(localStorage.getItem('activity'))){
+        removeLocalStorage('activity');
+        removeCookie('activity');
+    }
     setCookie('activity', response.data.activity);
     setLocalStorage('activity', response.data.activity);
     next();
