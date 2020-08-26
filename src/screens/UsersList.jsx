@@ -28,6 +28,7 @@ export default class UsersList extends Component {
     axios.get(`${process.env.REACT_APP_API_URL}/users`)
       .then(response => {
         this.setState({ users: response.data })
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

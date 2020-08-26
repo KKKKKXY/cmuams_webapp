@@ -29,7 +29,7 @@ const userScheama = new mongoose.Schema(
       default: ''
     },
     enrolled: {
-      data: Array
+      type: Array
     }
   },
   {
