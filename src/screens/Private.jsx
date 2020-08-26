@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import authSvg from '../assets/update.svg';
+import walletSvg from '../assets/coin.svg';
+
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
@@ -84,6 +86,23 @@ const Private = ({ history }) => {
         <ToastContainer />
         <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
           <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
+          <div class="row">
+            <div class="col-sm-6">
+            <img src={walletSvg} alt="React Logo" />
+            </div>
+            <div class="col">
+            <p>Balance:</p>
+            <h3 className="text-1xl xl:text-1xl font-extrabold text-pink-800 text-opacity-85">100</h3>
+            <button
+                    className='mt-1 tracking-wide font-semibold bg-gray-600 text-gray-100 w-full py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
+                    onClick={() => window.location.href = '/'}
+                 >
+                    <span className='ml-1'>Transaction Record</span>
+                  </button>
+
+            </div>
+            </div>
+      
             <div className='mt-12 flex flex-col items-center'>
               <h1 className='text-2xl xl:text-3xl font-extrabold'>
                 Profile Update
