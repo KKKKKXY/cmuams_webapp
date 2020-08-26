@@ -1,65 +1,48 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
-import { isAuth, getCookie } from '../helpers/auth';
+import { isAuth } from '../helpers/auth';
 import { toast } from 'react-toastify';
 
 
-const UserAccounts = props => (
+const Enrolled = props => (
   <tr>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.activityName}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.description}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.startDate}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.bidEndDate}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.location}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.responsiblePerson}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.phoneNo}</span><span></span></>)}</td>
-    <td>{props.user.enrolled && props.user.enrolled.constructor === Array && props.user.enrolled.map(item => <><span>{item.limitParticipant}</span><span></span></>)}</td>
+    <td>{props.enrolledActivity.activityName}</td>
+    <td>{props.enrolledActivity.description}</td>
+    <td>{props.enrolledActivity.startDate}</td>
+    <td>{props.enrolledActivity.bidEndDate}</td>
+    <td>{props.enrolledActivity.location}</td>
+    <td>{props.enrolledActivity.responsiblePerson}</td>
+    <td>{props.enrolledActivity.phoneNo}</td>
+    <td>{props.enrolledActivity.limitParticipant}</td>
   </tr>
 )
 
-export default class UsersList extends Component {
+export default class ViewEnrolledList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { users: [] };
+    this.state = { userInfo: [] };
   }
 
   componentDidMount() {
-    const token = getCookie('token');
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users`)
+    .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
       .then(response => {
-        this.setState({ users: response.data })
+        if (isAuth().enrolled == "") {
+          toast.error("There are no enrolled activities");
+        }
+        this.setState({ userInfo: response.data.enrolled })
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
-  // componentDidMount() {
-  //   const token = getCookie('token');
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     })
-  //     .then(response => {
-  //       if (isAuth().enrolled == "") {
-  //         toast.error("There are no enrolled activities");
-  //         this.setState({ users: response.data })
-  //       }
-  //       this.setState({ users: response.data })
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  // }
-
-  userList() {
-    return this.state.users.map(currentuser => {
-      return <UserAccounts user={currentuser} key={currentuser._id}/>
+  enrolledActivityList() {
+    return this.state.userInfo.map(currentenrolledactivity => {
+      return <Enrolled enrolledActivity={currentenrolledactivity} key={currentenrolledactivity._id} />;
     })
   }
 
@@ -82,7 +65,7 @@ export default class UsersList extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.userList()}
+            {this.enrolledActivityList()}
           </tbody>
         </table>
       </div>
