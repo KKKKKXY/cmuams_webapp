@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import { isAuth } from '../helpers/auth';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 const Enrolled = props => (
@@ -29,7 +30,7 @@ export default class ViewEnrolledList extends Component {
     axios
     .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
       .then(response => {
-        if (isAuth().enrolled == "") {
+        if (response.data.enrolled == "") {
           toast.error("There are no enrolled activities");
         }
         this.setState({ userInfo: response.data.enrolled })
@@ -51,6 +52,7 @@ export default class ViewEnrolledList extends Component {
       <div className="container">
         <PrivateNavbar />
         <div></div>
+        <ToastContainer />
         <table className="table table-bordered">
           <thead className="thead-light">
             <tr>

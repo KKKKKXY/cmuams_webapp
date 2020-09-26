@@ -20,6 +20,7 @@ import EditActivity from './screens/EditActivity';
 import EnrollList from "./screens/EnrolledList";
 
 import StuViewActivity from './screens/StuViewActivity';
+import ViewTransacRecord from './screens/ViewTransacRecord';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -38,6 +39,7 @@ ReactDOM.render(
       <AdminRoute path="/addActivity" exact component={AddActivity} />
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
       <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
+      <Route path='/transacRecord' exact render={props => <ViewTransacRecord {...props} />} />
 
       <Redirect to='/' />
     </Switch>

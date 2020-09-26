@@ -30,6 +30,13 @@ const userScheama = new mongoose.Schema(
     },
     enrolled: {
       type: Array
+    },
+    coins: {
+      type: Number,
+      default: 100
+    },
+    transaction: {
+      type: Array
     }
   },
   {
