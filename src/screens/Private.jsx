@@ -13,7 +13,8 @@ const Private = ({ history }) => {
     email: '',
     password1: '',
     textChange: 'Update',
-    role: ''
+    role: '',
+    coins: ''
   });
 
   useEffect(() => {
@@ -29,8 +30,8 @@ const Private = ({ history }) => {
         }
       })
       .then(res => {
-        const { role, name, email } = res.data;
-        setFormData({ ...formData, role, name, email });
+        const { role, name, email, coins } = res.data;
+        setFormData({ ...formData, role, name, email, coins });
       })
       .catch(err => {
         toast.error(`Error To Your Information ${err.response.statusText}`);
@@ -42,7 +43,7 @@ const Private = ({ history }) => {
       });
   };
 
-  const { name, email, password1, textChange, role } = formData;
+  const { name, email, password1, textChange, role, coins } = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
@@ -92,10 +93,10 @@ const Private = ({ history }) => {
             </div>
             <div class="col">
             <p>Balance:</p>
-            <h3 className="text-1xl xl:text-1xl font-extrabold text-pink-800 text-opacity-85">100</h3>
+            <h3 className="text-1xl xl:text-1xl font-extrabold text-pink-800 text-opacity-85">{coins}</h3>
             <button
                     className='mt-1 tracking-wide font-semibold bg-gray-600 text-gray-100 w-full py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                    onClick={() => window.location.href = '/'}
+                    onClick={() => window.location.href = '/transacRecord'}
                  >
                     <span className='ml-1'>Transaction Record</span>
                   </button>

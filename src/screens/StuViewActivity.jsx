@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import { isAuth, setActivityLocalStorage } from '../helpers/auth';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Activities = props => (
     <tr>
@@ -16,7 +17,7 @@ const Activities = props => (
         <td>{props.activity.limitParticipant}</td>
         <td>
             <Tooltip title="Enroll" placement="top">
-            <a href="#" onClick={() => { props.deleteActivity(props.activity._id) }}><i class="fas fa-plus-square" aria-hidden="true"></i></a>
+                <a href="#" onClick={() => { props.enrollActivity(props.activity._id) }}><i className="fas fa-plus-square" aria-hidden="true"></i></a>
             </Tooltip>
         </td>
     </tr>
@@ -25,22 +26,39 @@ const Activities = props => (
 export default class StuViewActivity extends Component {
     constructor(props) {
         super(props);
-        this.state = { activities: [] };
+        this.editActivity = this.enrollActivity.bind(this);
+        this.state = {
+            activities: []
+        };
     }
 
     componentDidMount() {
         axios.get(`${process.env.REACT_APP_API_URL}/activities`)
             .then(response => {
                 this.setState({ activities: response.data })
+                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
+    enrollActivity(activityId) {
+        axios.post(`${process.env.REACT_APP_API_URL}/student/enrollActivity/${activityId}/${isAuth()._id}`)
+            .then(res => {
+                setActivityLocalStorage(res, () => { });
+                toast.success(res.data.message);
+            })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
+    }
+
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} key={currentactivity._id} />;
+            return <Activities activity={currentactivity} key={currentactivity._id} enrollActivity={this.enrollActivity} />;
         })
     }
 
@@ -49,6 +67,7 @@ export default class StuViewActivity extends Component {
             <div className="container">
                 <PrivateNavbar />
                 <div></div>
+                <ToastContainer />
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
