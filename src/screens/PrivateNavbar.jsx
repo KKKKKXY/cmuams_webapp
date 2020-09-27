@@ -15,6 +15,7 @@ const PrivateNavbar = ({ history }) => {
                     <Nav.Link href="/stuviewactivity">Activity</Nav.Link>
                     <Nav.Link href="/enrollList">Enrolled List</Nav.Link>
                     <Nav.Link href="/private">Account</Nav.Link>
+                    <Nav.Link href="/wallet">Wallet</Nav.Link>
                 </Nav>
                 <button onClick={() => { signout(() => { toast.error('Signout Successfully'); window.location.href = '/' }); }}>
                     <i className='fas fa-sign-out-alt  w-6  -ml-2' />
