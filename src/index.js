@@ -18,6 +18,7 @@ import AddActivity from './screens/AddActivity';
 import ViewActivity from './screens/ViewActivity';
 import EditActivity from './screens/EditActivity';
 import EnrollList from "./screens/EnrolledList";
+import Wallet from "./screens/Wallet"
 
 import StuViewActivity from './screens/StuViewActivity';
 import ViewTransacRecord from './screens/ViewTransacRecord';
@@ -34,6 +35,7 @@ ReactDOM.render(
       <PrivateRoute path="/private" exact component={Private} />
       <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
       <PrivateRoute path="/enrolllist" exact component={EnrollList}/>
+      <PrivateRoute path="/wallet" exact component = {Wallet}/>
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />

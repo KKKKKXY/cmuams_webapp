@@ -13,8 +13,7 @@ const Private = ({ history }) => {
     email: '',
     password1: '',
     textChange: 'Update',
-    role: '',
-    coins: ''
+    role: ''
   });
 
   useEffect(() => {
@@ -30,8 +29,8 @@ const Private = ({ history }) => {
         }
       })
       .then(res => {
-        const { role, name, email, coins } = res.data;
-        setFormData({ ...formData, role, name, email, coins });
+        const { role, name, email} = res.data;
+        setFormData({ ...formData, role, name, email});
       })
       .catch(err => {
         toast.error(`Error To Your Information ${err.response.statusText}`);
@@ -43,7 +42,7 @@ const Private = ({ history }) => {
       });
   };
 
-  const { name, email, password1, textChange, role, coins } = formData;
+  const { name, email, password1, textChange, role} = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
@@ -88,25 +87,11 @@ const Private = ({ history }) => {
         <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
           <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
           <div class="row">
-            <div class="col-sm-6">
-            <img src={walletSvg} alt="React Logo" />
-            </div>
-            <div class="col">
-            <p>Balance:</p>
-            <h3 className="text-1xl xl:text-1xl font-extrabold text-pink-800 text-opacity-85">{coins}</h3>
-            <button
-                    className='mt-1 tracking-wide font-semibold bg-gray-600 text-gray-100 w-full py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                    onClick={() => window.location.href = '/transacRecord'}
-                 >
-                    <span className='ml-1'>Transaction Record</span>
-                  </button>
-
-            </div>
             </div>
       
             <div className='mt-12 flex flex-col items-center'>
               <h1 className='text-2xl xl:text-3xl font-extrabold'>
-                Profile Update
+                Profile
             </h1>
 
               <form
