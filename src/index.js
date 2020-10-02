@@ -22,6 +22,8 @@ import Wallet from "./screens/Wallet"
 
 import StuViewActivity from './screens/StuViewActivity';
 import ViewTransacRecord from './screens/ViewTransacRecord';
+import Transfer from './screens/Transfer';
+
 
 ReactDOM.render(
   <BrowserRouter>
@@ -42,6 +44,7 @@ ReactDOM.render(
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
       <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
       <Route path='/transacRecord' exact render={props => <ViewTransacRecord {...props} />} />
+      <Route path='/transfer' exact render={props => <Transfer {...props} />} />
 
       <Redirect to='/' />
     </Switch>
