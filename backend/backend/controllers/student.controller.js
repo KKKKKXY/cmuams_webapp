@@ -2,6 +2,7 @@ const Activity = require('../models/activity.model');
 const User = require('../models/auth.model');
 const { validationResult } = require('express-validator');
 const Transfer = require('../models/transfer.model');
+const BlockChain = require('../controllers/blockchain.controller')
 
 exports.enrollActivityController = (req, res) => {
     const activityId = req.params.activityId;
@@ -45,6 +46,9 @@ exports.enrollActivityController = (req, res) => {
 
 exports.transferController = (req, res) => {
     const { senderEmail, recipientEmail, transferDate, amount } = req.body;
+    let blockChain = new BlockChain();
+    blockChain.addNewTransaction({senderEmail, recipientEmail, amount});
+    blockChain.addNewBlock(null);
     const errors = validationResult(req);
     const transfer = new Transfer({ senderEmail, recipientEmail, transferDate, amount });
     // transfer.save()
