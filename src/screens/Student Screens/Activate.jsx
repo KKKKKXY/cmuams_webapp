@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import authSvg from '../assets/welcome.svg';
+import authSvg from '../../assets/welcome.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { isAuth } from '../helpers/auth';
+import { isAuth } from '../../helpers/auth';
 import { Redirect } from 'react-router-dom';
 
 const Activate = ({ match }) => {

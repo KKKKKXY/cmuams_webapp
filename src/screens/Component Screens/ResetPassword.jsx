@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import authSvg from '../assets/reset.svg';
+import authSvg from '../../assets/reset.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 const ResetPassword = ({ match }) => {

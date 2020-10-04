@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import authSvg from '../assets/login.svg';
+import authSvg from '../../assets/login.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { authenticate, isAuth } from '../helpers/auth';
+import { authenticate, isAuth } from '../../helpers/auth';
 import { Link, Redirect } from 'react-router-dom';
 
 const Login = ({ history }) => {

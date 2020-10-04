@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { getCookie, signout, activityId, updateActivity } from '../helpers/auth';
+import { getCookie, signout, activityId, updateActivity } from '../../helpers/auth';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import AdminNavbar from './AdminNavbar';

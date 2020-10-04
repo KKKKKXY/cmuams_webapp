@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
-import Controls from '../helpers/Controls';
-import { useForm, Form } from '../helpers/useForm';
-import { isAuth } from '../helpers/auth';
+import Controls from '../../helpers/Controls';
+import { useForm, Form } from '../../helpers/useForm';
+import { isAuth } from '../../helpers/auth';
 import { toast } from 'react-toastify';
 
 const initialFValues = {
