@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import authSvg from '../assets/auth.svg';
+import authSvg from '../../assets/auth.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { isAuth } from '../helpers/auth';
+import { isAuth } from '../../helpers/auth';
 import { Redirect } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
-        surname: '', 
+        surname: '',
         email: '',
         password1: '',
         password2: '',
         textChange: 'Submit'
     });
 
-    const { name, email, password1, password2, textChange } = formData;
+    const { name, email, surname, password1, password2, textChange } = formData;
     // Handle change from inputs
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
@@ -29,7 +29,7 @@ const Register = () => {
                 setFormData({ ...formData, textChange: 'Submitting' });
                 axios
                     .post(`${process.env.REACT_APP_API_URL}/register`, {
-                        name,
+                        name: name + surname,
                         email,
                         password: password1
                     })
@@ -82,19 +82,19 @@ const Register = () => {
                             onSubmit={handleSubmit}
                         >
                             <div className='mx-auto max-w-xs relative '>
-                            <input
+                                <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
                                     type='text'
                                     placeholder='Name'
                                     onChange={handleChange('name')}
                                     value={name}
                                 />
-                               <input
-                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                                     type='text'
                                     placeholder='Surname'
                                     onChange={handleChange('surname')}
-                                    value={name}
+                                    value={surname}
                                 />
                                 <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'

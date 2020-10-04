@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
-import { isAuth } from '../helpers/auth';
+import { isAuth } from '../../helpers/auth';
 import { toast } from 'react-toastify';
 
 
 const Transaction = props => (
   <tr>
-    <td>{props.transaction.from}</td>
-    <td>{props.transaction.to}</td>
+    <td>{props.transaction.senderEmail}</td>
+    <td>{props.transaction.receiverEmail}</td>
     <td>{props.transaction.amount}</td>
-    <td>{props.transaction.timestamp}</td>
-    <td if>{props.transaction.valid.toString()}</td>
+    <td>{props.transaction.transferDate}</td>
   
     {/* <td>
       <if condition="$v[props.transaction.valid] eq 'true' ">1
@@ -63,7 +62,6 @@ export default class ViewTransacRecordList extends Component {
               <td>To</td>
               <td>Amount</td>
               <td>Timestamp</td>
-              <td>Valid</td>
             </tr>
           </thead>
           <tbody>

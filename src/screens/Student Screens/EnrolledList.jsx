@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
-import { isAuth } from '../helpers/auth';
+import { isAuth } from '../../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
 
 

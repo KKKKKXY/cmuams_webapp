@@ -1,29 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
-import App from './App';
-import Login from './screens/Login.jsx';
-import Register from './screens/Register';
-import Activate from './screens/Activate';
-import Private from './screens/Private.jsx';
-import Admin from './screens/Admin.jsx';
-import ForgetPassword from './screens/ForgetPassword.jsx';
-import ResetPassword from './screens/ResetPassword.jsx';
-import PrivateRoute from './Routes/PrivateRoute';
-import AdminRoute from './Routes/AdminRoute';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import UsersList from './screens/UsersList';
-import AddActivity from './screens/AddActivity';
-import ViewActivity from './screens/ViewActivity';
-import EditActivity from './screens/EditActivity';
-import EnrollList from "./screens/EnrolledList";
-import Wallet from "./screens/Wallet"
-
-import StuViewActivity from './screens/StuViewActivity';
-import ViewTransacRecord from './screens/ViewTransacRecord';
-import Transfer from './screens/Transfer';
-
+import App from './App';
+import PrivateRoute from './Routes/PrivateRoute';
+import AdminRoute from './Routes/AdminRoute';
+import Login from './screens/Component Screens/Login';
+import Register from './screens/Student Screens/Register';
+import ForgetPassword from './screens/Component Screens/ForgetPassword';
+import ResetPassword from './screens/Component Screens/ResetPassword';
+import Activate from './screens/Student Screens/Activate';
+import Private from './screens/Student Screens/Private';
+import StuViewActivity from './screens/Student Screens/StuViewActivity';
+import EnrollList from "./screens/Student Screens/EnrolledList";
+import Wallet from "./screens/Student Screens/Wallet"
+import Admin from './screens/Admin Screens/Admin';
+import UsersList from './screens/Admin Screens/UsersList';
+import AddActivity from './screens/Admin Screens/AddActivity';
+import ViewActivity from './screens/Admin Screens/ViewActivity';
+import EditActivity from './screens/Admin Screens/EditActivity';
+import ViewTransacRecord from './screens/Student Screens/ViewTransacRecord';
+import Transfer from './screens/Student Screens/Transfer';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -45,7 +43,6 @@ ReactDOM.render(
       <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
       <Route path='/transacRecord' exact render={props => <ViewTransacRecord {...props} />} />
       <Route path='/transfer' exact render={props => <Transfer {...props} />} />
-
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { signout } from '../helpers/auth';
+import { signout } from '../../helpers/auth';
 import { Nav, Navbar } from 'react-bootstrap';
 
 const AdminNavbar = ({ history }) => {

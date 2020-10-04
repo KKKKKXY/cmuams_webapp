@@ -2,11 +2,11 @@ import React, { Component, useState } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { isAuth, setActivityLocalStorage } from '../helpers/auth';
+import { isAuth, setActivityLocalStorage } from '../../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
-import Popup from "../helpers/Popup";
+import Popup from "../../helpers/Popup";
 import BidForm from "./BidForm"
-import * as bidActivityService from "../services/BidActivityService";
+import * as bidActivityService from "../../services/BidActivityService";
 
 const Activities = props => {
     const [openPopup, setOpenPopup] = useState(false)
@@ -32,7 +32,7 @@ const Activities = props => {
                 <td>{props.activity.limitParticipant}</td>
                 <td>
                     <Tooltip title="Enroll" placement="top">
-                        <a href="#" onClick={() => { setOpenPopup(true); }}><i className="fas fa-plus-square" aria-hidden="true"></i></a>
+                        <a href="#" onClick={() => { props.enrollActivity(props.activity._id) }}><i className="fas fa-plus-square" aria-hidden="true"></i></a>
                         {/* <a href="#" onClick={() => { props.enrollActivity(props.activity._id) }}><i className="fas fa-plus-square" aria-hidden="true"></i></a> */}
                     </Tooltip>
                 </td>
