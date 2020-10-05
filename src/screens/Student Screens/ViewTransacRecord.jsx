@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const Transaction = props => (
   <tr>
     <td>{props.transaction.senderEmail}</td>
-    <td>{props.transaction.receiverEmail}</td>
+    <td>{props.transaction.recipientEmail}</td>
     <td>{props.transaction.amount}</td>
     <td>{props.transaction.transferDate}</td>
   

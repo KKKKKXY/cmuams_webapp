@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseDateFormat = require('mongoose-date-format');
 
 // Exercise schema
 const transferSchema = new mongoose.Schema(
@@ -25,5 +26,6 @@ const transferSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+transferSchema.plugin(mongooseDateFormat); 
 
 module.exports = mongoose.model('Transfer', transferSchema);

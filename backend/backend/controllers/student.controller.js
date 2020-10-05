@@ -46,6 +46,7 @@ exports.enrollActivityController = (req, res) => {
 
 exports.transferController = (req, res) => {
     const { senderEmail, recipientEmail, transferDate, amount } = req.body;
+    console.log(senderEmail)
     let blockChain = new BlockChain();
     blockChain.addNewTransaction({senderEmail, recipientEmail, amount});
     blockChain.addNewBlock(null);
@@ -58,27 +59,41 @@ exports.transferController = (req, res) => {
             error: firstError
         });
     } else {
-        User.findOne({email: senderEmail}).exec((err, user) => {
-            if (err || !user) {
+        User.findOne({email: senderEmail}).exec((err, sender) => {
+            if (err || !sender) {
                 return res.status(400).json({
                     error: 'The sender Email can not found'
                 });
             } else {
-                User.findOne({email: recipientEmail}).exec((err, user) => {
-                    if (err || !user) {
+                User.findOne({email: recipientEmail}).exec((err, recipient) => {
+                    if (err || !recipient) {
                         return res.status(400).json({
                             error: 'The recipient Email can not found'
                         });
                     } else {
-                        console.log(transfer)
-                        user.transaction.push(transfer)
-                        user.save()
-                        return res.json({
-                            success: true,
-                            message: 'Transfer successfully',
-                            transfer
-                        });
+                        if(sender.coins < amount){
+                            return res.status(400).json({
+                                error: 'Coins is not enough!'
+                            }); 
+                        }else{
+                            // console.log(sender.transaction)
+
+                            sender.coins = parseInt(sender.coins) - parseInt(amount)
+                            recipient.coins = parseInt(recipient.coins) + parseInt(amount)
+
+                            sender.transaction.push(transfer)
+                            recipient.transaction.push(transfer)
+                            sender.save()
+                            recipient.save()
+                            return res.json({
+                                success: true,
+                                message: 'Transfer successfully',
+                                transfer
+                            });
+                        }
+
                     }
+
                 });
             }
         });
