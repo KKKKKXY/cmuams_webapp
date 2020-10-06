@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongooseDateFormat = require('mongoose-date-format');
+
 
 // Exercise schema
 const activitySchema = new mongoose.Schema(
@@ -40,5 +42,6 @@ const activitySchema = new mongoose.Schema(
         timestamps: true
     }
 );
+activitySchema.plugin(mongooseDateFormat); 
 
 module.exports = mongoose.model('Activity', activitySchema);
