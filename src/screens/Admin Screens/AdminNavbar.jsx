@@ -10,7 +10,6 @@ const AdminNavbar = ({ history }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/usersInfo">User Management</Nav.Link>
           <Nav.Link href="/activitylist">Activity</Nav.Link>
           <Nav.Link href="/admin">Account</Nav.Link>
