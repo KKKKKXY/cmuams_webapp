@@ -2,21 +2,21 @@ import React, { Component, useState } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { isAuth, setActivityLocalStorage } from '../../helpers/auth';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import Popup from "../../helpers/Popup";
 import BidForm from "./BidForm"
 import * as bidActivityService from "../../services/BidActivityService";
 
 const Activities = props => {
     const [openPopup, setOpenPopup] = useState(false)
-    const [records, setRecords] = useState(bidActivityService.getAllTransfers())
+
     const bid = (transter, resetForm) => {
+        console.log('Bid Round 1')
+        console.log(transter)
         if (transter.id == 0)
-            bidActivityService.insertTransfer(transter)
+            bidActivityService.insert1stTransfer(transter)
         resetForm()
         setOpenPopup(false)
-        setRecords(bidActivityService.getAllTransfers())
     }
 
     return (
@@ -31,34 +31,36 @@ const Activities = props => {
                 <td>{props.activity.phoneNo}</td>
                 <td>{props.activity.limitParticipant}</td>
                 <td>
-                    <Tooltip title="Enroll" placement="top">
-                        <a href="#" onClick={() => { props.enrollActivity(props.activity._id) }}><i className="fas fa-plus-square" aria-hidden="true"></i></a>
-                        {/* <a href="#" onClick={() => { props.enrollActivity(props.activity._id) }}><i className="fas fa-plus-square" aria-hidden="true"></i></a> */}
+                    <Tooltip title="Bid 1st Round" placement="right">
+                        <a href="#" onClick={() => { setOpenPopup(true) }}><i className='fas fa-coins fa-2x' style={{ color: '#E2C000' }}></i></a>
                     </Tooltip>
                 </td>
             </tr >
 
             <Popup
-                title="Bidding Activity Transfer"
+                title="Bidding Activity Transfer Round 1"
+                subtitle="The activities available for bidding will be displayed"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <BidForm bid={bid}  options={props.catchActivity()}/>
+                <BidForm bid={bid} options={props.catchActivity()} />
             </Popup>
         </>
     )
 }
 
-function Receiver(id, name) {
+function Receiver(_id, id, name, bidRound1Time, bidRound2Time) {
+    this._id = _id;
     this.id = id;
     this.name = name;
+    this.bidRound1Time = bidRound1Time;
+    this.bidRound2Time = bidRound2Time;
 }
 
 export default class StuViewActivity extends Component {
 
     constructor(props) {
         super(props);
-        this.enrollActivity = this.enrollActivity.bind(this);
         this.catchActivity = this.catchActivity.bind(this);
         this.state = {
             activities: [],
@@ -67,11 +69,12 @@ export default class StuViewActivity extends Component {
     }
 
     componentDidMount() {
+        //get all activities
         axios.get(`${process.env.REACT_APP_API_URL}/activities`)
             .then(response => {
                 let tmpArray = []
                 for (var i = 0; i < response.data.length; i++) {
-                    tmpArray.push(new Receiver((i + 1).toString(), response.data[i].activityName))
+                    tmpArray.push(new Receiver(response.data[i]._id, (i + 1).toString(), response.data[i].activityName, response.data[i].startDate, response.data[i].bidEndDate))
                 }
                 this.setState({
                     activities: response.data,
@@ -79,7 +82,6 @@ export default class StuViewActivity extends Component {
                 })
                 console.log('componentDidMount()');
                 console.log(this.state.options);
-
             })
             .catch((error) => {
                 console.log(error);
@@ -90,22 +92,9 @@ export default class StuViewActivity extends Component {
         return this.state.options;
     }
 
-    enrollActivity(activityId) {
-        axios.post(`${process.env.REACT_APP_API_URL}/student/enrollActivity/${activityId}/${isAuth()._id}`)
-            .then(res => {
-                setActivityLocalStorage(res, () => { });
-                toast.success(res.data.message);
-            })
-            .catch(err => {
-                console.log(err.response);
-                toast.error(err.response.data.error);
-                toast.error(err.response.data.errors);
-            });
-    }
-
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} key={currentactivity._id} catchActivity={this.catchActivity} enrollActivity={this.enrollActivity} />;
+            return <Activities activity={currentactivity} key={currentactivity._id} catchActivity={this.catchActivity} />;
         })
     }
 

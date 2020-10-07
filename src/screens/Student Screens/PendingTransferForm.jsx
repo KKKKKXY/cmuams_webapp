@@ -3,6 +3,8 @@ import { Grid, } from '@material-ui/core';
 import Controls from '../../helpers/Controls';
 import { useForm, Form } from '../../helpers/useForm';
 import { isAuth } from '../../helpers/auth';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const initialFValues = {
     id: 0,
@@ -12,31 +14,8 @@ const initialFValues = {
     date: Date()
 }
 
-export default function BidForm(props) {
-    const { bid, options } = props
-
-    const filterOption = (options) => {
-        let filterOptions = []
-
-        console.log(new Date().getHours())
-        // const myDate = new Date(options[3].bidRound1Time);
-        // const newDate = new Date(myDate);
-        // console.log(myDate<=new Date());
-        // console.log(new Date(newDate.setHours(newDate.getHours() + 1))>=new Date());
-        // console.log('--------------hahahahah------------')
-
-        // console.log(new Date())
-        // for(var i = 0; i < options.length; i++) {
-        //     console.log('Round 1 Activity ' + options[i].name + '' + new Date(options[i].bidRound1Time))
-        //     console.log('Round 2 Activity ' + options[i].name + '' + (new Date(new Date(new Date(options[i].bidRound1Time)).setHours(new Date(new Date(options[i].bidRound1Time)).getHours() + 1))))
-
-
-        // }console.log('--------------------------')
-
-        filterOptions = options.filter(option =>
-            (new Date(option.bidRound1Time) <= new Date()) && (new Date(new Date(new Date(option.bidRound1Time)).setHours(new Date(new Date(option.bidRound1Time)).getHours() + 1))) >= new Date())
-        return filterOptions;
-    }
+export default function PendingTransferForm(props) {
+    const { activityName, amount } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -57,7 +36,6 @@ export default function BidForm(props) {
         errors,
         setErrors,
         handleInputChange,
-        resetForm
     } = useForm(initialFValues, true, validate);
 
     useEffect(() => {
@@ -66,12 +44,26 @@ export default function BidForm(props) {
 
     const loadSender = () => {
         initialFValues.from = isAuth().name;
+        initialFValues.to = activityName
+        initialFValues.amount = amount
     };
 
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            bid(values, resetForm);
+            axios.post(
+                `${process.env.REACT_APP_API_URL}/student/enrollActivity/${isAuth()._id}`,
+                {
+                    activityName
+                })
+                .then(res => {
+                    toast.success(res.data.message);
+                })
+                .catch(err => {
+                    console.log(err.response);
+                    toast.error(err.response.data.error);
+                    toast.error(err.response.data.errors);
+                });
         }
     }
 
@@ -86,13 +78,13 @@ export default function BidForm(props) {
                     error={errors.from}
                     disabled={true}
                 />
-                <Controls.Select
+                <Controls.Input
                     name="to"
                     label="Receiver"
                     value={values.to}
                     onChange={handleInputChange}
-                    options={filterOption(options)}
                     error={errors.to}
+                    disabled={true}
                 />
                 <Controls.Input
                     name="amount"
@@ -100,16 +92,13 @@ export default function BidForm(props) {
                     value={values.amount}
                     onChange={handleInputChange}
                     error={errors.amount}
+                    disabled={true}
                 />
-                <div>
-                    <Controls.Button
-                        type="submit"
-                        text="Submit" />
-                    <Controls.Button
-                        text="Reset"
-                        color="default"
-                        onClick={resetForm} />
-                </div>
+                <Controls.Button
+                    type="submit"
+                    text="Confirm"
+                />
+
             </Grid>
         </Form>
     )

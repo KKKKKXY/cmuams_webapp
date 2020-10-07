@@ -1,26 +1,108 @@
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 const KEYS = {
     transfers: 'transfers',
     transferId: 'transferId'
 }
 
-export function insertTransfer(data) {
-    let transfers = getAllTransfers();
-    data['id'] = generateTransferId()
-    transfers.push(data)
-    localStorage.setItem(KEYS.transfers, JSON.stringify(transfers))
+//Round 1
+export function insert1stTransfer(data) {
+    data['id'] = generate1stTransferId()
+    let transfers = get1stAllTransfers()
+    console.log(transfers)
+
+    axios.post(`${process.env.REACT_APP_API_URL}/student/firstBidRound`,
+        {
+            id: data.id,
+            from: data.from,
+            to: data.to,
+            amount: data.amount,
+            date: data.date
+        })
+        .then(res => {
+            toast.success(res.data.message);
+        })
+        .catch(err => {
+            console.log(err.response);
+            toast.error(err.response.data.error);
+            toast.error(err.response.data.errors);
+        });
 }
 
-export function generateTransferId() {
-    if (localStorage.getItem(KEYS.transferId) == null)
-        localStorage.setItem(KEYS.transferId, '0')
-    var id = parseInt(localStorage.getItem(KEYS.transferId))
-    localStorage.setItem(KEYS.transferId, (++id).toString())
-    return id;
+export function generate1stTransferId() {
+    let alltransfer = get1stAllTransfers()
+    let lastTransfer = alltransfer[alltransfer.length - 1]
+    let id = lastTransfer.id
+
+    if (id == null || -1) {
+        id = 0
+    }
+
+    return id + 1;
 }
 
-export function getAllTransfers() {
-    if (localStorage.getItem(KEYS.transfers) == null)
-        localStorage.setItem(KEYS.transfers, JSON.stringify([]))
-    let transfers = JSON.parse(localStorage.getItem(KEYS.transfers));
-    return transfers;
+export function get1stAllTransfers() {
+
+    axios.get(`${process.env.REACT_APP_API_URL}/firstBidRoundTransfer`)
+        .then(response => {
+            console.log(response.data)
+            KEYS.transfers = response.data
+
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    return KEYS.transfers;
+}
+
+//Round 2
+export function insert2ndTransfer(data) {
+    data['id'] = generate2ndTransferId()
+    let transfers = get2ndAllTransfers()
+    console.log(transfers)
+
+    axios.post(`${process.env.REACT_APP_API_URL}/student/secondBidRound`,
+        {
+            id: data.id,
+            from: data.from,
+            to: data.to,
+            amount: data.amount,
+            date: data.date
+        })
+        .then(res => {
+            toast.success(res.data.message);
+        })
+        .catch(err => {
+            console.log(err.response);
+            toast.error(err.response.data.error);
+            toast.error(err.response.data.errors);
+        });
+}
+
+export function generate2ndTransferId() {
+    let alltransfer = get2ndAllTransfers()
+    let lastTransfer = alltransfer[alltransfer.length - 1]
+    let id = lastTransfer.id
+
+    if (id == null || -1) {
+        id = 0
+    }
+
+    return id + 1;
+}
+
+export function get2ndAllTransfers() {
+
+    axios.get(`${process.env.REACT_APP_API_URL}/secondBidRoundTransfer`)
+        .then(response => {
+            console.log(response.data)
+            KEYS.transfers = response.data
+
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    return KEYS.transfers;
+
 }
