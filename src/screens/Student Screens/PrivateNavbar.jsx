@@ -11,7 +11,7 @@ const PrivateNavbar = ({ history }) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/rules">Bidding Rules</Nav.Link>
                     <Nav.Link href="/stuviewactivity">Activity</Nav.Link>
                     <Nav.Link href="/enrollList">Enrolled List</Nav.Link>
                     <Nav.Link href="/private">Account</Nav.Link>

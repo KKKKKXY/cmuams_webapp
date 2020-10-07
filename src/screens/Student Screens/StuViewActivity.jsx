@@ -102,7 +102,6 @@ export default class StuViewActivity extends Component {
         return (
             <div className="container">
                 <PrivateNavbar />
-                <div></div>
                 <ToastContainer />
                 <table className="table">
                     <thead className="thead-light">

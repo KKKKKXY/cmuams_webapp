@@ -22,6 +22,7 @@ import ViewActivity from './screens/Admin Screens/ViewActivity';
 import EditActivity from './screens/Admin Screens/EditActivity';
 import ViewTransacRecord from './screens/Student Screens/ViewTransacRecord';
 import Transfer from './screens/Student Screens/Transfer';
+import Rules from './screens/Student Screens/Rules'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -43,6 +44,8 @@ ReactDOM.render(
       <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
       <Route path='/transacRecord' exact render={props => <ViewTransacRecord {...props} />} />
       <Route path='/transfer' exact render={props => <Transfer {...props} />} />
+      <Route path='/rules' exact render={props => <Rules {...props} />} />
+
       <Redirect to='/' />
     </Switch>
   </BrowserRouter>,
