@@ -3,6 +3,9 @@ import { Grid, } from '@material-ui/core';
 import Controls from '../../helpers/Controls';
 import { useForm, Form } from '../../helpers/useForm';
 import { isAuth } from '../../helpers/auth';
+import { toast } from 'react-toastify';
+import * as bidActivityService from "../../services/BidActivityService";
+
 
 const initialFValues = {
     id: 0,
@@ -12,31 +15,8 @@ const initialFValues = {
     date: Date()
 }
 
-export default function BidForm(props) {
-    const { bid, options } = props
-
-    const filterOption = (options) => {
-        let filterOptions = []
-
-        console.log(new Date().getHours())
-        // const myDate = new Date(options[3].bidRound1Time);
-        // const newDate = new Date(myDate);
-        // console.log(myDate<=new Date());
-        // console.log(new Date(newDate.setHours(newDate.getHours() + 1))>=new Date());
-        // console.log('--------------hahahahah------------')
-
-        // console.log(new Date())
-        // for(var i = 0; i < options.length; i++) {
-        //     console.log('Round 1 Activity ' + options[i].name + '' + new Date(options[i].bidRound1Time))
-        //     console.log('Round 2 Activity ' + options[i].name + '' + (new Date(new Date(new Date(options[i].bidRound1Time)).setHours(new Date(new Date(options[i].bidRound1Time)).getHours() + 1))))
-
-
-        // }console.log('--------------------------')
-
-        filterOptions = options.filter(option =>
-            (new Date(option.bidRound1Time) <= new Date()) && (new Date(new Date(new Date(option.bidRound1Time)).setHours(new Date(new Date(option.bidRound1Time)).getHours() + 1))) >= new Date())
-        return filterOptions;
-    }
+export default function Bid2Form(props) {
+    const { bid,activityName } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -66,6 +46,10 @@ export default function BidForm(props) {
 
     const loadSender = () => {
         initialFValues.from = isAuth().name;
+        console.log(bidActivityService.get1stAllTransfers())
+        // let transfer = bidActivityService.get1stAllTransfers().filter(transfers => transfers.from == isAuth().name)
+        console.log(activityName)
+        initialFValues.to = activityName
     };
 
     const handleSubmit = e => {
@@ -86,13 +70,13 @@ export default function BidForm(props) {
                     error={errors.from}
                     disabled={true}
                 />
-                <Controls.Select
+                <Controls.Input
                     name="to"
                     label="Receiver"
                     value={values.to}
                     onChange={handleInputChange}
-                    options={filterOption(options)}
                     error={errors.to}
+                    disabled={true}
                 />
                 <Controls.Input
                     name="amount"

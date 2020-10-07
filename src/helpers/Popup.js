@@ -11,11 +11,15 @@ const useStyles = makeStyles(theme => ({
     },
     dialogTitle: {
         paddingRight: '0px'
+    },
+    subtitle: {
+            color: 'red',
+
     }
 }))
 
 export default function Popup(props) {
-    const { title, children, openPopup, setOpenPopup } = props;
+    const { title, subtitle, children, openPopup, setOpenPopup } = props;
     const classes = useStyles();
 
     return (
@@ -31,6 +35,7 @@ export default function Popup(props) {
                         <CloseIcon />
                     </Controls.ActionButton>
                 </div>
+<p className={classes.subtitle}>{subtitle}</p>
             </DialogTitle>
             <DialogContent dividers>
                 {children}
