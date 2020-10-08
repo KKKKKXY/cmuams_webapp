@@ -29,7 +29,6 @@ const Admin = ({ history }) => {
       })
       .then(res => {
         const { role, name, email } = res.data;
-        console.log(res.data);
         setFormData({ ...formData, role, name, email });
       })
       .catch(err => {
@@ -49,7 +48,6 @@ const Admin = ({ history }) => {
 
   const handleSubmit = e => {
     const token = getCookie('token');
-    console.log(token);
     e.preventDefault();
     setFormData({ ...formData, textChange: 'Submitting' });
     axios

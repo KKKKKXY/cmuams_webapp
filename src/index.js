@@ -12,8 +12,8 @@ import ForgetPassword from './screens/Component Screens/ForgetPassword';
 import ResetPassword from './screens/Component Screens/ResetPassword';
 import Activate from './screens/Student Screens/Activate';
 import Private from './screens/Student Screens/Private';
-import StuViewActivity from './screens/Student Screens/StuViewActivity';
-import EnrollList from "./screens/Student Screens/EnrolledList";
+import StuViewActivity from './screens/Student Screens/Bidding/StuViewActivity'
+import BiddingSummary from './screens/Student Screens/Bidding/BiddingSummary'
 import Wallet from "./screens/Student Screens/Wallet"
 import Admin from './screens/Admin Screens/Admin';
 import UsersList from './screens/Admin Screens/UsersList';
@@ -29,22 +29,24 @@ ReactDOM.render(
     <Switch>
       <Route path='/' exact render={props => <App {...props} />} />
       <Route path='/login' exact render={props => <Login {...props} />} />
-      <Route path='/register' exact render={props => <Register {...props} />} />
       <Route path='/users/password/forget' exact render={props => <ForgetPassword {...props} />} />
       <Route path='/users/password/reset/:token' exact render={props => <ResetPassword {...props} />} />
+      <Route path='/register' exact render={props => <Register {...props} />} />
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
-      <PrivateRoute path="/private" exact component={Private} />
-      <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
-      <PrivateRoute path="/enrolllist" exact component={EnrollList}/>
-      <PrivateRoute path="/wallet" exact component = {Wallet}/>
+
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
       <AdminRoute path="/addActivity" exact component={AddActivity} />
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
-      <Route path='/editActivity' exact render={props => <EditActivity {...props} />} />
-      <Route path='/transacRecord' exact render={props => <ViewTransacRecord {...props} />} />
-      <Route path='/transfer' exact render={props => <Transfer {...props} />} />
-      <Route path='/rules' exact render={props => <Rules {...props} />} />
+      <AdminRoute path='/editActivity' exact component={EditActivity} />
+
+      <PrivateRoute path="/private" exact component={Private} />
+      <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
+      <PrivateRoute path="/biddingSummary" exact component={BiddingSummary} />
+      <PrivateRoute path="/wallet" exact component={Wallet} />
+      <PrivateRoute path='/transacRecord' exact component={ViewTransacRecord} />
+      <PrivateRoute path='/transfer' exact component={Transfer} />
+      <PrivateRoute path='/rules' exact component={Rules} />
 
       <Redirect to='/' />
     </Switch>

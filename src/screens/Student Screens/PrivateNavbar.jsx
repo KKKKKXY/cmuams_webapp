@@ -13,7 +13,7 @@ const PrivateNavbar = ({ history }) => {
                 <Nav className="mr-auto">
                     <Nav.Link href="/rules">Bidding Rules</Nav.Link>
                     <Nav.Link href="/stuviewactivity">Activity</Nav.Link>
-                    <Nav.Link href="/enrollList">Enrolled List</Nav.Link>
+                    <Nav.Link href="/biddingSummary">Enrolled List</Nav.Link>
                     <Nav.Link href="/private">Account</Nav.Link>
                     <Nav.Link href="/wallet">Wallet</Nav.Link>
                 </Nav>

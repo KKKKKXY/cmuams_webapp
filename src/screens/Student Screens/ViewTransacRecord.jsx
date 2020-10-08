@@ -4,20 +4,12 @@ import PrivateNavbar from './PrivateNavbar';
 import { isAuth } from '../../helpers/auth';
 import { toast } from 'react-toastify';
 
-
 const Transaction = props => (
   <tr>
     <td>{props.transaction.senderEmail}</td>
     <td>{props.transaction.recipientEmail}</td>
     <td>{props.transaction.amount}</td>
     <td>{props.transaction.transferDate}</td>
-  
-    {/* <td>
-      <if condition="$v[props.transaction.valid] eq 'true' ">1
-      </if>
-      <else>2</else>
-    </td> */}
-
   </tr>
 
 )
@@ -25,19 +17,17 @@ const Transaction = props => (
 export default class ViewTransacRecordList extends Component {
   constructor(props) {
     super(props);
-
     this.state = { userTransac: [] };
   }
 
   componentDidMount() {
     axios
-    .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
+      .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
       .then(response => {
         if (isAuth().enrolled == "") {
           toast.error("There are no transactions");
         }
         this.setState({ userTransac: response.data.transaction })
-        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);

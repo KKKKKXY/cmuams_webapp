@@ -27,9 +27,6 @@ const userRouter = require('./routes/users.route')
 const activityRouter = require('./routes/activities.route')
 const studnetRouter = require('./routes/student.route')
 
-
-// const studentRouter = require('./routes/student.route')
-
 // Dev Logginf Middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({

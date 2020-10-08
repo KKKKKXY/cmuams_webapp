@@ -84,7 +84,7 @@ export const updateUser = (response, next) => {
 
 export const setActivityLocalStorage = (response, next) => {
     console.log('HELPER ON EDIT RESPONSE', response);
-    if(getCookie('activity') || JSON.parse(localStorage.getItem('activity'))){
+    if (getCookie('activity') || JSON.parse(localStorage.getItem('activity'))) {
         removeLocalStorage('activity');
         removeCookie('activity');
     }

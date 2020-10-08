@@ -9,8 +9,6 @@ const KEYS = {
 //Round 1
 export function insert1stTransfer(data) {
     data['id'] = generate1stTransferId()
-    let transfers = get1stAllTransfers()
-    console.log(transfers)
 
     axios.post(`${process.env.REACT_APP_API_URL}/student/firstBidRound`,
         {
@@ -21,6 +19,7 @@ export function insert1stTransfer(data) {
             date: data.date
         })
         .then(res => {
+            console.log(res)
             toast.success(res.data.message);
         })
         .catch(err => {
@@ -46,9 +45,7 @@ export function get1stAllTransfers() {
 
     axios.get(`${process.env.REACT_APP_API_URL}/firstBidRoundTransfer`)
         .then(response => {
-            console.log(response.data)
             KEYS.transfers = response.data
-
         })
         .catch((error) => {
             console.log(error);
@@ -59,9 +56,6 @@ export function get1stAllTransfers() {
 //Round 2
 export function insert2ndTransfer(data) {
     data['id'] = generate2ndTransferId()
-    let transfers = get2ndAllTransfers()
-    console.log(transfers)
-
     axios.post(`${process.env.REACT_APP_API_URL}/student/secondBidRound`,
         {
             id: data.id,
@@ -96,9 +90,7 @@ export function get2ndAllTransfers() {
 
     axios.get(`${process.env.REACT_APP_API_URL}/secondBidRoundTransfer`)
         .then(response => {
-            console.log(response.data)
             KEYS.transfers = response.data
-
         })
         .catch((error) => {
             console.log(error);

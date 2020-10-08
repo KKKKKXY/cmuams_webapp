@@ -48,7 +48,6 @@ const Private = ({ history }) => {
 
   const handleSubmit = e => {
     const token = getCookie('token');
-    console.log(token);
     e.preventDefault();
     setFormData({ ...formData, textChange: 'Submitting' });
     axios
@@ -85,7 +84,7 @@ const Private = ({ history }) => {
         <ToastContainer />
         <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
           <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
-          <div class="row">
+          <div className="row">
             </div>
       
             <div className='mt-12 flex flex-col items-center'>
