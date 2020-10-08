@@ -30,9 +30,7 @@ exports.enrollActivityController = (req, res) => {
                             error: 'User not found'
                         });
                     } else {
-                        console.log((user.enrolled).some(enrolled => enrolled.activityName == activityName));
-                        console.log(user.enrolled)
-                        if ((user.enrolled).some(enrolled => enrolled.activityName == activityName)){
+                        if ((user.enrolled).some(enrolled => enrolled.activityName == activityName)) {
                             return res.status(400).json({
                                 error: 'You already transfered!'
                             });
@@ -55,7 +53,6 @@ exports.enrollActivityController = (req, res) => {
 
 exports.transferController = (req, res) => {
     const { senderEmail, recipientEmail, transferDate, amount } = req.body;
-    console.log(senderEmail)
     let blockChain = new BlockChain();
     blockChain.addNewTransaction({ senderEmail, recipientEmail, amount });
     blockChain.addNewBlock(null);
@@ -85,11 +82,8 @@ exports.transferController = (req, res) => {
                                 error: 'Coins is not enough!'
                             });
                         } else {
-                            // console.log(sender.transaction)
-
                             sender.coins = parseInt(sender.coins) - parseInt(amount)
                             recipient.coins = parseInt(recipient.coins) + parseInt(amount)
-
                             sender.transaction.push(transfer)
                             recipient.transaction.push(transfer)
                             sender.save()
@@ -159,6 +153,32 @@ exports.listRound1TransferController = (req, res) => {
     });
 };
 
+exports.deleteAllRound1TransferController = (req, res) => {
+    const {to} = req.body;
+    FirstRound.findOne({to : to}).exec((err, transfer) => {
+        if (err) {
+            return res.json({
+                error: 'There are something wrong!'
+            });
+        }
+
+        FirstRound.deleteMany({to : to}).exec((err, deleteInfo) => {
+            console.log(transfer)
+            if (err || !deleteInfo) {
+                return res.json({
+                    error: 'Unable to complete cleanup'
+                });
+            }
+            return res.json({
+                success: true,
+                message: 'You already miss the chance to bid activity \'' + to + '\' ',
+                transfer
+            });
+        });
+
+    })
+};
+
 exports.round2BidController = (req, res) => {
     const { id, from, to, amount, date } = req.body;
     const errors = validationResult(req);
@@ -207,4 +227,30 @@ exports.listRound2TransferController = (req, res) => {
         }
         res.json(transfer);
     });
+};
+
+exports.deleteAllRound2TransferController = (req, res) => {
+    const {to} = req.body;
+    SecondRound.findOne({to : to}).exec((err, transfer) => {
+        if (err) {
+            return res.json({
+                error: 'There are something wrong!'
+            });
+        }
+
+        SecondRound.deleteMany({to : to}).exec((err, deleteInfo) => {
+            console.log(transfer)
+            if (err || !deleteInfo) {
+                return res.json({
+                    error: 'Unable to complete cleanup'
+                });
+            }
+            return res.json({
+                success: true,
+                message: 'You already miss the chance to enroll activity \'' + to + '\' ',
+                transfer
+            });
+        });
+
+    })
 };

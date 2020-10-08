@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import AdminNavbar from './AdminNavbar';
 import { ToastContainer, toast } from 'react-toastify';
+import Table from 'react-bootstrap/Table'
+
 
 const UserAccounts = props => (
 
@@ -12,7 +14,7 @@ const UserAccounts = props => (
     <td>{props.user.updatedAt}</td>
     <td>{props.user.role}</td>
     <td>
-      <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.user.name + ') ?')) props.deleteUser(props.user._id) }}><i class="fa fa-trash" aria-hidden="true"></i></a>
+      <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.user.name + ') ?')) props.deleteUser(props.user._id) }}><i className="fa fa-trash" aria-hidden="true"></i></a>
     </td>
   </tr>
 )
@@ -28,7 +30,6 @@ export default class UsersList extends Component {
     axios.get(`${process.env.REACT_APP_API_URL}/users`)
       .then(response => {
         this.setState({ users: response.data })
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -63,12 +64,16 @@ export default class UsersList extends Component {
         <AdminNavbar />
         <div></div>
         <ToastContainer />
-        <table className="table" class="table table-bordered">
+        <Table responsive="xl"
+          striped bordered hover
+          className="table table-bordered"
+          size="sm"
+        >
+
           <thead className="thead-light">
             <tr>
               <th>Name</th>
               <th>E-mail address</th>
-              {/* <th>Password</th> */}
               <th>Created time</th>
               <th>Updated time</th>
               <th>Role</th>
@@ -78,7 +83,7 @@ export default class UsersList extends Component {
           <tbody>
             {this.userList()}
           </tbody>
-        </table>
+        </Table>
       </div>
     )
   }

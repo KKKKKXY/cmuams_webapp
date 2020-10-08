@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { getCookie } from '../../helpers/auth';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import AdminNavbar from './AdminNavbar';
@@ -30,8 +29,6 @@ const AddActivity = ({ history }) => {
     };
 
     const handleSubmit = e => {
-        const token = getCookie('token');
-        console.log(token);
         e.preventDefault();
         setFormData({ ...formData, textChange: 'Adding' });
         axios
@@ -74,126 +71,126 @@ const AddActivity = ({ history }) => {
                                 onSubmit={handleSubmit}
                             >
                                 {/* <div className='mx-auto max-w-xs relative'> */}
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
-                                        type='text'
-                                        placeholder='Activity Name'
-                                        onChange={handleChange('activityName')}
-                                        value={activityName}
-                                    />
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        type='text'
-                                        placeholder='Description'
-                                        onChange={handleChange('description')}
-                                        value={description}
-                                    />
-                                            <DatePicker
-                                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                                placeholderText="Start Date"
-                                                selected={startDate}
-                                                onChange={date => setStartDate(date)}
-                                                showTimeSelect
-                                                includeTimes={[
-                                                    setHours(setMinutes(new Date(), 0), 1),
-                                                    setHours(setMinutes(new Date(), 0), 2),
-                                                    setHours(setMinutes(new Date(), 0), 3),
-                                                    setHours(setMinutes(new Date(), 0), 4),
-                                                    setHours(setMinutes(new Date(), 0), 5),
-                                                    setHours(setMinutes(new Date(), 0), 6),
-                                                    setHours(setMinutes(new Date(), 0), 7),
-                                                    setHours(setMinutes(new Date(), 0), 8),
-                                                    setHours(setMinutes(new Date(), 0), 9),
-                                                    setHours(setMinutes(new Date(), 0), 10),
-                                                    setHours(setMinutes(new Date(), 0), 11),
-                                                    setHours(setMinutes(new Date(), 0), 12),
-                                                    setHours(setMinutes(new Date(), 0), 13),
-                                                    setHours(setMinutes(new Date(), 0), 14),
-                                                    setHours(setMinutes(new Date(), 0), 15),
-                                                    setHours(setMinutes(new Date(), 0), 16),
-                                                    setHours(setMinutes(new Date(), 0), 17),
-                                                    setHours(setMinutes(new Date(), 0), 18),
-                                                    setHours(setMinutes(new Date(), 0), 19),
-                                                    setHours(setMinutes(new Date(), 0), 20),
-                                                    setHours(setMinutes(new Date(), 0), 21),
-                                                    setHours(setMinutes(new Date(), 0), 22),
-                                                    setHours(setMinutes(new Date(), 0), 23),
-                                                    setHours(setMinutes(new Date(), 0), 24),
-                                                  ]}
-                                                  dateFormat="MMMM d, yyyy HH:mm"
-                                            />
-                                            <DatePicker
-                                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                                placeholderText="Bidding End Date"
-                                                selected={bidEndDate}
-                                                onChange={date => setBidEndDate(date)}
-                                                showTimeSelect
-                                                includeTimes={[
-                                                    setHours(setMinutes(new Date(), 0), 1),
-                                                    setHours(setMinutes(new Date(), 0), 2),
-                                                    setHours(setMinutes(new Date(), 0), 3),
-                                                    setHours(setMinutes(new Date(), 0), 4),
-                                                    setHours(setMinutes(new Date(), 0), 5),
-                                                    setHours(setMinutes(new Date(), 0), 6),
-                                                    setHours(setMinutes(new Date(), 0), 7),
-                                                    setHours(setMinutes(new Date(), 0), 8),
-                                                    setHours(setMinutes(new Date(), 0), 9),
-                                                    setHours(setMinutes(new Date(), 0), 10),
-                                                    setHours(setMinutes(new Date(), 0), 11),
-                                                    setHours(setMinutes(new Date(), 0), 12),
-                                                    setHours(setMinutes(new Date(), 0), 13),
-                                                    setHours(setMinutes(new Date(), 0), 14),
-                                                    setHours(setMinutes(new Date(), 0), 15),
-                                                    setHours(setMinutes(new Date(), 0), 16),
-                                                    setHours(setMinutes(new Date(), 0), 17),
-                                                    setHours(setMinutes(new Date(), 0), 18),
-                                                    setHours(setMinutes(new Date(), 0), 19),
-                                                    setHours(setMinutes(new Date(), 0), 20),
-                                                    setHours(setMinutes(new Date(), 0), 21),
-                                                    setHours(setMinutes(new Date(), 0), 22),
-                                                    setHours(setMinutes(new Date(), 0), 23),
-                                                    setHours(setMinutes(new Date(), 0), 24),
-                                                  ]}
-                                                  dateFormat="MMMM d, yyyy HH:mm"
-                                            />
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        type='text'
-                                        placeholder='Location'
-                                        onChange={handleChange('location')}
-                                        value={location}
-                                    />
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
+                                    type='text'
+                                    placeholder='Activity Name'
+                                    onChange={handleChange('activityName')}
+                                    value={activityName}
+                                />
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    type='text'
+                                    placeholder='Description'
+                                    onChange={handleChange('description')}
+                                    value={description}
+                                />
+                                <DatePicker
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    placeholderText="Start Date"
+                                    selected={startDate}
+                                    onChange={date => setStartDate(date)}
+                                    showTimeSelect
+                                    includeTimes={[
+                                        setHours(setMinutes(new Date(), 0), 1),
+                                        setHours(setMinutes(new Date(), 0), 2),
+                                        setHours(setMinutes(new Date(), 0), 3),
+                                        setHours(setMinutes(new Date(), 0), 4),
+                                        setHours(setMinutes(new Date(), 0), 5),
+                                        setHours(setMinutes(new Date(), 0), 6),
+                                        setHours(setMinutes(new Date(), 0), 7),
+                                        setHours(setMinutes(new Date(), 0), 8),
+                                        setHours(setMinutes(new Date(), 0), 9),
+                                        setHours(setMinutes(new Date(), 0), 10),
+                                        setHours(setMinutes(new Date(), 0), 11),
+                                        setHours(setMinutes(new Date(), 0), 12),
+                                        setHours(setMinutes(new Date(), 0), 13),
+                                        setHours(setMinutes(new Date(), 0), 14),
+                                        setHours(setMinutes(new Date(), 0), 15),
+                                        setHours(setMinutes(new Date(), 0), 16),
+                                        setHours(setMinutes(new Date(), 0), 17),
+                                        setHours(setMinutes(new Date(), 0), 18),
+                                        setHours(setMinutes(new Date(), 0), 19),
+                                        setHours(setMinutes(new Date(), 0), 20),
+                                        setHours(setMinutes(new Date(), 0), 21),
+                                        setHours(setMinutes(new Date(), 0), 22),
+                                        setHours(setMinutes(new Date(), 0), 23),
+                                        setHours(setMinutes(new Date(), 0), 24),
+                                    ]}
+                                    dateFormat="MMMM d, yyyy HH:mm"
+                                />
+                                <DatePicker
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    placeholderText="Bidding End Date"
+                                    selected={bidEndDate}
+                                    onChange={date => setBidEndDate(date)}
+                                    showTimeSelect
+                                    includeTimes={[
+                                        setHours(setMinutes(new Date(), 0), 1),
+                                        setHours(setMinutes(new Date(), 0), 2),
+                                        setHours(setMinutes(new Date(), 0), 3),
+                                        setHours(setMinutes(new Date(), 0), 4),
+                                        setHours(setMinutes(new Date(), 0), 5),
+                                        setHours(setMinutes(new Date(), 0), 6),
+                                        setHours(setMinutes(new Date(), 0), 7),
+                                        setHours(setMinutes(new Date(), 0), 8),
+                                        setHours(setMinutes(new Date(), 0), 9),
+                                        setHours(setMinutes(new Date(), 0), 10),
+                                        setHours(setMinutes(new Date(), 0), 11),
+                                        setHours(setMinutes(new Date(), 0), 12),
+                                        setHours(setMinutes(new Date(), 0), 13),
+                                        setHours(setMinutes(new Date(), 0), 14),
+                                        setHours(setMinutes(new Date(), 0), 15),
+                                        setHours(setMinutes(new Date(), 0), 16),
+                                        setHours(setMinutes(new Date(), 0), 17),
+                                        setHours(setMinutes(new Date(), 0), 18),
+                                        setHours(setMinutes(new Date(), 0), 19),
+                                        setHours(setMinutes(new Date(), 0), 20),
+                                        setHours(setMinutes(new Date(), 0), 21),
+                                        setHours(setMinutes(new Date(), 0), 22),
+                                        setHours(setMinutes(new Date(), 0), 23),
+                                        setHours(setMinutes(new Date(), 0), 24),
+                                    ]}
+                                    dateFormat="MMMM d, yyyy HH:mm"
+                                />
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    type='text'
+                                    placeholder='Location'
+                                    onChange={handleChange('location')}
+                                    value={location}
+                                />
 
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        type='text'
-                                        placeholder='Responsible Person'
-                                        onChange={handleChange('responsiblePerson')}
-                                        value={responsiblePerson}
-                                    />
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    type='text'
+                                    placeholder='Responsible Person'
+                                    onChange={handleChange('responsiblePerson')}
+                                    value={responsiblePerson}
+                                />
 
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        type='text'
-                                        placeholder='Phone No.'
-                                        onChange={handleChange('phoneNo')}
-                                        value={phoneNo}
-                                    />
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    type='text'
+                                    placeholder='Phone No.'
+                                    onChange={handleChange('phoneNo')}
+                                    value={phoneNo}
+                                />
 
-                                    <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        type='text'
-                                        placeholder='Limit Participant'
-                                        onChange={handleChange('limitParticipant')}
-                                        value={limitParticipant}
-                                    />
-                                    <button
-                                        type='submit'
-                                        className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                                    >
-                                        <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
-                                        <span className='ml-3'>{textChange}</span>
-                                    </button>
+                                <input
+                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                    type='text'
+                                    placeholder='Limit Participant'
+                                    onChange={handleChange('limitParticipant')}
+                                    value={limitParticipant}
+                                />
+                                <button
+                                    type='submit'
+                                    className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
+                                >
+                                    <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
+                                    <span className='ml-3'>{textChange}</span>
+                                </button>
                                 {/* </div> */}
                             </form>
                         </div>

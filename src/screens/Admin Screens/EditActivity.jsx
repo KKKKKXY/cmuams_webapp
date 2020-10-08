@@ -24,9 +24,6 @@ const EditActivity = ({ history }) => {
   }, []);
 
   const loadActivity = () => {
-    const activity = getCookie('activity');
-    console.log(activity);
-    console.log(activityId()._id);
     axios
       .get(`${process.env.REACT_APP_API_URL}/activity/${activityId()._id}`)
       .then(res => {
@@ -52,7 +49,6 @@ const EditActivity = ({ history }) => {
 
   const handleSubmit = e => {
     const token = getCookie('token');
-    console.log(token);
     e.preventDefault();
     setFormData({ ...formData, textChange: 'Submitting' });
     axios

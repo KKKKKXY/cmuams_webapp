@@ -23,7 +23,6 @@ const ResetPassword = ({ match }) => {
         setFormData({ ...formData, [text]: e.target.value });
     };
     const handleSubmit = e => {
-        console.log(password1, password2)
         e.preventDefault();
         if ((password1 === password2) && password1 && password2) {
             setFormData({ ...formData, textChange: 'Submitting' });
@@ -33,7 +32,6 @@ const ResetPassword = ({ match }) => {
                     resetPasswordLink: token
                 })
                 .then(res => {
-                    console.log(res.data.message)
                     setFormData({
                         ...formData,
                         password1: '',

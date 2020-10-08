@@ -7,6 +7,8 @@ import { setActivityLocalStorage } from '../../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import { green } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
+import Table from 'react-bootstrap/Table'
+
 
 const useStyles = makeStyles((theme) => ({
     fab: {
@@ -72,7 +74,6 @@ export default class ViewActivity extends Component {
         axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
             .then(res => {
                 setActivityLocalStorage(res, () => { });
-                console.log(id);
                 if (localStorage.getItem('activity')) {
                     window.location.href = '/editActivity'
                 }
@@ -100,7 +101,12 @@ export default class ViewActivity extends Component {
                         <Icon className="fa fa-plus-circle" style={{ color: green[500], fontSize: 50, margin: 10 }} onClick={() => window.location.href = '/addActivity'}></Icon>
                     </Tooltip>
                 </div>
-                <table className="table table-bordered">
+                <Table
+                    responsive="xl"
+                    striped bordered hover
+                    size="sm"
+                    className="table table-bordered"
+                >
                     <thead className="thead-light">
                         <tr>
                             <td>Name</td>
@@ -117,7 +123,7 @@ export default class ViewActivity extends Component {
                     <tbody>
                         {this.activityList()}
                     </tbody>
-                </table>
+                </Table>
             </div>
 
         )

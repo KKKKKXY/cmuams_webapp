@@ -53,7 +53,6 @@ exports.addActivityController = (req, res) => {
     } else {
     activity.save((err, activity) => {
         if (err) {
-            console.log('Save error', errorHandler(err));
             return res.status(401).json({
                 errors: errorHandler(err)
             });
@@ -112,7 +111,6 @@ exports.editActivityController = (req, res) => {
             }
             activity.save((err, editedActivity) => {
                 if (err) {
-                    console.log('Activity Eidt ERROR', err);
                     return res.status(400).json({
                         error: 'Activity eidt failed'
                     });

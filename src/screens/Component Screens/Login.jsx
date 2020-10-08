@@ -18,7 +18,6 @@ const Login = ({ history }) => {
   };
 
   const handleSubmit = e => {
-    console.log(process.env.REACT_APP_API_URL);
     e.preventDefault();
     if (email && password1) {
       setFormData({ ...formData, textChange: 'Submitting' });
@@ -39,7 +38,6 @@ const Login = ({ history }) => {
               ? history.push('/admin')
               : history.push('/private');
             toast.success(`Hey ${res.data.user.name}, Welcome back!`);
-            console.log(res.data.user.name);
           });
         })
         .catch(err => {

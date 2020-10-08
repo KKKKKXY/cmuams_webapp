@@ -3,8 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import PrivateNavbar from './PrivateNavbar';
+import { isAuth } from '../../helpers/auth';
 
-const Transfer = ({ history }) => {
+const Transfer = () => {
     const [formData, setFormData] = useState({
         senderEmail: '',
         recipientEmail: '',
@@ -13,8 +14,7 @@ const Transfer = ({ history }) => {
         textChange: 'Transfer',
     });
 
-    const { senderEmail, recipientEmail, transferDate, amount, textChange } = formData;
-    const [tranferDate, setTransferDate] = useState(null);
+    const { recipientEmail, transferDate, amount, textChange } = formData;
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
@@ -22,25 +22,30 @@ const Transfer = ({ history }) => {
     const handleSubmit = e => {
         e.preventDefault();
         setFormData({ ...formData, textChange: 'Transfering' });
-        axios
-            .post(
-                `${process.env.REACT_APP_API_URL}/student/transfer`,
-                {
-                    senderEmail,
-                    recipientEmail,
-                    transferDate,
-                    amount,
-                }
-            )
-            .then(res => {
+        if (recipientEmail == isAuth().email) {
+            toast.error('You cannot transfer coins to yourself!');
+        }
+        else {
+            axios
+                .post(
+                    `${process.env.REACT_APP_API_URL}/student/transfer`,
+                    {
+                        senderEmail: isAuth().email,
+                        recipientEmail,
+                        transferDate,
+                        amount,
+                    }
+                )
+                .then(res => {
                     toast.success(res.data.message);
-                    setFormData({ ...formData, textChange: 'Transfer' });                
-            })
-            .catch(err => {
-                console.log(err.response);
-                toast.error(err.response.data.error);
-                toast.error(err.response.data.errors);
-            });
+                    setFormData({ ...formData, textChange: 'Transfer' });
+                })
+                .catch(err => {
+                    console.log(err.response);
+                    toast.error(err.response.data.error);
+                    toast.error(err.response.data.errors);
+                });
+        }
     };
 
     return (
@@ -58,30 +63,12 @@ const Transfer = ({ history }) => {
                             >
                                 <div className='mx-auto max-w-xs relative'>
                                     <input
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
-                                        type='text'
-                                        placeholder='Sender Email'
-                                        onChange={handleChange('senderEmail')}
-                                        value={senderEmail}
-                                    />
-                                    <input
                                         className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                                         type='text'
                                         placeholder='Recipient Email'
                                         onChange={handleChange('recipientEmail')}
                                         value={recipientEmail}
                                     />
-                                    {/* <div className="form-group">
-                                        <div>
-                                            <DatePicker
-                                                className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                                placeholderText="Transfer Date"
-                                                selected={transferDate}
-                                                onChange={date => setTransferDate(date)}
-                                            />
-                                        </div>
-                                    </div> */}
-
                                     <input
                                         className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                                         type='text'
