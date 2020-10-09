@@ -29,7 +29,14 @@ const userScheama = new mongoose.Schema(
       default: ''
     },
     enrolled: {
-      data: Array
+      type: Array
+    },
+    coins: {
+      type: Number,
+      default: 100
+    },
+    transaction: {
+      type: Array
     }
   },
   {
