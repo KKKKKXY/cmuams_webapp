@@ -16,7 +16,7 @@ let BlockChainSchema = new mongoose.Schema({
     },
     transaction: {
         required: true,
-        type: Schema.Types.Array
+        type: Schema.Types.Object
     },
     prevHash: {
         required: false,
