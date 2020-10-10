@@ -31,7 +31,7 @@ class BlockChain {
         let block = {
             index: this.chain.length + 1,
             timestamp: Date.now(),
-            transactions: this.curr_transactions,
+            transaction: this.curr_transactions,
             prevHash: prevHash,
         };
 
@@ -58,8 +58,8 @@ class BlockChain {
         }
     }
 
-    addNewTransaction(sender, recipient, amount) {
-        this.curr_transactions.push({ sender, recipient, amount });
+    addNewTransaction(trans) {
+        this.curr_transactions.push( trans );
     }
 
     lastBock() {

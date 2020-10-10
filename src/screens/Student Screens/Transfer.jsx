@@ -9,7 +9,7 @@ const Transfer = () => {
     const [formData, setFormData] = useState({
         senderEmail: '',
         recipientEmail: '',
-        transferDate: Date(),
+        transferDate: new Date(),
         amount: '',
         textChange: 'Transfer',
     });

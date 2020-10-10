@@ -54,8 +54,6 @@ exports.enrollActivityController = (req, res) => {
 exports.transferController = (req, res) => {
     const { senderEmail, recipientEmail, transferDate, amount } = req.body;
     let blockChain = new BlockChain();
-    blockChain.addNewTransaction({ senderEmail, recipientEmail, amount });
-    blockChain.addNewBlock(null);
     const errors = validationResult(req);
     const transfer = new Transfer({ senderEmail, recipientEmail, transferDate, amount });
     // transfer.save()
@@ -84,8 +82,8 @@ exports.transferController = (req, res) => {
                         } else {
                             sender.coins = parseInt(sender.coins) - parseInt(amount)
                             recipient.coins = parseInt(recipient.coins) + parseInt(amount)
-                            sender.transaction.push(transfer)
-                            recipient.transaction.push(transfer)
+                            blockChain.addNewTransaction({ senderEmail, recipientEmail, amount, transferDate });
+                            blockChain.addNewBlock(null);
                             sender.save()
                             recipient.save()
                             return res.json({
