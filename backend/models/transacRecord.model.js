@@ -11,15 +11,6 @@ const transactionSchema = new mongoose.Schema(
         },
         amount: {
             type: Number,
-        },
-        prevHash: {
-            type: String
-        },
-        hash: {
-            type: String
-        },
-        valid: {
-            type: Boolean,
         }
     },
     {

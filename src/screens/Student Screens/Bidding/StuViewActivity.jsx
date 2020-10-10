@@ -2,11 +2,13 @@ import React, { Component, useState } from 'react';
 import axios from 'axios';
 import PrivateNavbar from '../PrivateNavbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Popup from "../../../helpers/Popup";
 import BidForm from "./BidForm"
 import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
+import { Button } from 'react-bootstrap';
+import { setActivityLocalStorage } from '../../../helpers/auth';
 
 const Activities = props => {
     const [openPopup, setOpenPopup] = useState(false)
@@ -25,14 +27,13 @@ const Activities = props => {
             < tr >
                 <td>{props.activity.activityName}</td>
                 <td>{props.activity.description}</td>
-                <td>{props.activity.startDate}</td>
-                <td>{props.activity.bidEndDate}</td>
-                <td>{props.activity.location}</td>
-                <td>{props.activity.responsiblePerson}</td>
-                <td>{props.activity.phoneNo}</td>
-                <td>{props.activity.limitParticipant}</td>
+                <td>{props.activity.bidDate}</td>
+                <td>{props.activity.seats}</td>
                 <td>
-                    <Tooltip title="Bid 1st Round" placement="right">
+                    <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.activity._id)}>Info</Button>{' '}
+                </td>
+                <td>
+                    <Tooltip title="Bid Activity" placement="right">
                         <a href="#" onClick={() => setOpenPopup(true)}>
                             <i className='fas fa-coins fa-2x' style={{ color: '#E2C000' }}></i>
                         </a>
@@ -65,6 +66,8 @@ export default class StuViewActivity extends Component {
     constructor(props) {
         super(props);
         this.catchActivity = this.catchActivity.bind(this);
+        this.viewActivityInfo = this.viewActivityInfo.bind(this);
+
         this.state = {
             activities: [],
             options: []
@@ -77,15 +80,15 @@ export default class StuViewActivity extends Component {
             .then(response => {
                 let tmpArray = []
                 for (var i = 0; i < response.data.length; i++) {
-                    tmpArray.push(new Receiver(response.data[i]._id, (i + 1).toString(), response.data[i].activityName, response.data[i].startDate, response.data[i].bidEndDate))
+                    tmpArray.push(new Receiver(response.data[i]._id, (i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
                 }
                 this.setState({
                     // activities: response.data,
                     activities: (response.data).sort((a, b) => {
                         //sort by date
-                        if (a.startDate < b.startDate)
+                        if (a.activityDate < b.activityDate)
                             return -1;
-                        else if (a.startDate > b.startDate)
+                        else if (a.activityDate > b.activityDate)
                             return 1;
 
                         return 0;
@@ -100,11 +103,28 @@ export default class StuViewActivity extends Component {
 
     catchActivity() {
         return this.state.options;
+    }    
+    
+    viewActivityInfo(id) {
+        axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
+            .then(res => {
+                setActivityLocalStorage(res, () => { });
+                if (localStorage.getItem('activity')) {
+                    window.location.href = '/viewActivityInfo'
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
     }
+
+
 
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} key={currentactivity._id} catchActivity={this.catchActivity} />;
+            return <Activities activity={currentactivity} key={currentactivity._id} catchActivity={this.catchActivity} viewActivityInfo={this.viewActivityInfo}/>;
         })
     }
 
@@ -123,13 +143,10 @@ export default class StuViewActivity extends Component {
                         <tr>
                             <td>Name</td>
                             <td>Description</td>
-                            <td>Start Date</td>
-                            <td>Bid End Date</td>
-                            <td>Location</td>
-                            <td>Responsible Person</td>
-                            <td>Phone No</td>
-                            <td>Limit Participant</td>
-                            <td>Enroll</td>
+                            <td>Bidding Date</td>
+                            <td>Seats</td>
+                            <td>More</td>
+                            <td>Bid</td>
                         </tr>
                     </thead>
                     <tbody>

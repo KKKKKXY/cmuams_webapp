@@ -10,18 +10,18 @@ exports.readActivityController = (req, res) => {
                 error: 'Activity not found'
             });
         }
-        const { _id, activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = activity;
+        const { _id, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = activity;
         return res.json({
             activity: {
                 _id,
                 activityName,
                 description,
-                startDate,
-                bidEndDate,
+                activityDate,
+                bidDate,
                 location,
                 responsiblePerson,
-                phoneNo,
-                limitParticipant
+                contact,
+                seats
             }
         });
     });
@@ -39,10 +39,10 @@ exports.listActivityController = (req, res) => {
 };
 
 exports.addActivityController = (req, res) => {
-    const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = req.body;
+    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = req.body;
     const errors = validationResult(req);
     const activity = new Activity({
-        activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant
+        activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats
     });
 
     if (!errors.isEmpty()) {
@@ -83,7 +83,7 @@ exports.deleteActivityController = (req, res) => {
 };
 
 exports.editActivityController = (req, res) => {
-    const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = req.body;
+    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = req.body;
     const activityId = req.params.id;
     const errors = validationResult(req);
 
@@ -102,12 +102,12 @@ exports.editActivityController = (req, res) => {
             else {
                 activity.activityName = activityName;
                 activity.description = description;
-                activity.startDate = startDate;
-                activity.bidEndDate = bidEndDate;
+                activity.activityDate = activityDate;
+                activity.bidDate = bidDate;
                 activity.location = location;
                 activity.responsiblePerson = responsiblePerson;
-                activity.phoneNo = phoneNo;
-                activity.limitParticipant = limitParticipant;
+                activity.contact = contact;
+                activity.seats = seats;
             }
             activity.save((err, editedActivity) => {
                 if (err) {

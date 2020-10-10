@@ -22,7 +22,6 @@ const Transfer = props => {
                 <td>{props.end}</td>
                 <td>
                     <Tooltip title="Confirm Transfer Information" placement="left">
-
                         <a href="#" onClick={() => { setOpenPopup(true) }}><i className='fas fa-exchange-alt fa-2x'
                             style={{
                                 color: '#7AA300',

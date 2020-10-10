@@ -4,9 +4,6 @@ const TARGET_HASH = hash(1560);
 
 let validator = require("../helpers/validator");
 
-let mongoose = require("mongoose");
-
-// let blockChainModel = mongoose.model("BlockChain");
 const blockChainModel = require('../models/blockchain.model')
 
 
