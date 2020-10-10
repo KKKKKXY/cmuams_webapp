@@ -9,12 +9,12 @@ const Enrolled = props => (
     <tr>
         <td>{props.enrolledActivity.activityName}</td>
         <td>{props.enrolledActivity.description}</td>
-        <td>{props.enrolledActivity.startDate}</td>
-        <td>{props.enrolledActivity.bidEndDate}</td>
+        <td>{props.enrolledActivity.activityDate}</td>
+        <td>{props.enrolledActivity.bidDate}</td>
         <td>{props.enrolledActivity.location}</td>
         <td>{props.enrolledActivity.responsiblePerson}</td>
-        <td>{props.enrolledActivity.phoneNo}</td>
-        <td>{props.enrolledActivity.limitParticipant}</td>
+        <td>{props.enrolledActivity.contact}</td>
+        <td>{props.enrolledActivity.seats}</td>
     </tr>
 )
 

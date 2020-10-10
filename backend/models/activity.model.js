@@ -12,11 +12,11 @@ const activitySchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        startDate: {
+        activityDate: {
             type: Date,
             required: true
         },
-        bidEndDate: {
+        bidDate: {
             type: Date,
             required: true
         },
@@ -26,16 +26,19 @@ const activitySchema = new mongoose.Schema(
         },
         responsiblePerson: {
             type: String,
-            default: ''
+            required: true
         },
-        phoneNo: {
+        contact: {
             type: String,
-            default: ''
+            required: true
         },
-        limitParticipant: {
+        seats: {
             type: Number,
             required: true
         },
+        students: {
+            type: Array
+        }
     },
     {
         timestamps: true

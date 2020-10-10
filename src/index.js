@@ -23,6 +23,9 @@ import EditActivity from './screens/Admin Screens/EditActivity';
 import ViewTransacRecord from './screens/Student Screens/ViewTransacRecord';
 import Transfer from './screens/Student Screens/Transfer';
 import Rules from './screens/Student Screens/Rules'
+import ViewActivityInfo from './screens/Student Screens/ViewActivityInfo'
+
+
 
 ReactDOM.render(
   <BrowserRouter>
@@ -47,6 +50,8 @@ ReactDOM.render(
       <PrivateRoute path='/transacRecord' exact component={ViewTransacRecord} />
       <PrivateRoute path='/transfer' exact component={Transfer} />
       <PrivateRoute path='/rules' exact component={Rules} />
+      <PrivateRoute path='/viewActivityInfo' exact component={ViewActivityInfo} />
+      
 
       <Redirect to='/' />
     </Switch>

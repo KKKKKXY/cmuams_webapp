@@ -20,12 +20,12 @@ const Activities = props => (
     <tr>
         <td>{props.activity.activityName}</td>
         <td>{props.activity.description}</td>
-        <td>{props.activity.startDate}</td>
-        <td>{props.activity.bidEndDate}</td>
+        <td>{props.activity.activityDate}</td>
+        <td>{props.activity.bidDate}</td>
         <td>{props.activity.location}</td>
         <td>{props.activity.responsiblePerson}</td>
-        <td>{props.activity.phoneNo}</td>
-        <td>{props.activity.limitParticipant}</td>
+        <td>{props.activity.contact}</td>
+        <td>{props.activity.seats}</td>
         <td>
             <Tooltip title="Delete" placement="top">
                 <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fa fa-trash" aria-hidden="true"></i></a>

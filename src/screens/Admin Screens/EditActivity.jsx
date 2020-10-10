@@ -10,12 +10,12 @@ const EditActivity = ({ history }) => {
   const [formData, setFormData] = useState({
     activityName: '',
     description: '',
-    startDate: '',
-    bidEndDate: '',
+    activityDate: '',
+    bidDate: '',
     location: '',
     responsiblePerson: '',
-    phoneNo: '',
-    limitParticipant: '',
+    contact: '',
+    seats: '',
     textChange: 'Update'
   });
 
@@ -27,8 +27,8 @@ const EditActivity = ({ history }) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/activity/${activityId()._id}`)
       .then(res => {
-        const { activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant } = res.data.activity;
-        setFormData({ ...formData, activityName, description, startDate, bidEndDate, location, responsiblePerson, phoneNo, limitParticipant });
+        const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = res.data.activity;
+        setFormData({ ...formData, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats });
       })
       .catch(err => {
         toast.error(`Error To Your Information ${err.response.statusText}`);
@@ -40,9 +40,10 @@ const EditActivity = ({ history }) => {
       });
   };
 
-  const { activityName, description, location, responsiblePerson, phoneNo, limitParticipant, textChange } = formData;
-  const [startDate, setStartDate] = useState();
-  const [bidEndDate, setBidEndDate] = useState();
+  const { activityName, description, location, responsiblePerson, contact, seats, textChange } = formData;
+  // console.log(activityDate)
+  const [activityDate, setActivityDate] = useState();
+  const [bidDate, setBidDate] = useState();
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
@@ -51,36 +52,50 @@ const EditActivity = ({ history }) => {
     const token = getCookie('token');
     e.preventDefault();
     setFormData({ ...formData, textChange: 'Submitting' });
-    axios
-      .put(
-        `${process.env.REACT_APP_API_URL}/activity/update/${activityId()._id}`,
-        {
-          activityName,
-          description,
-          startDate,
-          bidEndDate,
-          location,
-          responsiblePerson,
-          phoneNo,
-          limitParticipant
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      .then(res => {
-        updateActivity(res, () => {
-          toast.success(res.data.message);
-          setFormData({ ...formData, textChange: 'Update' });
-        });
-      })
-      .catch(err => {
-        console.log(err.response);
-        toast.error(err.response.data.error);
-        toast.error(err.response.data.errors);
-      });
+    if (activityDate < new Date() || bidDate < new Date()) {
+      toast.error('Select Date should exceed now date');
+    }
+    else {
+      if ((activityDate > bidDate) && (activityDate >= new Date()) && (bidDate >= new Date())) {
+        axios
+          .put(
+            `${process.env.REACT_APP_API_URL}/activity/update/${activityId()._id}`,
+            {
+              activityName,
+              description,
+              activityDate,
+              bidDate,
+              location,
+              responsiblePerson,
+              contact,
+              seats
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+          .then(res => {
+            updateActivity(res, () => {
+              toast.success(res.data.message);
+              setFormData({ ...formData, textChange: 'Update' });
+            });
+          })
+          .catch(err => {
+            console.log(err.response);
+            toast.error(err.response.data.error);
+            toast.error(err.response.data.errors);
+          });
+      }
+
+      else {
+        toast.error('The bid should is held before activity start')
+      }
+
+    }
+
+
   };
 
   return (
@@ -98,83 +113,78 @@ const EditActivity = ({ history }) => {
                 className='w-full flex-1 mt-8 text-indigo-500'
                 onSubmit={handleSubmit}
               >
-                <div className='mx-auto max-w-xs relative'>
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Activity Name'
-                    onChange={handleChange('activityName')}
-                    value={activityName}
-                  />
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Activity Name'
+                  onChange={handleChange('activityName')}
+                  value={activityName}
+                />
 
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Description'
-                    onChange={handleChange('description')}
-                    value={description}
-                  />
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Description'
+                  onChange={handleChange('description')}
+                  value={description}
+                />
 
-                  <div className="form-group">
-                    <div>
-                      <DatePicker
-                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                        selected={startDate}
-                        placeholderText="Start Date"
-                        onChange={date => setStartDate(date)}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <div>
-                      <DatePicker
-                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                        placeholderText="Biding End Date"
-                        selected={bidEndDate}
-                        onChange={date => setBidEndDate(date)}
-                      />
-                    </div>
-                  </div>
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Location'
-                    onChange={handleChange('location')}
-                    value={location}
-                  />
+                <DatePicker
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  placeholderText="Activity Date"
+                  selected={activityDate}
+                  onChange={date => setActivityDate(date)}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy HH:mm"
+                />
+                <DatePicker
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  placeholderText="Bidding Date"
+                  selected={bidDate}
+                  onChange={date => setBidDate(date)}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy HH:mm"
+                />
 
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Responsible Person'
-                    onChange={handleChange('responsiblePerson')}
-                    value={responsiblePerson}
-                  />
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Location'
+                  onChange={handleChange('location')}
+                  value={location}
+                />
 
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Phone No.'
-                    onChange={handleChange('phoneNo')}
-                    value={phoneNo}
-                  />
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Stuff'
+                  onChange={handleChange('responsiblePerson')}
+                  value={responsiblePerson}
+                />
 
-                  <input
-                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                    type='text'
-                    placeholder='Limit Participant'
-                    onChange={handleChange('limitParticipant')}
-                    value={limitParticipant}
-                  />
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Contact'
+                  onChange={handleChange('contact')}
+                  value={contact}
+                />
 
-                  <button
-                    type='submit'
-                    className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                  >
-                    <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
-                    <span className='ml-3'>{textChange}</span>
-                  </button>
-                </div>
+                <input
+                  className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                  type='text'
+                  placeholder='Seats'
+                  onChange={handleChange('seats')}
+                  value={seats}
+                />
+
+                <button
+                  type='submit'
+                  className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
+                >
+                  <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
+                  <span className='ml-3'>{textChange}</span>
+                </button>
               </form>
             </div>
           </div>

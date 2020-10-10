@@ -34,9 +34,6 @@ const userScheama = new mongoose.Schema(
     coins: {
       type: Number,
       default: 100
-    },
-    transaction: {
-      type: Array
     }
   },
   {
