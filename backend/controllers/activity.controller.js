@@ -39,10 +39,10 @@ exports.listActivityController = (req, res) => {
 };
 
 exports.addActivityController = (req, res) => {
-    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = req.body;
+    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, creator } = req.body;
     const errors = validationResult(req);
     const activity = new Activity({
-        activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats
+        activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, creator
     });
 
     if (!errors.isEmpty()) {
@@ -83,7 +83,7 @@ exports.deleteActivityController = (req, res) => {
 };
 
 exports.editActivityController = (req, res) => {
-    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = req.body;
+    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, editor } = req.body;
     const activityId = req.params.id;
     const errors = validationResult(req);
 
@@ -108,6 +108,7 @@ exports.editActivityController = (req, res) => {
                 activity.responsiblePerson = responsiblePerson;
                 activity.contact = contact;
                 activity.seats = seats;
+                activity.creator = editor;
             }
             activity.save((err, editedActivity) => {
                 if (err) {

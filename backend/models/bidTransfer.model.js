@@ -2,17 +2,9 @@ const mongoose = require('mongoose');
 const mongooseDateFormat = require('mongoose-date-format');
 
 // Exercise schema
-const FirstRoundSchema = new mongoose.Schema(
+const BidTransferSchema = new mongoose.Schema(
     {
-        id: {
-            type: Number,
-            required: true
-        },
-        from: {
-            type: String,
-            required: true
-        },
-        to: {
+        student: {
             type: String,
             required: true
         },
@@ -20,9 +12,8 @@ const FirstRoundSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        date: {
+        transferDate: {
             type: Date,
-            default: Date.now(),
             required: true
         }
     },
@@ -30,7 +21,6 @@ const FirstRoundSchema = new mongoose.Schema(
         timestamps: true
     }
 );
-FirstRoundSchema.plugin(mongooseDateFormat); 
+BidTransferSchema.plugin(mongooseDateFormat); 
 
-
-module.exports = mongoose.model('FirstRound', FirstRoundSchema);
+module.exports = mongoose.model('BidTransfer', BidTransferSchema);

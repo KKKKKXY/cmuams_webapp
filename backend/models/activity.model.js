@@ -36,6 +36,10 @@ const activitySchema = new mongoose.Schema(
             type: Number,
             required: true
         },
+        creator: {
+            type: String,
+            required: true
+        },
         students: {
             type: Array
         }

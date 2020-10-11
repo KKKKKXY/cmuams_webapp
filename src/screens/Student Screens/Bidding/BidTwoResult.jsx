@@ -86,6 +86,12 @@ export class BidTwoResult extends Component {
                         return 0;
                     })
                 })
+
+                // console.log('Bid Result: ')
+                // console.log(this.state.bidOneResult)
+                // console.log('Sort List: ')
+                // console.log(this.state.sortList)
+
                 this.sleep(3000).then(() => {
                     toast.warning('You have transfer not complete')
                 })
@@ -143,7 +149,7 @@ export class BidTwoResult extends Component {
                             toast.error(err.response.data.error);
                             toast.error(err.response.data.errors);
                         })
-                        });
+                    });
             }
             else {
                 console.log('between two times')
@@ -151,91 +157,91 @@ export class BidTwoResult extends Component {
 
             }
 
-    })
+        })
 
-    // console.log('bid 2 transfer')
-    // console.log(this.state.pendingBid)
-    // return this.state.pendingBid.map(currentpendingBid => {
-    //     return <Transfer pendingTransfer={currentpendingBid} key={currentpendingBid._id} rank={this.rank()} start={this.start()} end={this.end()} />;
-    // })
-}
+        // console.log('bid 2 transfer')
+        // console.log(this.state.pendingBid)
+        // return this.state.pendingBid.map(currentpendingBid => {
+        //     return <Transfer pendingTransfer={currentpendingBid} key={currentpendingBid._id} rank={this.rank()} start={this.start()} end={this.end()} />;
+        // })
+    }
 
-rank() {
-    return (this.state.sortList.findIndex(currentsortList => {
-        return currentsortList.from == isAuth().name;
-    })) + 1
-}
+    rank() {
+        return (this.state.sortList.findIndex(currentsortList => {
+            return currentsortList.from == isAuth().name;
+        })) + 1
+    }
 
-start() {
-    const transferStartDate = this.state.pendingBid.map(result => result.date)
-    const date = (new Date(transferStartDate)).setHours((new Date(transferStartDate)).getHours() + 1)
-    return Moment(date).format('MMMM Do YYYY, h:30:00 a')
-}
+    start() {
+        const transferStartDate = this.state.pendingBid.map(result => result.date)
+        const date = (new Date(transferStartDate)).setHours((new Date(transferStartDate)).getHours() + 1)
+        return Moment(date).format('MMMM Do YYYY, h:30:00 a')
+    }
 
-end() {
-    const transferStartDate = this.state.pendingBid.map(result => result.date)
-    const date = (new Date(transferStartDate)).setHours((new Date(transferStartDate)).getHours() + 2)
+    end() {
+        const transferStartDate = this.state.pendingBid.map(result => result.date)
+        const date = (new Date(transferStartDate)).setHours((new Date(transferStartDate)).getHours() + 2)
 
-    return Moment(date).format('MMMM Do YYYY, h:00:00 a')
-}
+        return Moment(date).format('MMMM Do YYYY, h:00:00 a')
+    }
 
-sortList() {
-    return this.state.sortList.map(currentsortList => {
-        return <Sort sortList={currentsortList} key={currentsortList._id} />;
-    })
-}
+    sortList() {
+        return this.state.sortList.map(currentsortList => {
+            return <Sort sortList={currentsortList} key={currentsortList._id} />;
+        })
+    }
 
-render() {
-    return (
-        <div>
+    render() {
+        return (
+            <div>
 
-            <h5 style={{ 'color': 'grey' }}>2nd Round Bid Result</h5>
+                <h5 style={{ 'color': 'grey' }}>2nd Round Bid Result</h5>
 
-            <Table
-                responsive="xl"
-                striped bordered hover
-                size="sm"
-                className="table table-bordered"
-                style={{ 'marginBottom': '30px' }}
-            >
-                <thead style={{ backgroundColor: '#C9CCC7' }}>
-                    <tr>
-                        <td>Rank</td>
+                <Table
+                    responsive="xl"
+                    striped bordered hover
+                    size="sm"
+                    className="table table-bordered"
+                    style={{ 'marginBottom': '30px' }}
+                >
+                    <thead style={{ backgroundColor: '#C9CCC7' }}>
+                        <tr>
+                            <td>Rank</td>
 
-                        <td>Activity Name</td>
-                        <td>Amount</td>
-                        <td>Transfer Start</td>
-                        <td>Transfer End</td>
-                        <td>Transfer</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.pendingTransferList()}
-                </tbody>
-            </Table>
+                            <td>Activity Name</td>
+                            <td>Amount</td>
+                            <td>Transfer Start</td>
+                            <td>Transfer End</td>
+                            <td>Transfer</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.pendingTransferList()}
+                    </tbody>
+                </Table>
 
-            <h5 style={{ 'color': 'grey' }}>Bid Two List</h5>
-            <Table
-                responsive="xl"
-                striped bordered hover
-                size="sm"
-                className="table table-bordered"
-                style={{ 'marginBottom': '30px' }}
-            >
-                <thead style={{ backgroundColor: '#C9CCC7' }}>
-                    <tr>
-                        <td>from</td>
-                        <td>to</td>
-                        <td>date</td>
-                        <td>amonut</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.sortList()}
-                </tbody>
-            </Table>
-        </div>
-    );
-}
+                <h5 style={{ 'color': 'grey' }}>Bid Two List</h5>
+                <Table
+                    responsive="xl"
+                    striped bordered hover
+                    size="sm"
+                    className="table table-bordered"
+                    style={{ 'marginBottom': '30px' }}
+                >
+                    <thead style={{ backgroundColor: '#C9CCC7' }}>
+                        <tr>
+                            <td>from</td>
+                            <td>to</td>
+                            <td>date</td>
+                            <td>amonut</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.sortList()}
+                    </tbody>
+                </Table>
+            </div>
+        );
+    }
 
 }

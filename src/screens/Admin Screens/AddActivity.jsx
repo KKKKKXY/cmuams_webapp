@@ -4,6 +4,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import AdminNavbar from './AdminNavbar';
+import { isAuth } from '../../helpers/auth';
+
 
 const AddActivity = ({ history }) => {
     const [formData, setFormData] = useState({
@@ -47,7 +49,8 @@ const AddActivity = ({ history }) => {
                         location,
                         responsiblePerson,
                         contact,
-                        seats
+                        seats,
+                        creator: isAuth().name
                     }
                 )
                 .then(res => {

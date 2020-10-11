@@ -5,17 +5,16 @@ import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
 import Tooltip from '@material-ui/core/Tooltip';
 import Popup from "../../../helpers/Popup";
-import Bid2Form from "./Bid2Form"
+import UpdateCoinForm from "./Bid2Form"
 import Moment from 'moment';
 import { toast } from 'react-toastify';
 
 
-const SecondBid = props => {
+const BidResultList = props => {
     const [openPopup, setOpenPopup] = useState(false)
     const bid = (transter, resetForm) => {
-        console.log('Bid Round 2')
-        if (transter.id == 0)
-            bidActivityService.insert2ndTransfer(transter)
+        console.log('Can Update Coins')
+        bidActivityService.updateCoinsAmount(transter)
         resetForm()
         setOpenPopup(false)
     }
@@ -23,26 +22,30 @@ const SecondBid = props => {
     return (
         <>
             <tr>
-                <td>{props.rank}</td>
+                <td>{props.bidResult.rank}</td>
                 <td>{props.bidResult.to}</td>
                 <td>{props.bidResult.amount}</td>
-                <td>{props.last}</td>
-                <td>{props.start}</td>
-                <td>{props.end}</td>
+                <td>{props.bidResult.last}</td>
+                <td>{props.bidResult.end}</td>
                 <td>
-                    <Tooltip title="Bid 2nd Round" placement="left">
-                        <a href="#" onClick={() => { setOpenPopup(true) }}><i className='fas fa-coins fa-2x' style={{ color: '#E2C000' }}></i></a>
+                    <Tooltip title="Update coins" placement="left">
+                        <a href="#" onClick={() => { setOpenPopup(true) }}><i className='fas fa-sync-alt fa-2x' style={{
+                            color: '#4993DD',
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}></i></a>
                     </Tooltip>
                 </td>
             </tr>
 
             <Popup
-                title="Bidding Activity Transfer Round 2"
-                subtitle="2nd Round"
+                title="Update your coins amount"
+                subtitle="Please check and input coins amount"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <Bid2Form bid={bid} activityName={props.bidResult.to} />
+                <UpdateCoinForm bid={bid} activityName={props.bidResult.to} />
             </Popup>
         </>
     )
@@ -50,57 +53,118 @@ const SecondBid = props => {
 
 const Sort = props => (
     <tr>
-        <td>{props.sortList.from}</td>
+        <td>{props.sortList.student}</td>
         <td>{props.sortList.to}</td>
-        <td>{props.sortList.date}</td>
         <td>{props.sortList.amount}</td>
+        <td>{props.sortList.transferDate}</td>
     </tr>
 )
 
+function Result(_id, rank, to, amount, last, end) {
+    this._id = _id;
+    this.rank = rank;
+    this.to = to;
+    this.amount = amount;
+    this.last = last;
+    this.end = end;
+}
+
+function All(_id, to, amount, student, transferDate) {
+    this._id = _id;
+    this.to = to;
+    this.amount = amount;
+    this.student = student;
+    this.transferDate = transferDate;
+}
 
 export class BidOneResult extends Component {
 
     constructor(props) {
         super(props);
-        this.rank = this.rank.bind(this)
-        this.start = this.start.bind(this)
-        this.end = this.end.bind(this)
 
         this.state = {
-            bidOneResult: [],
-            sortList: []
+            rank: '',
+            to: '',
+            amount: '',
+            last: '',
+            end: '',
+            result: [],
+            allTransfer: []
         };
     }
 
     componentDidMount() {
-        axios.get(`${process.env.REACT_APP_API_URL}/firstBidRoundTransfer`)
+        axios.get(`${process.env.REACT_APP_API_URL}/activities`)
             .then(response => {
-                console.log(response.data)
-                if (response.data == '') {
-                    toast.info('You don\'t have activity to bid');
+                let activities = response.data
+                let students = []
+                let _id = ''
+                let rank = ''
+                let to = ''
+                let amount = ''
+                let last = ''
+                let end = ''
+                let result = []
+                let allTransfer = []
+
+                console.log(isAuth().name)
+                for (var i = 0; i < activities.length; i++) {
+                    // toast.info('You don\'t have activity to bid');
+                    students = activities[i].students
+
+                    if (students.length > 0) {
+                        students.sort((a, b) => {
+                            //sort by amount
+                            if (a.amount < b.amount)
+                                return 1;
+                            else if (a.amount > b.amount)
+                                return -1;
+
+                            //sort by date
+                            if (a.transferDate < b.transferDate)
+                                return -1;
+                            else if (a.transferDate > b.transferDate)
+                                return 1;
+
+                            return 0;
+                        })
+
+                        const bidTransfer = students.filter(student => student.student == isAuth().name)
+
+                        const bidDate = activities[i].bidDate
+                        const date = ((new Date(bidDate)).setHours((new Date(bidDate)).getHours() + 1))
+
+                        _id = bidTransfer[0]._id
+                        rank = students.findIndex(currentsortList => { return currentsortList.student == isAuth().name; }) + 1
+                        to = activities[i].activityName
+                        amount = parseInt(bidTransfer[0].amount)
+                        last = students[students.length - 1].amount
+                        end = Moment(date).format('MMMM Do YYYY, h:30:00 a')
+
+                        if (bidTransfer != '') {
+                            result.push(new Result(_id, rank, to, amount, last, end))
+                        }
+
+                        for (var j = 0; j < students.length; j++) {
+                            allTransfer.push(new All(students[j]._id, to, students[j].amount, students[j].student, Moment(students[j].transferDate).format('MMMM Do YYYY, h:mm:ss a')))
+                        }
+                    }
+                    else {
+                        console.log('length <= 0')
+                        // toast.info('You don\'t have bidding activity');
+                    }
                 }
                 this.setState({
-                    bidOneResult: response.data.filter(transfers => transfers.from == isAuth().name),
-                    sortList: (response.data).sort((a, b) => {
-                        //sort by amount
-                        if (a.amount < b.amount)
-                            return 1;
-                        else if (a.amount > b.amount)
-                            return -1;
-
-                        //sort by date
-                        if (a.date < b.date)
-                            return -1;
-                        else if (a.date > b.date)
-                            return 1;
-
-                        return 0;
-                    })
+                    rank: rank,
+                    to: to,
+                    amount: amount,
+                    last: last,
+                    end: end,
+                    result: result,
+                    allTransfer: allTransfer
                 })
-                // console.log('Bid Result: ')
-                // console.log(this.state.bidOneResult)
-                // console.log('Sort List: ')
-                // console.log(this.state.sortList)
+
+                console.log(this.state)
             })
             .catch((error) => {
                 console.log(error);
@@ -112,84 +176,66 @@ export class BidOneResult extends Component {
         )
     }
 
-    bidOneResultList() {
-        console.log('bid 1 transfer')
-        console.log(this.state.bidOneResult)
-        return this.state.bidOneResult.map(currentbidResult => {
-            console.log('start time: ' + this.start())
-            console.log('end time: ' + this.end())
+    bidResultList() {
+
+        return this.state.result.map(currentbidResult => {
 
             const nowDate = Moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')
-            if (nowDate < this.start()) {
-                console.log('not reach start time')
-                toast.warning('The time for bidding has not yet reached');
+            // if (nowDate < this.start()) {
+            //     console.log('not reach start time')
+            //     toast.warning('The time for bidding has not yet reached');
 
-                this.sleep(2500).then(() => {
-                    toast.info('Please back on: ' + this.start());
-                })
+            //     this.sleep(2500).then(() => {
+            //         toast.info('Please back on: ' + this.start());
+            //     })
 
-                return null;
-            }
+            //     return null;
+            // }
 
-            else if (nowDate > this.end()) {
-                console.log('more than and time')
-                console.log(currentbidResult.to)
-                axios.
-                    post(`${process.env.REACT_APP_API_URL}/cleanUpRound1List`,
-                        {
-                            to: currentbidResult.to
-                        })
-                    .then(res => {
-                        console.log('delete all round 1 bid result! ')
-                        console.log(res)
-                        toast.error(res.data.message);
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                        toast.error(err.response.data.error);
-                        toast.error(err.response.data.errors);
-                    });
-            }
-            else {
-                console.log('between two times')
-                return <SecondBid bidResult={currentbidResult} key={currentbidResult._id} rank={this.rank()} last={this.last()} start={this.start()} end={this.end()} />;
-            }
+            // else 
+            console.log(currentbidResult)
+            console.log(currentbidResult.end)
+            console.log(nowDate > currentbidResult.end)
+            // if (nowDate > currentbidResult.end) {
+            //     console.log('more than end time')
+            //     console.log(currentbidResult.to)
+            //     toast.info('Time is up for bidding \'' + currentbidResult.to + '\'  !!!');
+            //     currentbidResult = null
+            // axios.
+            //     post(`${process.env.REACT_APP_API_URL}/cleanUpRound1List`,
+            //         {
+            //             to: currentbidResult.to
+            //         })
+            //     .then(res => {
+            //         console.log('delete all round 1 bid result! ')
+            //         console.log(res)
+            //         toast.error(res.data.message);
+            //     })
+            //     .catch(err => {
+            //         console.log(err.response);
+            //         toast.error(err.response.data.error);
+            //         toast.error(err.response.data.errors);
+            //     });
+            // }
+            // else {
+            console.log('valid bid time')
+            console.log(currentbidResult._id)
+            return <BidResultList bidResult={currentbidResult} key={currentbidResult._id} />;
+            // }
         })
     }
 
     sortList() {
-        return this.state.sortList.map(currentsortList => {
+        return this.state.allTransfer.map(currentsortList => {
+            console.log(currentsortList._id)
             return <Sort sortList={currentsortList} key={currentsortList._id} />;
         })
-    }
-
-    rank() {
-        return (this.state.sortList.findIndex(currentsortList => {
-            return currentsortList.from == isAuth().name;
-        })) + 1
-    }
-
-    last() {
-        return ((this.state.sortList)[(this.state.sortList).length - 1]).amount
-    }
-
-    start() {
-        const bid1StartDate = this.state.bidOneResult.map(result => result.date)
-        const date = (new Date(bid1StartDate)).setHours((new Date(bid1StartDate)).getHours() + 1)
-
-        return Moment(date).format('MMMM Do YYYY, h:00:00 a')
-    }
-
-    end() {
-        const bid1StartDate = this.state.bidOneResult.map(result => result.date)
-        const date = ((new Date(bid1StartDate)).setHours((new Date(bid1StartDate)).getHours() + 1))
-        return Moment(date).format('MMMM Do YYYY, h:30:00 a')
     }
 
     render() {
         return (
             <div>
-                <h5 style={{ 'color': 'grey' }}>1st Round Bid Result</h5>
+                <h5 style={{ 'color': 'grey' }}>Bid Result</h5>
 
                 <Table responsive="xl"
                     striped bordered hover size="sm"
@@ -203,17 +249,16 @@ export class BidOneResult extends Component {
                             <td>Activity Name</td>
                             <td>Amount</td>
                             <td>Lastone pay amount</td>
-                            <td>Bid Round 2 Start</td>
-                            <td>Bid Round 2 End</td>
-                            <td>Bid</td>
+                            <td>Bid End Time</td>
+                            <td>Update Coins</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.bidOneResultList()}
+                        {this.bidResultList()}
                     </tbody>
                 </Table>
 
-                <h5 style={{ 'color': 'grey' }}>Bid One List</h5>
+                <h5 style={{ 'color': 'grey' }}>Bid List</h5>
                 <Table
                     responsive="xl"
                     striped bordered hover
@@ -223,10 +268,10 @@ export class BidOneResult extends Component {
                 >
                     <thead style={{ backgroundColor: '#FFD632' }}>
                         <tr>
-                            <td>from</td>
+                            <td>Student</td>
                             <td>to</td>
-                            <td>date</td>
-                            <td>amonut</td>
+                            <td>Amonut</td>
+                            <td>Date</td>
                         </tr>
                     </thead>
                     <tbody>

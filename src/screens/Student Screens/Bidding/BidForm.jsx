@@ -2,16 +2,16 @@ import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from '../../../helpers/Controls';
 import { useForm, Form } from '../../../helpers/useForm';
-import { isAuth } from '../../../helpers/auth';
+import { activityId, isAuth } from '../../../helpers/auth';
 import { toast } from 'react-toastify';
 
 
 const initialFValues = {
-    id: 0,
-    from: '',
-    to: '',
+    _id:'',
+    student: '',
+    activity: '',
     amount: '',
-    date: Date()
+    transferDate: Date(),
 }
 
 export default function BidForm(props) {
@@ -19,32 +19,20 @@ export default function BidForm(props) {
 
     const filterOption = (options) => {
         let filterOptions = []
-
-        // const myDate = new Date(options[3].bidRound1Time);
-        // const newDate = new Date(myDate);
-        // console.log(myDate<=new Date());
-        // console.log(new Date(newDate.setHours(newDate.getHours() + 1))>=new Date());
-        // console.log('--------------hahahahah------------')
-
-        // console.log(new Date())
-        // for(var i = 0; i < options.length; i++) {
-        //     console.log('Round 1 Activity ' + options[i].name + '' + new Date(options[i].bidRound1Time))
-        //     console.log('Round 2 Activity ' + options[i].name + '' + (new Date(new Date(new Date(options[i].bidRound1Time)).setHours(new Date(new Date(options[i].bidRound1Time)).getHours() + 1))))
-
-
-        // }console.log('--------------------------')
-
         filterOptions = options.filter(option =>
-            (new Date(option.bidRound1Time) <= new Date()) && (new Date(new Date(new Date(option.bidRound1Time)).setHours(new Date(new Date(option.bidRound1Time)).getHours() + 1))) >= new Date())
+            (new Date(option.bidDate) <= new Date()) && (new Date(new Date(new Date(option.bidDate)).setHours(new Date(new Date(option.bidDate)).getHours() + 1))) >= new Date())
         return filterOptions;
     }
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('to' in fieldValues)
-            temp.to = fieldValues.to ? "" : "This field is required."
+        if ('activity' in fieldValues)
+            temp.activity = fieldValues.activity ? "" : "This field is required."
         if ('amount' in fieldValues)
             temp.amount = fieldValues.amount ? "" : "This field is required."
+        // if ('amount' in fieldValues)
+        // temp.amount = fieldValues.amount ? /^[0-9]*$/ : "Only digit."
+
         setErrors({
             ...temp
         })
@@ -66,39 +54,39 @@ export default function BidForm(props) {
     }, []);
 
     const loadSender = () => {
-        initialFValues.from = isAuth().name;
+        initialFValues.student = isAuth().name;
+        initialFValues._id = activityId()._id;
+
     };
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(values.amount)
         if (validate() && (isAuth().coins >= values.amount)) {
             bid(values, resetForm);
         }
-        else{
+        else {
             toast.warning('Your coins is not enough !');
         }
-        
     }
 
     return (
         <Form onSubmit={handleSubmit}>
             <Grid container>
                 <Controls.Input
-                    name="from"
+                    name="student"
                     label="Sender"
-                    value={values.from}
+                    value={values.student}
                     onChange={handleInputChange}
-                    error={errors.from}
+                    error={errors.student}
                     disabled={true}
                 />
                 <Controls.Select
-                    name="to"
+                    name="activity"
                     label="Receiver"
-                    value={values.to}
+                    value={values.activity}
                     onChange={handleInputChange}
                     options={filterOption(options)}
-                    error={errors.to}
+                    error={errors.activity}
                 />
                 <Controls.Input
                     name="amount"

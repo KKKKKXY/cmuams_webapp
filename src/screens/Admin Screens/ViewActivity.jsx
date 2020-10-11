@@ -26,6 +26,7 @@ const Activities = props => (
         <td>{props.activity.responsiblePerson}</td>
         <td>{props.activity.contact}</td>
         <td>{props.activity.seats}</td>
+        <td>{props.activity.creator}</td>
         <td>
             <Tooltip title="Delete" placement="top">
                 <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fa fa-trash" aria-hidden="true"></i></a>
@@ -117,6 +118,7 @@ export default class ViewActivity extends Component {
                             <td>Responsible Person</td>
                             <td>Phone No</td>
                             <td>Limit Participant</td>
+                            <td>Creator</td>
                             <td>Delete/Edit</td>
                         </tr>
                     </thead>
