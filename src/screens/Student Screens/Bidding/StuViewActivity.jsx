@@ -4,7 +4,7 @@ import PrivateNavbar from '../PrivateNavbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ToastContainer, toast } from 'react-toastify';
 import Popup from "../../../helpers/Popup";
-import BidForm from "./BidForm"
+import BidForm from "./Popup Forms/BidForm"
 import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
 import { Button } from 'react-bootstrap';

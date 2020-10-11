@@ -1,34 +1,20 @@
 import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
-import Controls from '../../../helpers/Controls';
-import { useForm, Form } from '../../../helpers/useForm';
-import { isAuth } from '../../../helpers/auth';
+import Controls from '../../../../helpers/Controls'
+import { useForm, Form } from '../../../../helpers/useForm';
+import { isAuth } from '../../../../helpers/auth';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const initialFValues = {
-    id: 0,
-    from: '',
-    to: '',
+    student: '',
+    activity: '',
     amount: '',
-    date: Date()
+    transferDate: Date(),
 }
 
 export default function PendingTransferForm(props) {
     const { activityName, amount } = props
-
-    const validate = (fieldValues = values) => {
-        let temp = { ...errors }
-        if ('to' in fieldValues)
-            temp.to = fieldValues.to ? "" : "This field is required."
-        if ('amount' in fieldValues)
-            temp.amount = fieldValues.amount ? "" : "This field is required."
-        setErrors({
-            ...temp
-        })
-        if (fieldValues == values)
-            return Object.values(temp).every(x => x == "")
-    }
 
     const {
         values,
@@ -36,25 +22,29 @@ export default function PendingTransferForm(props) {
         errors,
         setErrors,
         handleInputChange,
-    } = useForm(initialFValues, true, validate);
+    } = useForm(initialFValues, true);
 
     useEffect(() => {
-        loadSender();
+        loadTransferInfo();
     }, []);
 
-    const loadSender = () => {
-        initialFValues.from = isAuth().name;
-        initialFValues.to = activityName
+    const loadTransferInfo = () => {
+        initialFValues.student = isAuth().name;
+        initialFValues.activity = activityName
         initialFValues.amount = amount
     };
 
     const handleSubmit = e => {
+        console.log(values)
+
         e.preventDefault()
-        if (validate()) {
             axios.post(
-                `${process.env.REACT_APP_API_URL}/student/enrollActivity/${isAuth()._id}`,
+                `${process.env.REACT_APP_API_URL}/student/enrollActivity`,
                 {
-                    activityName
+                    student: values.student,
+                    activity: values.activity,
+                    amount: values.amount,
+                    transferDate: values.transferDate
                 })
                 .then(res => {
                     toast.success(res.data.message);
@@ -64,7 +54,6 @@ export default function PendingTransferForm(props) {
                     toast.error(err.response.data.error);
                     toast.error(err.response.data.errors);
                 });
-        }
     }
 
     return (
@@ -73,17 +62,17 @@ export default function PendingTransferForm(props) {
                 <Controls.Input
                     name="from"
                     label="Sender"
-                    value={values.from}
+                    value={values.student}
                     onChange={handleInputChange}
-                    error={errors.from}
+                    error={errors.student}
                     disabled={true}
                 />
                 <Controls.Input
                     name="to"
                     label="Receiver"
-                    value={values.to}
+                    value={values.activity}
                     onChange={handleInputChange}
-                    error={errors.to}
+                    error={errors.activity}
                     disabled={true}
                 />
                 <Controls.Input

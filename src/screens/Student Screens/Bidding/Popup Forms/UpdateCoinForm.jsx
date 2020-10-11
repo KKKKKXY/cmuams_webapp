@@ -1,41 +1,31 @@
 import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
-import Controls from '../../../helpers/Controls';
-import { useForm, Form } from '../../../helpers/useForm';
-import { activityId, isAuth } from '../../../helpers/auth';
+import Controls from '../../../../helpers/Controls'
+import { useForm, Form } from '../../../../helpers/useForm';
+import { isAuth, activityId } from '../../../../helpers/auth';
 import { toast } from 'react-toastify';
 
 
 const initialFValues = {
-    _id:'',
+    _id: '',
     student: '',
     activity: '',
     amount: '',
     transferDate: Date(),
 }
 
-export default function BidForm(props) {
-    const { bid, options } = props
-
-    const filterOption = (options) => {
-        let filterOptions = []
-        filterOptions = options.filter(option =>
-            (new Date(option.bidDate) <= new Date()) && (new Date(new Date(new Date(option.bidDate)).setHours(new Date(new Date(option.bidDate)).getHours() + 1))) >= new Date())
-        return filterOptions;
-    }
+export default function UpdateCoinForm(props) {
+    const { bid, activityName } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('activity' in fieldValues)
-            temp.activity = fieldValues.activity ? "" : "This field is required."
         if ('amount' in fieldValues)
             temp.amount = fieldValues.amount ? "" : "This field is required."
-        // if ('amount' in fieldValues)
-        // temp.amount = fieldValues.amount ? /^[0-9]*$/ : "Only digit."
 
         setErrors({
             ...temp
         })
+
         if (fieldValues == values)
             return Object.values(temp).every(x => x == "")
     }
@@ -55,8 +45,8 @@ export default function BidForm(props) {
 
     const loadSender = () => {
         initialFValues.student = isAuth().name;
+        initialFValues.activity = activityName
         initialFValues._id = activityId()._id;
-
     };
 
     const handleSubmit = e => {
@@ -80,13 +70,13 @@ export default function BidForm(props) {
                     error={errors.student}
                     disabled={true}
                 />
-                <Controls.Select
+                <Controls.Input
                     name="activity"
                     label="Receiver"
                     value={values.activity}
                     onChange={handleInputChange}
-                    options={filterOption(options)}
                     error={errors.activity}
+                    disabled={true}
                 />
                 <Controls.Input
                     name="amount"

@@ -11,33 +11,16 @@ const { requireSignin } = require('../controllers/auth.controller');
 const { enrollActivityController } = require('../controllers/student.controller');
 const { transferController } = require('../controllers/student.controller')
 const { BidController } = require('../controllers/student.controller')
-
-
 const { UpdateCoinsAmountController } = require('../controllers/student.controller')
-
-
 const { listBidTransferController } = require('../controllers/student.controller')
-const { round2BidController } = require('../controllers/student.controller')
-const { listRound2TransferController } = require('../controllers/student.controller')
-const { deleteAllRound1TransferController } = require('../controllers/student.controller')
 const { deleteAllRound2TransferController } = require('../controllers/student.controller')
 
-
-router.post('/student/enrollActivity/:userId', enrollActivityController);
+router.post('/student/enrollActivity', enrollActivityController);
 router.post('/student/transfer', transferController);
 router.post('/student/bidActivity', BidController);
 router.get('/bidTransfer/:id', listBidTransferController);
-
 router.put('/updateCoins', UpdateCoinsAmountController);
 
-
-router.post('/student/secondBidRound', round2BidController);
-router.get('/secondBidRoundTransfer', listRound2TransferController);
-router.post('/cleanUpRound1List', deleteAllRound1TransferController)
 router.post('/cleanUpRound2List', deleteAllRound2TransferController)
-
-
-
-
 
 module.exports = router;

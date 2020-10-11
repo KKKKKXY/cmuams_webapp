@@ -5,7 +5,7 @@ import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
 import Tooltip from '@material-ui/core/Tooltip';
 import Popup from "../../../helpers/Popup";
-import UpdateCoinForm from "./Bid2Form"
+import UpdateCoinForm from "./Popup Forms/UpdateCoinForm"
 import Moment from 'moment';
 import { toast } from 'react-toastify';
 
@@ -77,7 +77,7 @@ function All(_id, to, amount, student, transferDate) {
     this.transferDate = transferDate;
 }
 
-export class BidOneResult extends Component {
+export class BidResult extends Component {
 
     constructor(props) {
         super(props);
@@ -130,23 +130,25 @@ export class BidOneResult extends Component {
                         })
 
                         const bidTransfer = students.filter(student => student.student == isAuth().name)
-
-                        const bidDate = activities[i].bidDate
-                        const date = ((new Date(bidDate)).setHours((new Date(bidDate)).getHours() + 1))
-
-                        _id = bidTransfer[0]._id
-                        rank = students.findIndex(currentsortList => { return currentsortList.student == isAuth().name; }) + 1
                         to = activities[i].activityName
-                        amount = parseInt(bidTransfer[0].amount)
-                        last = students[students.length - 1].amount
-                        end = Moment(date).format('MMMM Do YYYY, h:30:00 a')
 
-                        if (bidTransfer != '') {
+                        if(bidTransfer == ''){
+                            _id = 0
+                        }
+                        else{
+                            const bidDate = activities[i].bidDate
+                            const date = (new Date(bidDate)).setMinutes((new Date(bidDate)).getMinutes() + 90)
+    
+                            _id = bidTransfer[0]._id
+                            rank = students.findIndex(currentsortList => { return currentsortList.student == isAuth().name; }) + 1
+                            amount = parseInt(bidTransfer[0].amount)
+                            last = students[students.length - 1].amount
+                            end = Moment(date).format('MMMM Do YYYY, HH:mm:ss')
                             result.push(new Result(_id, rank, to, amount, last, end))
                         }
 
                         for (var j = 0; j < students.length; j++) {
-                            allTransfer.push(new All(students[j]._id, to, students[j].amount, students[j].student, Moment(students[j].transferDate).format('MMMM Do YYYY, h:mm:ss a')))
+                            allTransfer.push(new All(students[j]._id, to, students[j].amount, students[j].student, Moment(students[j].transferDate).format('MMMM Do YYYY, HH:mm:ss')))
                         }
                     }
                     else {
@@ -163,7 +165,6 @@ export class BidOneResult extends Component {
                     result: result,
                     allTransfer: allTransfer
                 })
-
                 console.log(this.state)
             })
             .catch((error) => {
@@ -177,57 +178,41 @@ export class BidOneResult extends Component {
     }
 
     bidResultList() {
-
         return this.state.result.map(currentbidResult => {
-
-            const nowDate = Moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')
-            // if (nowDate < this.start()) {
-            //     console.log('not reach start time')
-            //     toast.warning('The time for bidding has not yet reached');
-
-            //     this.sleep(2500).then(() => {
-            //         toast.info('Please back on: ' + this.start());
-            //     })
-
-            //     return null;
-            // }
-
-            // else 
             console.log(currentbidResult)
-            console.log(currentbidResult.end)
-            console.log(nowDate > currentbidResult.end)
-            // if (nowDate > currentbidResult.end) {
-            //     console.log('more than end time')
-            //     console.log(currentbidResult.to)
-            //     toast.info('Time is up for bidding \'' + currentbidResult.to + '\'  !!!');
-            //     currentbidResult = null
-            // axios.
-            //     post(`${process.env.REACT_APP_API_URL}/cleanUpRound1List`,
-            //         {
-            //             to: currentbidResult.to
-            //         })
-            //     .then(res => {
-            //         console.log('delete all round 1 bid result! ')
-            //         console.log(res)
-            //         toast.error(res.data.message);
-            //     })
-            //     .catch(err => {
-            //         console.log(err.response);
-            //         toast.error(err.response.data.error);
-            //         toast.error(err.response.data.errors);
-            //     });
-            // }
-            // else {
-            console.log('valid bid time')
-            console.log(currentbidResult._id)
-            return <BidResultList bidResult={currentbidResult} key={currentbidResult._id} />;
-            // }
+
+            const nowDate = Moment(new Date()).format('MMMM Do YYYY, HH:mm:ss')
+            // console.log(nowDate)
+            // console.log(currentbidResult.end)
+            // console.log(nowDate > (currentbidResult.end))
+
+            if (nowDate > currentbidResult.end) {
+                toast.error('Time is up for bidding \'' + currentbidResult.to + '\'  !!!');
+                axios.
+                    post(`${process.env.REACT_APP_API_URL}/student/enrollActivity`,
+                        {
+                            activity: currentbidResult.to
+                        })
+                    .then(res => {
+                        console.log('delete all round 1 bid result! ')
+                        console.log(res)
+                        toast.success(res.data.message);
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                        toast.error(err.response.data.error);
+                        toast.error(err.response.data.errors);
+                    });
+            }
+            else {
+                console.log('valid bid time')
+                return <BidResultList bidResult={currentbidResult} key={currentbidResult._id} />;
+            }
         })
     }
 
     sortList() {
         return this.state.allTransfer.map(currentsortList => {
-            console.log(currentsortList._id)
             return <Sort sortList={currentsortList} key={currentsortList._id} />;
         })
     }

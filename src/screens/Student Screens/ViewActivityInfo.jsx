@@ -30,7 +30,7 @@ const ViewActivityInfo = ({ history }) => {
                 const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = res.data.activity;
                 console.log(activityDate)
 
-                console.log(Moment(activityDate).format('MMMM Do YYYY, h:mm:ss a'))
+                console.log(Moment(activityDate).format('MMMM Do YYYY, HH:mm:ss'))
                 setFormData({ ...formData, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats });
             })
             .catch(err => {
@@ -81,14 +81,14 @@ const ViewActivityInfo = ({ history }) => {
                                 <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                                     type='text'
-                                    value={Moment(activityDate).format('MMMM Do YYYY, h:mm:ss a')}
+                                    value={Moment(activityDate).format('MMMM Do YYYY, HH:mm:ss')}
                                     disabled
                                 />
 
                                 <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                                     type='text'
-                                    value={Moment(bidDate).format('MMMM Do YYYY, h:mm:ss a')}
+                                    value={Moment(bidDate).format('MMMM Do YYYY, HH:mm:ss')}
                                     disabled
                                 />
 

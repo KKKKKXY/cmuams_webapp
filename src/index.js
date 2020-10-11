@@ -24,8 +24,7 @@ import ViewTransacRecord from './screens/Student Screens/ViewTransacRecord';
 import Transfer from './screens/Student Screens/Transfer';
 import Rules from './screens/Student Screens/Rules'
 import ViewActivityInfo from './screens/Student Screens/ViewActivityInfo'
-
-
+import EnrolledList from './screens/Student Screens/Bidding/EnrolledList'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -51,6 +50,7 @@ ReactDOM.render(
       <PrivateRoute path='/transfer' exact component={Transfer} />
       <PrivateRoute path='/rules' exact component={Rules} />
       <PrivateRoute path='/viewActivityInfo' exact component={ViewActivityInfo} />
+      <PrivateRoute path='/enrolledList' exact component={EnrolledList} />
       
 
       <Redirect to='/' />
