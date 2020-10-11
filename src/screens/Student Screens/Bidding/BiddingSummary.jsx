@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PrivateNavbar from '../PrivateNavbar';
 import { ToastContainer } from 'react-toastify';
-import { BidOneResult } from './BidOneResult';
-import { BidTwoResult } from './BidTwoResult';
-import { EnrolledList } from './EnrolledList';
+import { BidResult } from './BidResult';
+import { PendingTransfer } from './PendingTransfer';
 
 export default class BiddingSummary extends Component {
 
@@ -15,9 +14,8 @@ export default class BiddingSummary extends Component {
         <div></div>
         <ToastContainer />
 
-        <BidOneResult/>
-        {/* <BidTwoResult /> */}
-        {/* <EnrolledList /> */}
+        <BidResult/>
+        <PendingTransfer />
 
       </div>
     )

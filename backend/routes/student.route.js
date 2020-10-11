@@ -23,7 +23,7 @@ const { deleteAllRound1TransferController } = require('../controllers/student.co
 const { deleteAllRound2TransferController } = require('../controllers/student.controller')
 
 
-router.post('/student/enrollActivity/:userId', enrollActivityController);
+router.post('/student/enrollActivity', enrollActivityController);
 router.post('/student/transfer', transferController);
 router.post('/student/bidActivity', BidController);
 router.get('/bidTransfer/:id', listBidTransferController);

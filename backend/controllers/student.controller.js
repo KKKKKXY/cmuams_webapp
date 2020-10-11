@@ -8,8 +8,11 @@ const { errorHandler } = require('../helpers/dbErrorHandling');
 const SecondRound = require('../models/round2Transfer.model');
 
 exports.enrollActivityController = (req, res) => {
-    const userId = req.params.userId;
-    const { activityName } = req.body;
+
+    const { student, activity, amount, transferDate } = req.body;
+    const transfer = new BidTransfer({
+        student, amount, transferDate
+    });
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -18,30 +21,33 @@ exports.enrollActivityController = (req, res) => {
             error: firstError
         });
     } else {
-        Activity.findOne({ activityName: activityName }).exec((err, activity) => {
-            if (err || !activity) {
+        Activity.findOne({ activityName: activity }).exec((err, act) => {
+            if (err || !act) {
                 return res.status(400).json({
                     error: 'Activity not found'
                 });
             } else {
-                User.findById(userId).exec((err, user) => {
+                User.findOne({ name: student }).exec((err, user) => {
                     if (err || !user) {
                         return res.status(400).json({
                             error: 'User not found'
                         });
                     } else {
-                        if ((user.enrolled).some(enrolled => enrolled.activityName == activityName)) {
+                        if ((user.enrolled).some(enrolled => enrolled.activityName == activity)) {
                             return res.status(400).json({
                                 error: 'You already transfered!'
                             });
                         }
                         else {
-                            user.enrolled.push(activity)
+                            user.enrolled.push(act)
+                            act.students.push(transfer)
                             user.save()
+                            act.save()
                             return res.json({
                                 success: true,
                                 message: 'Student enrolled activity Successfully',
-                                activity
+                                act,
+                                transfer
                             });
                         }
                     }

@@ -5,10 +5,8 @@ import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
 import Tooltip from '@material-ui/core/Tooltip';
 import Popup from "../../../helpers/Popup";
-import UpdateCoinForm from "./Bid2Form"
+import UpdateCoinForm from "./Popup Forms/UpdateCoinForm"
 import Moment from 'moment';
-import { toast } from 'react-toastify';
-
 
 const BidResultList = props => {
     const [openPopup, setOpenPopup] = useState(false)
@@ -77,7 +75,7 @@ function All(_id, to, amount, student, transferDate) {
     this.transferDate = transferDate;
 }
 
-export class BidOneResult extends Component {
+export class BidResult extends Component {
 
     constructor(props) {
         super(props);
