@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PrivateNavbar from '../PrivateNavbar';
 import { ToastContainer } from 'react-toastify';
 import { BidResult } from './BidResult';
-import { PendingTransfer } from './PendingTransfer';
 
 export default class BiddingSummary extends Component {
 
@@ -15,8 +14,6 @@ export default class BiddingSummary extends Component {
         <ToastContainer />
 
         <BidResult/>
-        <PendingTransfer />
-
       </div>
     )
   }

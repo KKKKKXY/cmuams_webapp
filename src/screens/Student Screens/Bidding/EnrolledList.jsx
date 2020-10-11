@@ -12,7 +12,7 @@ import PrivateNavbar from '../PrivateNavbar';
 const Enrolled = props => (
     <tr>
         <td>{props.enrolledActivity.activityName}</td>
-        <td>{Moment(props.enrolledActivity.activityDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
+        <td>{Moment(props.enrolledActivity.activityDate).format('MMMM Do YYYY, HH:mm:ss')}</td>
         <td>{props.enrolledActivity.location}</td>
         <td>
             <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.enrolledActivity._id)}>Info</Button>{' '}

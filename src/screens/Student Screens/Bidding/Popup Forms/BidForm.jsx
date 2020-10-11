@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 
 const initialFValues = {
-    _id:'',
     student: '',
     activity: '',
     amount: '',
@@ -30,8 +29,6 @@ export default function BidForm(props) {
             temp.activity = fieldValues.activity ? "" : "This field is required."
         if ('amount' in fieldValues)
             temp.amount = fieldValues.amount ? "" : "This field is required."
-        // if ('amount' in fieldValues)
-        // temp.amount = fieldValues.amount ? /^[0-9]*$/ : "Only digit."
 
         setErrors({
             ...temp
@@ -55,7 +52,6 @@ export default function BidForm(props) {
 
     const loadSender = () => {
         initialFValues.student = isAuth().name;
-        initialFValues._id = activityId()._id;
 
     };
 
