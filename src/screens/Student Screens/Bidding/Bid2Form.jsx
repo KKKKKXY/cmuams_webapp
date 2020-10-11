@@ -2,28 +2,30 @@ import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from '../../../helpers/Controls';
 import { useForm, Form } from '../../../helpers/useForm';
-import { isAuth } from '../../../helpers/auth';
+import { isAuth, activityId } from '../../../helpers/auth';
+import { toast } from 'react-toastify';
+
 
 const initialFValues = {
-    id: 0,
-    from: '',
-    to: '',
+    _id: '',
+    student: '',
+    activity: '',
     amount: '',
-    date: Date()
+    transferDate: Date(),
 }
 
 export default function Bid2Form(props) {
-    const { bid,activityName } = props
+    const { bid, activityName } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('to' in fieldValues)
-            temp.to = fieldValues.to ? "" : "This field is required."
         if ('amount' in fieldValues)
             temp.amount = fieldValues.amount ? "" : "This field is required."
+
         setErrors({
             ...temp
         })
+
         if (fieldValues == values)
             return Object.values(temp).every(x => x == "")
     }
@@ -42,14 +44,18 @@ export default function Bid2Form(props) {
     }, []);
 
     const loadSender = () => {
-        initialFValues.from = isAuth().name;
-        initialFValues.to = activityName
+        initialFValues.student = isAuth().name;
+        initialFValues.activity = activityName
+        initialFValues._id = activityId()._id;
     };
 
     const handleSubmit = e => {
         e.preventDefault()
-        if (validate()) {
+        if (validate() && (isAuth().coins >= values.amount)) {
             bid(values, resetForm);
+        }
+        else {
+            toast.warning('Your coins is not enough !');
         }
     }
 
@@ -57,19 +63,19 @@ export default function Bid2Form(props) {
         <Form onSubmit={handleSubmit}>
             <Grid container>
                 <Controls.Input
-                    name="from"
+                    name="student"
                     label="Sender"
-                    value={values.from}
+                    value={values.student}
                     onChange={handleInputChange}
-                    error={errors.from}
+                    error={errors.student}
                     disabled={true}
                 />
                 <Controls.Input
-                    name="to"
+                    name="activity"
                     label="Receiver"
-                    value={values.to}
+                    value={values.activity}
                     onChange={handleInputChange}
-                    error={errors.to}
+                    error={errors.activity}
                     disabled={true}
                 />
                 <Controls.Input

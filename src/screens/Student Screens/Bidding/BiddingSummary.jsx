@@ -16,8 +16,8 @@ export default class BiddingSummary extends Component {
         <ToastContainer />
 
         <BidOneResult/>
-        <BidTwoResult />
-        <EnrolledList />
+        {/* <BidTwoResult /> */}
+        {/* <EnrolledList /> */}
 
       </div>
     )

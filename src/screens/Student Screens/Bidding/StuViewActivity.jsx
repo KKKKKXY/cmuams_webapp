@@ -15,9 +15,7 @@ const Activities = props => {
 
     const bid = (transter, resetForm) => {
         console.log('Bid Round 1')
-        console.log(transter)
-        if (transter.id == 0)
-            bidActivityService.insert1stTransfer(transter)
+        bidActivityService.insertBidTransfer(transter)
         resetForm()
         setOpenPopup(false)
     }
@@ -53,12 +51,11 @@ const Activities = props => {
     )
 }
 
-function Receiver(_id, id, name, bidRound1Time, bidRound2Time) {
-    this._id = _id;
+function Receiver(id, activityName, activityDate, bidDate) {
     this.id = id;
-    this.name = name;
-    this.bidRound1Time = bidRound1Time;
-    this.bidRound2Time = bidRound2Time;
+    this.activityName = activityName;
+    this.activityDate = activityDate;
+    this.bidDate = bidDate;
 }
 
 export default class StuViewActivity extends Component {
@@ -80,15 +77,14 @@ export default class StuViewActivity extends Component {
             .then(response => {
                 let tmpArray = []
                 for (var i = 0; i < response.data.length; i++) {
-                    tmpArray.push(new Receiver(response.data[i]._id, (i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
+                    tmpArray.push(new Receiver((i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
                 }
                 this.setState({
-                    // activities: response.data,
                     activities: (response.data).sort((a, b) => {
                         //sort by date
-                        if (a.activityDate < b.activityDate)
+                        if (a.bidDate < b.bidDate)
                             return -1;
-                        else if (a.activityDate > b.activityDate)
+                        else if (a.bidDate > b.bidDate)
                             return 1;
 
                         return 0;
@@ -119,8 +115,6 @@ export default class StuViewActivity extends Component {
                 toast.error(err.response.data.errors);
             });
     }
-
-
 
     activityList() {
         return this.state.activities.map(currentactivity => {
