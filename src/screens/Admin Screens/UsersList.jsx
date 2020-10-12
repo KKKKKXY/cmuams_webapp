@@ -3,15 +3,15 @@ import axios from 'axios';
 import AdminNavbar from './AdminNavbar';
 import { ToastContainer, toast } from 'react-toastify';
 import Table from 'react-bootstrap/Table'
-
+import Moment from 'moment';
 
 const UserAccounts = props => (
 
   <tr>
     <td>{props.user.name}</td>
     <td>{props.user.email}</td>
-    <td>{props.user.createdAt}</td>
-    <td>{props.user.updatedAt}</td>
+    <td>{Moment(props.user.createdAt).format('MMMM Do YYYY, HH:mm:ss')}</td>
+    <td>{Moment(props.user.updatedAt).format('MMMM Do YYYY, HH:mm:ss')}</td>
     <td>{props.user.role}</td>
     <td>
       <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.user.name + ') ?')) props.deleteUser(props.user._id) }}><i className="fa fa-trash" aria-hidden="true"></i></a>
@@ -72,11 +72,11 @@ export default class UsersList extends Component {
 
           <thead className="thead-light">
             <tr>
-              <th>Name</th>
-              <th>E-mail address</th>
-              <th>Created time</th>
-              <th>Updated time</th>
-              <th>Role</th>
+              <th>User Name</th>
+              <th>E-mail Address</th>
+              <th>Created Time</th>
+              <th>Updated Time</th>
+              <th>Account Type</th>
               <th>Delete</th>
             </tr>
           </thead>

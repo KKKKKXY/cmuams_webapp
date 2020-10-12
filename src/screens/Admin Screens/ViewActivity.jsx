@@ -149,8 +149,8 @@ export default class ViewActivity extends Component {
                             <td>Activity Name</td>
                             <td>Activity Date</td>
                             <td>Stuff</td>
-                            <td>Student</td>
-                            <td>Info</td>
+                            <td>Student List</td>
+                            <td>Detail</td>
                             <td>Delete/Edit</td>
                         </tr>
                     </thead>

@@ -188,7 +188,6 @@ export class BidResult extends Component {
             // console.log(nowDate > (currentbidResult.end))
 
             if (nowDate > currentbidResult.end) {
-                toast.error('Time is up for bidding \'' + currentbidResult.to + '\'  !!!');
                 axios.
                     post(`${process.env.REACT_APP_API_URL}/student/enrollActivity`,
                         {
@@ -197,7 +196,7 @@ export class BidResult extends Component {
                     .then(res => {
                         console.log('delete all round 1 bid result! ')
                         console.log(res)
-                        toast.success(res.data.message);
+                        // toast.success(res.data.message);
                     })
                     .catch(err => {
                         console.log(err.response);
