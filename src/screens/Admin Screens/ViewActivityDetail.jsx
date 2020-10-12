@@ -3,12 +3,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { activityId, isAuth } from '../../helpers/auth';
 import "react-datepicker/dist/react-datepicker.css";
-import PrivateNavbar from './PrivateNavbar';
+import AdminNavbar from './AdminNavbar';
 import Moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 
 
-const ViewActivityInfo = ({ history }) => {
+const ViewActivityDetail = ({ history }) => {
     const [formData, setFormData] = useState({
         activityName: '',
         description: '',
@@ -17,7 +17,8 @@ const ViewActivityInfo = ({ history }) => {
         location: '',
         responsiblePerson: '',
         contact: '',
-        seats: ''
+        seats: '',
+        creator: ''
     });
 
     useEffect(() => {
@@ -28,32 +29,32 @@ const ViewActivityInfo = ({ history }) => {
         axios
             .get(`${process.env.REACT_APP_API_URL}/activity/${activityId()._id}`)
             .then(res => {
-                const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = res.data.activity;
+                const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, creator } = res.data.activity;
                 console.log(activityDate)
 
                 console.log(Moment(activityDate).format('MMMM Do YYYY, HH:mm:ss'))
-                setFormData({ ...formData, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats });
+                setFormData({ ...formData, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, creator });
             })
             .catch(err => {
                 toast.error(`Error To Your Information ${err.response.statusText}`);
                 if (err.response.status === 401) {
-                    history.push('/stuviewactivity');
+                    history.push('/activitylist')
                 }
             });
     };
 
 
-    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = formData;
+    const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats, creator } = formData;
 
 
     const handleSubmit = e => {
-        history.push('/stuviewactivity');
+        history.push('/activitylist')
     };
 
 
     return (
         <div className="container">
-            <PrivateNavbar />
+            <AdminNavbar />
             <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
                 <ToastContainer />
                 <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
@@ -143,6 +144,15 @@ const ViewActivityInfo = ({ history }) => {
                                     disabled
                                 />
 
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Creator"
+                                    multiline
+                                    value={creator}
+                                    disabled
+                                />
+
                                 <button
                                     type='submit'
                                     className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
@@ -158,4 +168,4 @@ const ViewActivityInfo = ({ history }) => {
     );
 };
 
-export default ViewActivityInfo;
+export default ViewActivityDetail;

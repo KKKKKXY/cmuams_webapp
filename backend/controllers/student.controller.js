@@ -5,6 +5,7 @@ const Transfer = require('../models/transfer.model');
 const BlockChain = require('../controllers/blockchain.controller')
 const BidTransfer = require('../models/bidTransfer.model');
 const { errorHandler } = require('../helpers/dbErrorHandling');
+const blockChainModel = require('../models/blockchain.model')
 
 // exports.enrollActivityController = (req, res) => {
 
@@ -92,18 +93,15 @@ exports.enrollActivityController = (req, res) => {
 
                         return 0;
                     })
-                    console.log('sorted -- -- -- -- -- -- -- -- --')
-                    console.log(students)
-                    console.log(act.seats)
 
                     for (var i = 0; i < act.seats; i++) {
                         let stu = students[i].student
 
                         User.findOne({ name: stu }).exec((err, user) => {
                             if (err || !user) {
-                                return res.status(400).json({
-                                    error: 'User not found'
-                                });
+                                // return res.status(400).json({
+                                //     error: 'User not found'
+                                // });
                             } else {
                                 const enrollActivity = new Activity({
                                     activityName: act.activityName,
@@ -124,15 +122,12 @@ exports.enrollActivityController = (req, res) => {
                                 else {
                                     user.enrolled.push(enrollActivity)
                                 }
+                                user.save()
+
                             }
-                            user.save()
                         })
                     }
 
-                    console.log('splice........')
-
-                    console.log(act.seats)
-                    console.log(act.students.length)
                     for (var j = act.seats; j < act.students.length; j++) {
                         act.students.splice(j, 1);
                     }
@@ -333,4 +328,40 @@ exports.transferController = (req, res) => {
             }
         });
     }
+};
+
+exports.getTransferController = (req, res) => {
+    const userId = req.params.id;
+
+    User.findById({ _id: userId }).exec((err, user) => {
+        if (err || !user) {
+            // return res.status(400).json({
+            //     error: 'User not found'
+            // });
+        } else {
+            blockChainModel.find().exec((err, chains) => {
+                if (err || !chains || chains == "") {
+                    // return res.status(400).json({
+                    //     error: 'Activities not found'
+                    // });
+                }
+                else {
+                    console.log(chains.length)
+                    let transfer = []
+
+                    for (var i = 0; i < chains.length; i++) {
+                        console.log((chains[i].transaction[0].senderEmail == user.email) || (chains[i].transaction[0].recipientEmail == user.email))
+
+                        if ((chains[i].transaction[0].senderEmail == user.email) || (chains[i].transaction[0].recipientEmail == user.email)) {
+                            transfer.push(chains[i].transaction[0])
+                        }
+                    }
+                    return res.json({
+                        success: true,
+                        transfer
+                    });
+                }
+            });
+        }
+    })
 };

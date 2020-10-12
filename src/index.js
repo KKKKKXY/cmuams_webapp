@@ -26,6 +26,9 @@ import Rules from './screens/Student Screens/Rules'
 import ViewActivityInfo from './screens/Student Screens/ViewActivityInfo'
 import EnrolledList from './screens/Student Screens/Bidding/EnrolledList'
 import ViewStudent from './screens/Admin Screens/ViewStudent';
+import ViewActivityDetail from './screens/Admin Screens/ViewActivityDetail';
+
+
 
 
 ReactDOM.render(
@@ -37,7 +40,6 @@ ReactDOM.render(
       <Route path='/users/password/reset/:token' exact render={props => <ResetPassword {...props} />} />
       <Route path='/register' exact render={props => <Register {...props} />} />
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
-      <Route path='/viewActivityInfo' exact component={ViewActivityInfo} />
 
       <AdminRoute path="/admin" exact component={Admin} />
       <AdminRoute path="/usersInfo" exact component={UsersList} />
@@ -45,8 +47,7 @@ ReactDOM.render(
       <AdminRoute path="/activitylist" exact component={ViewActivity} />
       <AdminRoute path='/editActivity' exact component={EditActivity} />
       <AdminRoute path='/viewStudent' exact component={ViewStudent} />
-
-      
+      <AdminRoute path='/viewActivityDetail' exact component={ViewActivityDetail} />
 
       <PrivateRoute path="/private" exact component={Private} />
       <PrivateRoute path="/stuviewactivity" exact component={StuViewActivity} />
@@ -56,7 +57,7 @@ ReactDOM.render(
       <PrivateRoute path='/transfer' exact component={Transfer} />
       <PrivateRoute path='/rules' exact component={Rules} />
       <PrivateRoute path='/enrolledList' exact component={EnrolledList} />
-      
+      <PrivateRoute path='/viewActivityInfo' exact component={ViewActivityInfo} />
 
       <Redirect to='/' />
     </Switch>

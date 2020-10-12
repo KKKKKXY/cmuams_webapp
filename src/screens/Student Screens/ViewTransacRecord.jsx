@@ -11,8 +11,14 @@ const Transaction = props => (
     <td>{props.transaction.amount}</td>
     <td>{props.transaction.transferDate}</td>
   </tr>
-
 )
+
+function Transac(senderEmail, recipientEmail, amount, transferDate) {
+  this.senderEmail = senderEmail;
+  this.recipientEmail = recipientEmail;
+  this.amount = amount;
+  this.transferDate = transferDate;
+}
 
 export default class ViewTransacRecordList extends Component {
   constructor(props) {
@@ -21,13 +27,14 @@ export default class ViewTransacRecordList extends Component {
   }
 
   componentDidMount() {
+    let all = []
+    let transfer = []
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
+      .get(`${process.env.REACT_APP_API_URL}/transacHistory/${isAuth()._id}`)
       .then(response => {
-        if (isAuth().enrolled == "") {
-          toast.error("There are no transactions");
-        }
-        this.setState({ userTransac: response.data.transaction })
+        console.log(response)
+        all = response.data.transfer
+        this.setState({ userTransac: all })
       })
       .catch((error) => {
         console.log(error);
