@@ -5,7 +5,7 @@ import { activityId } from '../../helpers/auth';
 import "react-datepicker/dist/react-datepicker.css";
 import PrivateNavbar from './PrivateNavbar';
 import Moment from 'moment';
-
+import { isAuth } from '../../helpers/auth';
 
 const ViewActivityInfo = ({ history }) => {
     const [formData, setFormData] = useState({
@@ -45,8 +45,9 @@ const ViewActivityInfo = ({ history }) => {
 
 
     const handleSubmit = e => {
-        history.push('/stuviewactivity');
-
+        isAuth() && isAuth().role === 'admin'
+        ? history.push('/activitylist')
+        : history.push('/stuviewactivity');
     };
 
     return (

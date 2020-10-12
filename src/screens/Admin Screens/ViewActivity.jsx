@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { green } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
 import Table from 'react-bootstrap/Table'
-
+import { Button } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
     fab: {
@@ -19,14 +19,15 @@ const useStyles = makeStyles((theme) => ({
 const Activities = props => (
     <tr>
         <td>{props.activity.activityName}</td>
-        <td>{props.activity.description}</td>
         <td>{props.activity.activityDate}</td>
-        <td>{props.activity.bidDate}</td>
-        <td>{props.activity.location}</td>
         <td>{props.activity.responsiblePerson}</td>
-        <td>{props.activity.contact}</td>
-        <td>{props.activity.seats}</td>
-        <td>{props.activity.creator}</td>
+        <td>
+            <Button variant="outline-info" onClick={() => props.viewStudent(props.activity._id)}>Student</Button>{' '}
+        </td>
+        <td>
+            <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.activity._id)}>Info</Button>{' '}
+        </td>
+
         <td>
             <Tooltip title="Delete" placement="top">
                 <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fa fa-trash" aria-hidden="true"></i></a>
@@ -43,6 +44,9 @@ export default class ViewActivity extends Component {
         super(props);
         this.deleteActivity = this.deleteActivity.bind(this);
         this.editActivity = this.editActivity.bind(this);
+        this.viewStudent = this.viewStudent.bind(this);
+
+        this.viewActivityInfo = this.viewActivityInfo.bind(this);
         this.state = { activities: [] };
     }
 
@@ -55,6 +59,38 @@ export default class ViewActivity extends Component {
                 console.log(error);
             })
     }
+
+        viewStudent(id) {
+        axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
+            .then(res => {
+                setActivityLocalStorage(res, () => { });
+                if (localStorage.getItem('activity')) {
+                    window.location.href = '/viewStudent'
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
+    }
+
+    viewActivityInfo(id) {
+        axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
+            .then(res => {
+                setActivityLocalStorage(res, () => { });
+                if (localStorage.getItem('activity')) {
+                    window.location.href = '/viewActivityInfo'
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+                toast.error(err.response.data.error);
+                toast.error(err.response.data.errors);
+            });
+    }
+
+    
 
     deleteActivity(id) {
         axios.delete(`${process.env.REACT_APP_API_URL}/activity/${id}`)
@@ -88,7 +124,7 @@ export default class ViewActivity extends Component {
 
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} editActivity={this.editActivity} key={currentactivity._id} />;
+            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} editActivity={this.editActivity} key={currentactivity._id} viewActivityInfo={this.viewActivityInfo} viewStudent={this.viewStudent}/>;
         })
     }
 
@@ -111,14 +147,10 @@ export default class ViewActivity extends Component {
                     <thead className="thead-light">
                         <tr>
                             <td>Name</td>
-                            <td>Description</td>
-                            <td>Start Date</td>
-                            <td>Bid End Date</td>
-                            <td>Location</td>
-                            <td>Responsible Person</td>
-                            <td>Phone No</td>
-                            <td>Limit Participant</td>
-                            <td>Creator</td>
+                            <td>Activity Date</td>
+                            <td>Stuff</td>
+                            <td>Student</td>
+                            <td>Info</td>
                             <td>Delete/Edit</td>
                         </tr>
                     </thead>
