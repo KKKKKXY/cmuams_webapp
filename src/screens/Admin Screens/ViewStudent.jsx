@@ -5,19 +5,15 @@ import { activityId } from '../../helpers/auth';
 import "react-datepicker/dist/react-datepicker.css";
 import AdminNavbar from './AdminNavbar';
 import Table from 'react-bootstrap/Table'
-import { green } from '@material-ui/core/colors';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
 import { Button } from 'react-bootstrap';
-
-
+import Moment from 'moment';
 
 const Sort = props => (
     <tr>
         <td>{activityId().activityName}</td>
         <td>{props.sortList.student}</td>
         <td>{props.sortList.amount}</td>
-        <td>{props.sortList.transferDate}</td>
+        <td>{Moment(props.sortList.transferDate).format('MMMM Do YYYY, HH:mm:ss')}</td>
     </tr>
 )
 
@@ -67,7 +63,7 @@ export default class ViewStudent extends Component {
                 >
                     <thead style={{ backgroundColor: '#FFD632' }}>
                         <tr>
-                            <td>activityName</td>
+                            <td>Activity Name</td>
                             <td>Student</td>
                             <td>Amonut</td>
                             <td>Date</td>

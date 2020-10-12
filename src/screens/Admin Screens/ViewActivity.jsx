@@ -60,7 +60,7 @@ export default class ViewActivity extends Component {
             })
     }
 
-        viewStudent(id) {
+    viewStudent(id) {
         axios.get(`${process.env.REACT_APP_API_URL}/activity/${id}`)
             .then(res => {
                 setActivityLocalStorage(res, () => { });
@@ -80,7 +80,7 @@ export default class ViewActivity extends Component {
             .then(res => {
                 setActivityLocalStorage(res, () => { });
                 if (localStorage.getItem('activity')) {
-                    window.location.href = '/viewActivityInfo'
+                    window.location.href = '/viewActivityDetail'
                 }
             })
             .catch(err => {
@@ -90,7 +90,7 @@ export default class ViewActivity extends Component {
             });
     }
 
-    
+
 
     deleteActivity(id) {
         axios.delete(`${process.env.REACT_APP_API_URL}/activity/${id}`)
@@ -124,7 +124,7 @@ export default class ViewActivity extends Component {
 
     activityList() {
         return this.state.activities.map(currentactivity => {
-            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} editActivity={this.editActivity} key={currentactivity._id} viewActivityInfo={this.viewActivityInfo} viewStudent={this.viewStudent}/>;
+            return <Activities activity={currentactivity} deleteActivity={this.deleteActivity} editActivity={this.editActivity} key={currentactivity._id} viewActivityInfo={this.viewActivityInfo} viewStudent={this.viewStudent} />;
         })
     }
 
@@ -146,7 +146,7 @@ export default class ViewActivity extends Component {
                 >
                     <thead className="thead-light">
                         <tr>
-                            <td>Name</td>
+                            <td>Activity Name</td>
                             <td>Activity Date</td>
                             <td>Stuff</td>
                             <td>Student</td>
