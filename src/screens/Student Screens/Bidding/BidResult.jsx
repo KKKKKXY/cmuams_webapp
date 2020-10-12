@@ -8,6 +8,7 @@ import Popup from "../../../helpers/Popup";
 import UpdateCoinForm from "./Popup Forms/UpdateCoinForm"
 import Moment from 'moment';
 import { toast } from 'react-toastify';
+import { setActivityLocalStorage } from '../../../helpers/auth';
 
 
 const BidResultList = props => {
@@ -29,7 +30,7 @@ const BidResultList = props => {
                 <td>{props.bidResult.end}</td>
                 <td>
                     <Tooltip title="Update coins" placement="left">
-                        <a href="#" onClick={() => { setOpenPopup(true) }}><i className='fas fa-sync-alt fa-2x' style={{
+                        <a href="#" onClick={() => { setOpenPopup(true)}}><i className='fas fa-sync-alt fa-2x' style={{
                             color: '#4993DD',
                             display: "flex",
                             justifyContent: "center",
@@ -45,7 +46,7 @@ const BidResultList = props => {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <UpdateCoinForm bid={bid} activityName={props.bidResult.to} />
+                <UpdateCoinForm bid={bid} activityName={props.bidResult.to}/>
             </Popup>
         </>
     )

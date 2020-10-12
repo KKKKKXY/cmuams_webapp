@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 
 const initialFValues = {
-    _id: '',
     student: '',
     activity: '',
     amount: '',
@@ -46,7 +45,6 @@ export default function UpdateCoinForm(props) {
     const loadSender = () => {
         initialFValues.student = isAuth().name;
         initialFValues.activity = activityName
-        initialFValues._id = activityId()._id;
     };
 
     const handleSubmit = e => {

@@ -28,7 +28,9 @@ const Activities = props => {
                 <td>{props.activity.bidDate}</td>
                 <td>{props.activity.seats}</td>
                 <td>
-                    <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.activity._id)}>Info</Button>{' '}
+                <Tooltip title="Activity information" placement="right">
+                    <a href="#" onClick={() => props.viewActivityInfo(props.activity._id)}><i className='fa fa-search-plus fa-2x' style={{ color: 'grey' }}></i></a>
+                </Tooltip>
                 </td>
                 <td>
                     <Tooltip title="Bid Activity" placement="right">
