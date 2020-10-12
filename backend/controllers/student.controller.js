@@ -347,18 +347,19 @@ exports.getTransferController = (req, res) => {
                 }
                 else {
                     console.log(chains.length)
-                    for (var i = 0; i < chains.length; i++) {
-                        let transfer = []
-                        console.log(chains[i].transaction)
+                    let transfer = []
 
-                        // if (((chains[i].transaction).some(trans => trans.senderEmail == user.email)) || ((chains[i].transaction).some(trans => trans.recipientEmail == user.email))) {
-                        //     transfer.push(chains[i].transaction)
-                        //     return res.json({
-                        //         success: true,
-                        //         chains
-                        //     });
-                        // }
+                    for (var i = 0; i < chains.length; i++) {
+                        console.log((chains[i].transaction[0].senderEmail == user.email) || (chains[i].transaction[0].recipientEmail == user.email))
+
+                        if ((chains[i].transaction[0].senderEmail == user.email) || (chains[i].transaction[0].recipientEmail == user.email)) {
+                            transfer.push(chains[i].transaction[0])
+                        }
                     }
+                    return res.json({
+                        success: true,
+                        transfer
+                    });
                 }
             });
         }

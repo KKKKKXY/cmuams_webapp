@@ -33,14 +33,8 @@ export default class ViewTransacRecordList extends Component {
       .get(`${process.env.REACT_APP_API_URL}/transacHistory/${isAuth()._id}`)
       .then(response => {
         console.log(response)
-        all = (response.data.transfer)[0]
-        console.log(all)
-        for (var i = 0; i < all.length; i++) {
-          transfer.push(new Transac(all[i].senderEmail, all[i].recipientEmail, all[i].amount, all[i].transferDate))
-        }
-        console.log(transfer)
-
-        this.setState({ userTransac: transfer })
+        all = response.data.transfer
+        this.setState({ userTransac: all })
       })
       .catch((error) => {
         console.log(error);
