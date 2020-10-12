@@ -23,12 +23,26 @@ export default function BidForm(props) {
         return filterOptions;
     }
 
+    const amountValidator = (amount) => {
+        if (/^[1-9]*$/.test(amount)){
+            return null
+        }
+        else if (/^[0]*$/.test(amount)){
+            return "Amount is invalid"
+        }
+        else{
+            return "Amount must be a digital"
+        }
+    }
+
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('activity' in fieldValues)
             temp.activity = fieldValues.activity ? "" : "This field is required."
         if ('amount' in fieldValues)
             temp.amount = fieldValues.amount ? "" : "This field is required."
+        // if ('amount' in fieldValues)
+        //     temp.amount = amountValidator(values.amount)
 
         setErrors({
             ...temp
@@ -57,11 +71,14 @@ export default function BidForm(props) {
 
     const handleSubmit = e => {
         e.preventDefault()
+
         if (validate() && (isAuth().coins >= values.amount)) {
             bid(values, resetForm);
         }
-        else {
+        else if (isAuth().coins < values.amount){
             toast.warning('Your coins is not enough !');
+        }
+        else {
         }
     }
 

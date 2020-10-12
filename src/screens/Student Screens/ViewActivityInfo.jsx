@@ -5,7 +5,9 @@ import { activityId } from '../../helpers/auth';
 import "react-datepicker/dist/react-datepicker.css";
 import PrivateNavbar from './PrivateNavbar';
 import Moment from 'moment';
-import { isAuth } from '../../helpers/auth';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const ViewActivityInfo = ({ history }) => {
     const [formData, setFormData] = useState({
@@ -41,14 +43,15 @@ const ViewActivityInfo = ({ history }) => {
             });
     };
 
+
     const { activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = formData;
 
 
     const handleSubmit = e => {
-        isAuth() && isAuth().role === 'admin'
-        ? history.push('/activitylist')
-        : history.push('/stuviewactivity');
+        history.push('/stuviewactivity');
+
     };
+    
 
     return (
         <div className="container">
@@ -59,68 +62,88 @@ const ViewActivityInfo = ({ history }) => {
                     <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                         <div className='mt-12 flex flex-col items-center'>
                             <h1 className='text-2xl xl:text-3xl font-extrabold'>
-                                Activity Information
-          </h1>
+                                Activity Information</h1>
                             <form
                                 className='w-full flex-1 mt-8 text-indigo-500'
                                 onSubmit={handleSubmit}
                             >
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
+                                <div>
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Activity Name"
+                                    multiline
+                                    rows={1}
                                     value={activityName}
                                     disabled
-                                />
+                                    />
+                                </div>
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Description"
+                                    multiline
+                                    rows={4}
                                     value={description}
                                     disabled
-                                />
+                                    />
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
-                                    value={Moment(activityDate).format('MMMM Do YYYY, HH:mm:ss')}
+
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Activity Date"
+                                    multiline
+                                    value={Moment(activityDate).format('MMMM Do YYYY, h:mm:ss a')}
+                                    disabled
+                                />
+                                
+
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Bidding Date"
+                                    multiline
+                                    value={Moment(bidDate).format('MMMM Do YYYY, h:mm:ss a')}
                                     disabled
                                 />
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
-                                    value={Moment(bidDate).format('MMMM Do YYYY, HH:mm:ss')}
-                                    disabled
-                                />
-
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Activity Location"
+                                    multiline
                                     value={location}
                                     disabled
-                                />
+                                    />
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Responsible Person"
+                                    multiline
                                     value={responsiblePerson}
                                     disabled
-                                />
+                                    />
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Contact"
+                                    multiline
                                     value={contact}
                                     disabled
-                                />
+                                    />
 
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                    type='text'
-                                    placeholder='Seats'
+                                <TextField
+                                    className='w-full mt-3'
+                                    id="filled-multiline-static"
+                                    label="Seats"
+                                    multiline
                                     value={seats}
                                     disabled
-                                />
+                                    />
 
                                 <button
                                     type='submit'
