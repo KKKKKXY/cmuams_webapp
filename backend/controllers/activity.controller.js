@@ -10,7 +10,7 @@ exports.readActivityController = (req, res) => {
                 error: 'Activity not found'
             });
         }
-        const { _id, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats } = activity;
+        const { _id, activityName, description, activityDate, bidDate, location, responsiblePerson, contact, seats,students, creator } = activity;
         return res.json({
             activity: {
                 _id,
@@ -21,7 +21,9 @@ exports.readActivityController = (req, res) => {
                 location,
                 responsiblePerson,
                 contact,
-                seats
+                seats,
+                students,
+                creator
             }
         });
     });
