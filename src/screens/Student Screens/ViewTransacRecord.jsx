@@ -2,23 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import { isAuth } from '../../helpers/auth';
-import { toast } from 'react-toastify';
+import Moment from 'moment';
 
 const Transaction = props => (
   <tr>
     <td>{props.transaction.senderEmail}</td>
     <td>{props.transaction.recipientEmail}</td>
     <td>{props.transaction.amount}</td>
-    <td>{props.transaction.transferDate}</td>
+    <td>{Moment(props.transaction.transferDate).format('MMMM Do YYYY, HH:mm:ss')}</td>
   </tr>
 )
-
-function Transac(senderEmail, recipientEmail, amount, transferDate) {
-  this.senderEmail = senderEmail;
-  this.recipientEmail = recipientEmail;
-  this.amount = amount;
-  this.transferDate = transferDate;
-}
 
 export default class ViewTransacRecordList extends Component {
   constructor(props) {
@@ -55,10 +48,10 @@ export default class ViewTransacRecordList extends Component {
         <table className="table table-bordered">
           <thead className="thead-light">
             <tr>
-              <td>From</td>
-              <td>To</td>
+              <td>Sender Email</td>
+              <td>Recipient Email</td>
               <td>Amount</td>
-              <td>Timestamp</td>
+              <td>Transfer Date</td>
             </tr>
           </thead>
           <tbody>

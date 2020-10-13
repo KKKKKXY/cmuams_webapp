@@ -33,38 +33,38 @@ const AddActivity = ({ history }) => {
         console.log(activityDate)
         console.log(new Date())
         console.log(activityDate < new Date() || bidDate < new Date())
-        if(activityDate < new Date() || bidDate < new Date()){
+        if (activityDate < new Date() || bidDate < new Date()) {
             toast.error('Select Date should exceed now date');
         }
-        else{
-            if((activityDate > bidDate) && (activityDate >= new Date()) && (bidDate >= new Date())){
+        else {
+            if ((activityDate > bidDate) && (activityDate >= new Date()) && (bidDate >= new Date())) {
                 axios
-                .post(
-                    `${process.env.REACT_APP_API_URL}/activity/add`,
-                    {
-                        activityName,
-                        description,
-                        activityDate,
-                        bidDate,
-                        location,
-                        responsiblePerson,
-                        contact,
-                        seats,
-                        creator: isAuth().name
-                    }
-                )
-                .then(res => {
-                    toast.success(res.data.message);
-                    setFormData({ ...formData, textChange: 'Add' });
-                })
-                .catch(err => {
-                    console.log(err.response);
-                    toast.error(err.response.data.error);
-                    toast.error(err.response.data.errors);
-                });
+                    .post(
+                        `${process.env.REACT_APP_API_URL}/activity/add`,
+                        {
+                            activityName,
+                            description,
+                            activityDate,
+                            bidDate,
+                            location,
+                            responsiblePerson,
+                            contact,
+                            seats,
+                            creator: isAuth().name
+                        }
+                    )
+                    .then(res => {
+                        toast.success(res.data.message);
+                        setFormData({ ...formData, textChange: 'Add' });
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                        toast.error(err.response.data.error);
+                        toast.error(err.response.data.errors);
+                    });
             }
             else {
-                toast.error('The bid should is held before activity start')   
+                toast.error('The bid should is held before activity start')
             }
 
         }
@@ -150,7 +150,7 @@ const AddActivity = ({ history }) => {
                                     type='submit'
                                     className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                                 >
-                                    <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
+                                    <i className="fad fa-plus-square fa 1x w-6 fa-1x"></i>
                                     <span className='ml-3'>{textChange}</span>
                                 </button>
                             </form>

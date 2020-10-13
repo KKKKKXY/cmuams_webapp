@@ -228,7 +228,7 @@ export class BidResult extends Component {
                             <td>Rank</td>
                             <td>Activity Name</td>
                             <td>Amount</td>
-                            <td>Last Bidder Paid</td>
+                            <td>Last Winner Amount</td>
                             <td>Bid End Time</td>
                             <td>Update Coins</td>
                         </tr>

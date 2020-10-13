@@ -22,18 +22,24 @@ const Activities = props => (
         <td>{props.activity.activityDate}</td>
         <td>{props.activity.responsiblePerson}</td>
         <td>
-            <Button variant="outline-info" onClick={() => props.viewStudent(props.activity._id)}>Student</Button>{' '}
+        <Tooltip title="Student List" placement="right">
+        <a href="#" onClick={() => props.viewStudent(props.activity._id)}><i className="fas fa-list-ol fa-2x" aria-hidden="true" style={{ color: 'grey' }}></i></a>
+        </Tooltip>
+            {/* <Button variant="outline-info" onClick={() => props.viewStudent(props.activity._id)}>Student</Button>{' '} */}
         </td>
         <td>
-            <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.activity._id)}>Info</Button>{' '}
+        <Tooltip title="Activity information" placement="right">
+                    <a href="#" onClick={() => props.viewActivityInfo(props.activity._id)}><i className='fa fa-search-plus fa-2x' style={{ color: 'grey' }}></i></a>
+                </Tooltip>
+            {/* <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.activity._id)}>Info</Button>{' '} */}
         </td>
 
         <td>
             <Tooltip title="Delete" placement="top">
-                <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="#" onClick={() => { if (window.confirm('Are you sure you wish to delete (' + props.activity.activityName + ') ?')) props.deleteActivity(props.activity._id); }}><i className="fas fa-trash-alt fa-2x" aria-hidden="true" style={{ color: 'red' }}></i></a>
             </Tooltip>
             <Tooltip title="Edit" placement="top" className={useStyles().fab}>
-                <a href="#" onClick={() => props.editActivity(props.activity._id)}><i className="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                <a href="#" onClick={() => props.editActivity(props.activity._id)}><i className="fas fa-edit fa-2x" aria-hidden="true"></i></a>
             </Tooltip>
         </td>
     </tr>
@@ -135,7 +141,8 @@ export default class ViewActivity extends Component {
                 <ToastContainer />
                 <div style={{ float: 'right' }}>
                     <Tooltip title="Create New Activity" placement="left">
-                        <Icon className="fa fa-plus-circle" style={{ color: green[500], fontSize: 50, margin: 10 }} onClick={() => window.location.href = '/addActivity'}></Icon>
+                    <a href="#" onClick={() => window.location.href = '/addActivity'}><i className="fad fa-plus-square fa 1x w-100 fa-3x" aria-hidden="true"></i></a>
+                        {/* <Icon className="fa fa-plus-circle" style={{ color: green[500], fontSize: 50, margin: 10 }} onClick={() => window.location.href = '/addActivity'}></Icon> */}
                     </Tooltip>
                 </div>
                 <Table

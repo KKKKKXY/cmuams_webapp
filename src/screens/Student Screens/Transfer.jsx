@@ -21,31 +21,34 @@ const Transfer = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        setFormData({ ...formData, textChange: 'Transfering' });
-        if (recipientEmail == isAuth().email) {
-            toast.error('You cannot transfer coins to yourself!');
+        if (window.confirm('Are you sure to transfer ' + amount + ' to (' + recipientEmail + ') ?')) {
+            setFormData({ ...formData, textChange: 'Transfering' });
+            if (recipientEmail == isAuth().email) {
+                toast.error('You cannot transfer coins to yourself!');
+            }
+            else {
+                axios
+                    .post(
+                        `${process.env.REACT_APP_API_URL}/student/transfer`,
+                        {
+                            senderEmail: isAuth().email,
+                            recipientEmail,
+                            transferDate,
+                            amount,
+                        }
+                    )
+                    .then(res => {
+                        toast.success(res.data.message);
+                        setFormData({ ...formData, textChange: 'Transfer' });
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                        toast.error(err.response.data.error);
+                        toast.error(err.response.data.errors);
+                    });
+            }
         }
-        else {
-            axios
-                .post(
-                    `${process.env.REACT_APP_API_URL}/student/transfer`,
-                    {
-                        senderEmail: isAuth().email,
-                        recipientEmail,
-                        transferDate,
-                        amount,
-                    }
-                )
-                .then(res => {
-                    toast.success(res.data.message);
-                    setFormData({ ...formData, textChange: 'Transfer' });
-                })
-                .catch(err => {
-                    console.log(err.response);
-                    toast.error(err.response.data.error);
-                    toast.error(err.response.data.errors);
-                });
-        }
+
     };
 
     return (
@@ -80,7 +83,7 @@ const Transfer = () => {
                                         type='submit'
                                         className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                                     >
-                                        <i className='fas fa-user-plus fa 1x w-6  -ml-2' />
+                                        <i className='fad fa-exchange-alt fa 1x w-6  -ml-2' />                                        
                                         <span className='ml-3'>{textChange}</span>
                                     </button>
                                 </div>

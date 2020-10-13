@@ -7,7 +7,6 @@ import Popup from "../../../helpers/Popup";
 import BidForm from "./Popup Forms/BidForm"
 import * as bidActivityService from "../../../services/BidActivityService";
 import Table from 'react-bootstrap/Table'
-import { Button } from 'react-bootstrap';
 import { setActivityLocalStorage } from '../../../helpers/auth';
 
 const Activities = props => {
