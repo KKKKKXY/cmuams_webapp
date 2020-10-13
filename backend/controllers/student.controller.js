@@ -7,56 +7,6 @@ const BidTransfer = require('../models/bidTransfer.model');
 const { errorHandler } = require('../helpers/dbErrorHandling');
 const blockChainModel = require('../models/blockchain.model')
 
-// exports.enrollActivityController = (req, res) => {
-
-//     const { student, activity, amount, transferDate } = req.body;
-//     const transfer = new BidTransfer({
-//         student, amount, transferDate
-//     });
-
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         const firstError = errors.array().map(error => error.msg)[0];
-//         return res.status(422).json({
-//             error: firstError
-//         });
-//     } else {
-//         Activity.findOne({ activityName: activity }).exec((err, act) => {
-//             if (err || !act) {
-//                 return res.status(400).json({
-//                     error: 'Activity not found'
-//                 });
-//             } else {
-//                 User.findOne({ name: student }).exec((err, user) => {
-//                     if (err || !user) {
-//                         return res.status(400).json({
-//                             error: 'User not found'
-//                         });
-//                     } else {
-//                         if ((user.enrolled).some(enrolled => enrolled.activityName == activity)) {
-//                             return res.status(400).json({
-//                                 error: 'You already transfered!'
-//                             });
-//                         }
-//                         else {
-//                             user.enrolled.push(act)
-//                             act.students.push(transfer)
-//                             user.save()
-//                             act.save()
-//                             return res.json({
-//                                 success: true,
-//                                 message: 'Student enrolled activity Successfully',
-//                                 act,
-//                                 transfer
-//                             });
-//                         }
-//                     }
-//                 });
-//             }
-//         });
-//     }
-// };
-
 exports.enrollActivityController = (req, res) => {
 
     const { activity } = req.body;
@@ -122,9 +72,8 @@ exports.enrollActivityController = (req, res) => {
                                 else {
                                     user.enrolled.push(enrollActivity)
                                 }
-                                user.save()
-
                             }
+                            user.save()
                         })
                     }
 
@@ -177,7 +126,6 @@ exports.BidController = (req, res) => {
                         }
                         else {
                             act.students.push(transfer)
-                            user.bidActivities.push(act._id)
                             act.save()
                             user.save()
                             return res.json({

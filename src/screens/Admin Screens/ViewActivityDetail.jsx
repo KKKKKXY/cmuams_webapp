@@ -94,7 +94,7 @@ const ViewActivityDetail = ({ history }) => {
                                     id="filled-multiline-static"
                                     label="Activity Date"
                                     multiline
-                                    value={Moment(activityDate).format('MMMM Do YYYY, h:mm:ss a')}
+                                    value={Moment(activityDate).format('MMMM Do YYYY, HH:mm:ss')}
                                     disabled
                                 />
 
@@ -104,7 +104,7 @@ const ViewActivityDetail = ({ history }) => {
                                     id="filled-multiline-static"
                                     label="Bidding Date"
                                     multiline
-                                    value={Moment(bidDate).format('MMMM Do YYYY, h:mm:ss a')}
+                                    value={Moment(bidDate).format('MMMM Do YYYY, HH:mm:ss')}
                                     disabled
                                 />
 

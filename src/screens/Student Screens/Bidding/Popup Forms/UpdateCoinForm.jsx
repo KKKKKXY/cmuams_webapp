@@ -70,7 +70,7 @@ export default function UpdateCoinForm(props) {
                 />
                 <Controls.Input
                     name="activity"
-                    label="Receiver"
+                    label="Bid Activity Name"
                     value={values.activity}
                     onChange={handleInputChange}
                     error={errors.activity}

@@ -69,7 +69,7 @@ export default function PendingTransferForm(props) {
                 />
                 <Controls.Input
                     name="to"
-                    label="Receiver"
+                    label="Bid Activity Name"
                     value={values.activity}
                     onChange={handleInputChange}
                     error={errors.activity}

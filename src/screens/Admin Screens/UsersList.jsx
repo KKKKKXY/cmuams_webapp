@@ -72,11 +72,11 @@ export default class UsersList extends Component {
 
           <thead className="thead-light">
             <tr>
-              <th>User Name</th>
-              <th>E-mail Address</th>
-              <th>Created Time</th>
-              <th>Updated Time</th>
-              <th>Account Type</th>
+              <th>Name</th>
+              <th>E-mail address</th>
+              <th>Created time</th>
+              <th>Updated time</th>
+              <th>Role</th>
               <th>Delete</th>
             </tr>
           </thead>
