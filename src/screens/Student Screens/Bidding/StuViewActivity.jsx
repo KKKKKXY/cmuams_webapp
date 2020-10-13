@@ -53,7 +53,7 @@ const Activities = props => {
     )
 }
 
-function Receiver(id, activityName, activityDate, bidDate) {
+function BidActivityName(id, activityName, activityDate, bidDate) {
     this.id = id;
     this.activityName = activityName;
     this.activityDate = activityDate;
@@ -79,7 +79,7 @@ export default class StuViewActivity extends Component {
             .then(response => {
                 let tmpArray = []
                 for (var i = 0; i < response.data.length; i++) {
-                    tmpArray.push(new Receiver((i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
+                    tmpArray.push(new BidActivityName((i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
                 }
                 this.setState({
                     activities: (response.data).sort((a, b) => {

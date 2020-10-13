@@ -8,8 +8,6 @@ import Popup from "../../../helpers/Popup";
 import UpdateCoinForm from "./Popup Forms/UpdateCoinForm"
 import Moment from 'moment';
 import { toast } from 'react-toastify';
-import { setActivityLocalStorage } from '../../../helpers/auth';
-
 
 const BidResultList = props => {
     const [openPopup, setOpenPopup] = useState(false)
@@ -183,9 +181,6 @@ export class BidResult extends Component {
             console.log(currentbidResult)
 
             const nowDate = Moment(new Date()).format('MMMM Do YYYY, HH:mm:ss')
-            // console.log(nowDate)
-            // console.log(currentbidResult.end)
-            // console.log(nowDate > (currentbidResult.end))
 
             if (nowDate > currentbidResult.end) {
                 axios.
@@ -233,7 +228,7 @@ export class BidResult extends Component {
                             <td>Rank</td>
                             <td>Activity Name</td>
                             <td>Amount</td>
-                            <td>Lastone pay amount</td>
+                            <td>Last Bidder Paid</td>
                             <td>Bid End Time</td>
                             <td>Update Coins</td>
                         </tr>

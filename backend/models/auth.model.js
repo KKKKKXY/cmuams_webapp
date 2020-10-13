@@ -34,10 +34,7 @@ const userScheama = new mongoose.Schema(
     coins: {
       type: Number,
       default: 100
-    },
-    bidActivities: {
-      type: Array
-    },
+    }
   },
   {
     timestamps: true

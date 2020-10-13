@@ -95,7 +95,7 @@ export default function BidForm(props) {
                 />
                 <Controls.Select
                     name="activity"
-                    label="Receiver"
+                    label="Bid Activity Name"
                     value={values.activity}
                     onChange={handleInputChange}
                     options={filterOption(options)}
