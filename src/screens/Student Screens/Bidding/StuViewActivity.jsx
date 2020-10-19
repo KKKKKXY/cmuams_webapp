@@ -41,7 +41,7 @@ const Activities = props => {
             </tr >
 
             <Popup
-                title="Bidding Activity Transfer Round 1"
+                title="Bidding Activity"
                 subtitle="The activities available for bidding will be displayed"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
@@ -52,7 +52,7 @@ const Activities = props => {
     )
 }
 
-function BidActivityName(id, activityName, activityDate, bidDate) {
+function Options(id, activityName, activityDate, bidDate) {
     this.id = id;
     this.activityName = activityName;
     this.activityDate = activityDate;
@@ -78,7 +78,7 @@ export default class StuViewActivity extends Component {
             .then(response => {
                 let tmpArray = []
                 for (var i = 0; i < response.data.length; i++) {
-                    tmpArray.push(new BidActivityName((i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
+                    tmpArray.push(new Options((i + 1).toString(), response.data[i].activityName, response.data[i].activityDate, response.data[i].bidDate))
                 }
                 this.setState({
                     activities: (response.data).sort((a, b) => {

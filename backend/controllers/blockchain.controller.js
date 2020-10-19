@@ -6,8 +6,6 @@ let validator = require("../helpers/validator");
 
 const blockChainModel = require('../models/blockchain.model')
 
-
-
 let chalk = require("chalk");
 
 class BlockChain {

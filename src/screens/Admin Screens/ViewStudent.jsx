@@ -22,12 +22,13 @@ export default class ViewStudent extends Component {
         super(props);
 
         this.state = {
-            students: []
+            students: [],
+            activityId: ''
         };
     }
 
     componentDidMount() {
-        axios.get(`${process.env.REACT_APP_API_URL}/activity/${activityId()._id}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/activity/${this.state.activityId}`)
             .then(response => {
                 console.log(response.data)
                 this.setState({
@@ -41,6 +42,7 @@ export default class ViewStudent extends Component {
     }
 
     sortList() {
+        console.log(this.state.students)
         return this.state.students.map(currentsortList => {
             return <Sort sortList={currentsortList} key={currentsortList._id} />;
         })
@@ -66,7 +68,7 @@ export default class ViewStudent extends Component {
                             <td>Activity Name</td>
                             <td>Student</td>
                             <td>Amonut</td>
-                            <td>Date</td>
+                            <td>Transfer Date</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,5 +85,5 @@ export default class ViewStudent extends Component {
         );
     }
 
-
+    
 }

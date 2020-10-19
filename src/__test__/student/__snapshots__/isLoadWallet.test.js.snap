@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user does not exist 1`] = `"User not found"`;
+
+exports[`user is exist 1`] = `
+Object {
+  "coins": 90,
+  "name": "XingyuanKang",
+}
+`;

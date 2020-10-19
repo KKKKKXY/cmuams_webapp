@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the user does not exist 1`] = `""`;
+
+exports[`the user is exist 1`] = `"ChenghaoLi"`;

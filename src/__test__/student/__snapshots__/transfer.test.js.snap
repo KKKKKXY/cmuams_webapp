@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`amount is equal to 0 1`] = `"The recipient email can not be found."`;
+
+exports[`coins are not enough 1`] = `"The recipient email can not be found."`;
+
+exports[`successfully 1`] = `"Transfer successfully."`;
+
+exports[`the recipient email can not be found 1`] = `"The recipient email can not be found."`;

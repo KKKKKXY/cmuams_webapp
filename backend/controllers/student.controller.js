@@ -9,7 +9,7 @@ const blockChainModel = require('../models/blockchain.model')
 
 exports.enrollActivityController = (req, res) => {
 
-    const { activity } = req.body;
+    const { activity, student } = req.body;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -18,76 +18,121 @@ exports.enrollActivityController = (req, res) => {
             error: firstError
         });
     } else {
-        Activity.findOne({ activityName: activity }).exec((err, act) => {
-            if (err || !act) {
+        User.findOne({ name: student }).exec((err, user) => {
+            if (err || !user) {
                 return res.status(400).json({
-                    error: 'Activity not found'
+                    error: 'User not found'
                 });
-            } else {
-                let students = act.students
+            }
+            else {
+                Activity.findOne({ activityName: activity }).exec((err, act) => {
+                    if (err || !act) {
+                        return res.status(400).json({
+                            error: 'Activity not found'
+                        });
+                    } else {
+                        let students = act.students
 
-                if (students.length > 0) {
-                    //sort students
-                    students.sort((a, b) => {
-                        //sort by amount
-                        if (a.amount < b.amount)
-                            return 1;
-                        else if (a.amount > b.amount)
-                            return -1;
+                        if (students.length > 0) {
+                            //sort students
+                            students.sort((a, b) => {
+                                //sort by amount
+                                if (a.amount < b.amount)
+                                    return 1;
+                                else if (a.amount > b.amount)
+                                    return -1;
 
-                        //sort by date
-                        if (a.transferDate < b.transferDate)
-                            return -1;
-                        else if (a.transferDate > b.transferDate)
-                            return 1;
+                                //sort by date
+                                if (a.transferDate < b.transferDate)
+                                    return -1;
+                                else if (a.transferDate > b.transferDate)
+                                    return 1;
 
-                        return 0;
-                    })
+                                return 0;
+                            })
 
-                    for (var i = 0; i < act.seats; i++) {
-                        let stu = students[i].student
-
-                        User.findOne({ name: stu }).exec((err, user) => {
-                            if (err || !user) {
-                                // return res.status(400).json({
-                                //     error: 'User not found'
-                                // });
-                            } else {
-                                const enrollActivity = new Activity({
-                                    activityName: act.activityName,
-                                    description: act.description,
-                                    activityDate: act.activityDate,
-                                    bidDate: act.bidDate,
-                                    location: act.location,
-                                    responsiblePerson: act.responsiblePerson,
-                                    contact: act.contact,
-                                    seats: act.seats,
-                                    creator: act.creator
-                                });
-                                if ((user.enrolled).some(enrolled => enrolled.activityName == activity)) {
-                                    // return res.status(400).json({
-                                    //     message: user.name + ' already enrolled ' + enrollActivity.activityName+' !'
-                                    // });
-                                }
-                                else {
-                                    user.enrolled.push(enrollActivity)
+                            if (act.seats <= students.length) {
+                                for (var i = 0; i < act.seats; i++) {
+                                    let stu = students[i].student
+                                    User.findOne({ name: stu }).exec((err, user) => {
+                                        if (err || !user) {
+                                            // return res.status(400).json({
+                                            //     error: 'User not found'
+                                            // });
+                                        } else {
+                                            const enrollActivity = new Activity({
+                                                activityName: act.activityName,
+                                                description: act.description,
+                                                activityDate: act.activityDate,
+                                                bidDate: act.bidDate,
+                                                location: act.location,
+                                                responsiblePerson: act.responsiblePerson,
+                                                contact: act.contact,
+                                                seats: act.seats,
+                                                creator: act.creator
+                                            });
+                                            if ((user.enrolled).some(enrolled => enrolled.activityName == activity)) {
+                                                // return res.status(400).json({
+                                                //     message: user.name + ' already enrolled ' + enrollActivity.activityName+' !'
+                                                // });
+                                            }
+                                            else {
+                                                user.enrolled.push(enrollActivity)
+                                            }
+                                        }
+                                        user.save()
+                                    })
                                 }
                             }
-                            user.save()
-                        })
+                            else {
+                                for (var ii = 0; ii < students.length; ii++) {
+                                    let stu = students[ii].student
+                                    User.findOne({ name: stu }).exec((err, user) => {
+                                        if (err || !user) {
+                                            // return res.status(400).json({
+                                            //     error: 'User not found'
+                                            // });
+                                        } else {
+                                            const enrollActivity = new Activity({
+                                                activityName: act.activityName,
+                                                description: act.description,
+                                                activityDate: act.activityDate,
+                                                bidDate: act.bidDate,
+                                                location: act.location,
+                                                responsiblePerson: act.responsiblePerson,
+                                                contact: act.contact,
+                                                seats: act.seats,
+                                                creator: act.creator
+                                            });
+                                            if ((user.enrolled).some(enrolled => enrolled.activityName == activity)) {
+                                                // return res.status(400).json({
+                                                //     message: user.name + ' already enrolled ' + enrollActivity.activityName+' !'
+                                                // });
+                                            }
+                                            else {
+                                                user.enrolled.push(enrollActivity)
+                                            }
+                                        }
+                                        user.save()
+                                    })
+                                }
+                            }
+                            for (var j = act.seats; j < act.students.length; j++) {
+                                act.students.splice(j, 1);
+                            }
+                        }
                     }
+                    act.save()
+                    return res.json({
+                        success: true,
+                        message: 'Student enrolled activity Successfully'
+                    });
+                });
 
-                    for (var j = act.seats; j < act.students.length; j++) {
-                        act.students.splice(j, 1);
-                    }
-                }
             }
-            act.save()
-            return res.json({
-                success: true,
-                message: 'Student enrolled activity Successfully'
-            });
-        });
+        })
+
+
     }
 };
 
@@ -130,8 +175,7 @@ exports.BidController = (req, res) => {
                             user.save()
                             return res.json({
                                 success: true,
-                                message: 'Student enrolled activity Successfully',
-                                transfer
+                                message: 'Bid activity \'' + activity + '\' successfully',
                             });
                         }
                     }
@@ -163,15 +207,21 @@ exports.UpdateCoinsAmountController = (req, res) => {
             }
             else {
                 let index = act.students.findIndex(stu => stu.student == student)
-                let stuBidTransfer = act.students[index]
+                if (index == -1) {
+                    return res.status(400).json({
+                        error: 'User not found'
+                    });
+                }
+                else {
+                    let stuBidTransfer = act.students[index]
 
-                stuBidTransfer.student = transfer.student
-                stuBidTransfer.amount = transfer.amount
-                stuBidTransfer.transferDate = transfer.transferDate
+                    stuBidTransfer.student = transfer.student
+                    stuBidTransfer.amount = transfer.amount
+                    stuBidTransfer.transferDate = transfer.transferDate
 
-                act.students.splice(index, 1);
-                act.students.push(stuBidTransfer)
-
+                    act.students.splice(index, 1);
+                    act.students.push(stuBidTransfer)
+                }
 
                 act.save((err, editedActivity) => {
                     if (err) {
@@ -181,8 +231,7 @@ exports.UpdateCoinsAmountController = (req, res) => {
                     }
                     return res.json({
                         success: true,
-                        message: 'Update Coins Amount Successfully!',
-                        editedActivity
+                        message: 'Update Coins Amount Successfully!'
                     });
                 });
             }
@@ -243,35 +292,39 @@ exports.transferController = (req, res) => {
         User.findOne({ email: senderEmail }).exec((err, sender) => {
             if (err || !sender) {
                 return res.status(400).json({
-                    error: 'The sender Email can not found'
+                    error: 'The sender email can not found'
                 });
             } else {
                 User.findOne({ email: recipientEmail }).exec((err, recipient) => {
                     if (err || !recipient) {
                         return res.status(400).json({
-                            error: 'The recipient Email can not found'
+                            error: 'The recipient email can not found'
                         });
                     } else {
                         if (sender.coins < amount) {
                             return res.status(400).json({
-                                error: 'Coins is not enough!'
+                                error: 'Your available balance is insufficient.'
                             });
                         } else {
-                            sender.coins = parseInt(sender.coins) - parseInt(amount)
-                            recipient.coins = parseInt(recipient.coins) + parseInt(amount)
-                            blockChain.addNewTransaction({ senderEmail, recipientEmail, amount, transferDate });
-                            blockChain.addNewBlock(null);
-                            sender.save()
-                            recipient.save()
-                            return res.json({
-                                success: true,
-                                message: 'Transfer successfully',
-                                transfer
-                            });
+                            if (amount === 0) {
+                                return res.status(400).json({
+                                    error: 'Invalid amount.'
+                                });
+                            }
+                            else {
+                                sender.coins = parseInt(sender.coins) - parseInt(amount)
+                                recipient.coins = parseInt(recipient.coins) + parseInt(amount)
+                                blockChain.addNewTransaction({ senderEmail, recipientEmail, amount, transferDate });
+                                blockChain.addNewBlock(null);
+                                sender.save()
+                                recipient.save()
+                                return res.json({
+                                    success: true,
+                                    message: 'Transfer successfully',
+                                });
+                            }
                         }
-
                     }
-
                 });
             }
         });
@@ -283,9 +336,9 @@ exports.getTransferController = (req, res) => {
 
     User.findById({ _id: userId }).exec((err, user) => {
         if (err || !user) {
-            // return res.status(400).json({
-            //     error: 'User not found'
-            // });
+            return res.status(400).json({
+                error: 'User not found'
+            });
         } else {
             blockChainModel.find().exec((err, chains) => {
                 if (err || !chains || chains == "") {

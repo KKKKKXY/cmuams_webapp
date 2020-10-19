@@ -136,12 +136,17 @@ export class BidResult extends Component {
                         }
                         else{
                             const bidDate = activities[i].bidDate
-                            const date = (new Date(bidDate)).setMinutes((new Date(bidDate)).getMinutes() + 90)
+                            const date = (new Date(bidDate)).setMinutes((new Date(bidDate)).getMinutes() + 60)
     
                             _id = bidTransfer[0]._id
                             rank = students.findIndex(currentsortList => { return currentsortList.student == isAuth().name; }) + 1
                             amount = parseInt(bidTransfer[0].amount)
-                            last = students[students.length - 1].amount
+                            if(activities[i].seats <= students.length){
+                                last = students[activities[i].seats - 1].amount
+                            }
+                            else{
+                                last = students[students.length - 1].amount
+                            }
                             end = Moment(date).format('MMMM Do YYYY, HH:mm:ss')
                             result.push(new Result(_id, rank, to, amount, last, end))
                         }
@@ -186,6 +191,7 @@ export class BidResult extends Component {
                 axios.
                     post(`${process.env.REACT_APP_API_URL}/student/enrollActivity`,
                         {
+                            student: isAuth().name,
                             activity: currentbidResult.to
                         })
                     .then(res => {
@@ -238,7 +244,7 @@ export class BidResult extends Component {
                     </tbody>
                 </Table>
 
-                <h5 style={{ 'color': 'grey' }}>Bid List</h5>
+                {/* <h5 style={{ 'color': 'grey' }}>Bid List</h5>
                 <Table
                     responsive="xl"
                     striped bordered hover
@@ -257,7 +263,7 @@ export class BidResult extends Component {
                     <tbody>
                         {this.sortList()}
                     </tbody>
-                </Table>
+                </Table> */}
 
             </div>
         );

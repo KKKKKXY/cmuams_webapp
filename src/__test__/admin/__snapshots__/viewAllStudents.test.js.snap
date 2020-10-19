@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the activity does not exist 1`] = `"Activity not found"`;
+
+exports[`the activity is exist 1`] = `
+Array [
+  Object {
+    "_id": "5f870be538e4c6a575b90f1e",
+    "amount": 50,
+    "student": "ChenghaoLi",
+    "transferDate": "2020-10-14T14:32:00.000Z",
+  },
+  Object {
+    "_id": "5f870ba838e4c6a575b90f1d",
+    "amount": 30,
+    "student": "XingyuanKang",
+    "transferDate": "2020-10-14T14:32:49.000Z",
+  },
+]
+`;

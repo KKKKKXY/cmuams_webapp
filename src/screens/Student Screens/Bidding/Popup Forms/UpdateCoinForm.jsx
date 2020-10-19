@@ -62,7 +62,7 @@ export default function UpdateCoinForm(props) {
             <Grid container>
                 <Controls.Input
                     name="student"
-                    label="Sender"
+                    label="Student"
                     value={values.student}
                     onChange={handleInputChange}
                     error={errors.student}

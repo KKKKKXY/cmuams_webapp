@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user does not exist 1`] = `"User not found"`;
+
+exports[`user is exist 1`] = `
+Object {
+  "transfer": Array [
+    Object {
+      "amount": "10",
+      "recipientEmail": "chenghao_li@cmu.ac.th",
+      "senderEmail": "xingyuan_kang@cmu.ac.th",
+      "transferDate": "2020-10-13T11:14:02.103Z",
+    },
+    Object {
+      "amount": 10,
+      "recipientEmail": "yanwen_he@cmu.ac.th",
+      "senderEmail": "xingyuan_kang@cmu.ac.th",
+      "transferDate": "2020-10-13T14:57:00.679Z",
+    },
+    Object {
+      "amount": 30,
+      "recipientEmail": "Doi Suthep",
+      "senderEmail": "xingyuan_kang@cmu.ac.th",
+      "transferDate": "2020-10-14T14:32:49.000Z",
+    },
+  ],
+}
+`;

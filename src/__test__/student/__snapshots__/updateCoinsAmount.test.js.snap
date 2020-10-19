@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`amount field is empty 1 1`] = `"This field is required"`;
+
+exports[`amount is equal to 0 1`] = `"Amount must be a digit"`;
+
+exports[`amount is not a number 1`] = `"Amount must be greater than 0"`;
+
+exports[`coins are not enough 1`] = `"Your coins are not enough!"`;
+
+exports[`successfully 1`] = `"Update Coins Amount Successfully!"`;

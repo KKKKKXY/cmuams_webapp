@@ -1,7 +1,6 @@
 const User = require('../models/auth.model');
 const { validationResult } = require('express-validator');
 
-
 exports.readUserController = (req, res) => {
     const userId = req.params.id;
     User.findById(userId).exec((err, user) => {
