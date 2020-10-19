@@ -38,6 +38,7 @@ export default class ViewTransacRecordList extends Component {
   transacRecordList() {
     return this.state.userTransac.map(currenttransac => {
       return <Transaction transaction={currenttransac} key={currenttransac._id} />;
+      
     })
   }
 
@@ -53,8 +54,8 @@ export default class ViewTransacRecordList extends Component {
           className="table table-bordered">
           <thead className="thead-light">
             <tr>
-              <td>Sender Email</td>
-              <td>Recipient Email</td>
+              <td>Sender</td>
+              <td>Recipient</td>
               <td>Amount</td>
               <td>Transfer Date</td>
             </tr>
