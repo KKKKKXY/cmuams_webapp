@@ -3,11 +3,10 @@ import axios from 'axios';
 import { isAuth } from '../../../helpers/auth';
 import Table from 'react-bootstrap/Table'
 import { toast } from 'react-toastify';
-import { Button } from 'react-bootstrap';
 import { setActivityLocalStorage } from '../../../helpers/auth';
 import Moment from 'moment';
 import PrivateNavbar from '../PrivateNavbar';
-
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Enrolled = props => (
     <tr>
@@ -15,9 +14,11 @@ const Enrolled = props => (
         <td>{Moment(props.enrolledActivity.activityDate).format('MMMM Do YYYY, HH:mm:ss')}</td>
         <td>{props.enrolledActivity.location}</td>
         <td>
-            <Button variant="outline-info" onClick={() => props.viewActivityInfo(props.enrolledActivity._id)}>Info</Button>{' '}
-
+            <Tooltip title="Activity information" placement="right">
+                <a href="#" onClick={() => props.viewActivityInfo(props.enrolledActivity._id)}><i className='fa fa-search-plus fa-2x' style={{ color: 'grey' }}></i></a>
+            </Tooltip>
         </td>
+
     </tr>
 )
 
@@ -68,7 +69,7 @@ export default class EnrolledList extends Component {
         return (
 
             <div className="container">
-            <PrivateNavbar />
+                <PrivateNavbar />
                 <Table
                     responsive="xl"
                     striped bordered hover
@@ -78,10 +79,10 @@ export default class EnrolledList extends Component {
                 >
                     <thead style={{ backgroundColor: '#71CE3B' }}>
                         <tr>
-                            <td>Name</td>
-                            <td>Start Date</td>
+                            <td>Activity Name</td>
+                            <td>Activity Date</td>
                             <td>Location</td>
-                            <td>More</td>
+                            <td>Detail</td>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user does not exist 1`] = `"User not found"`;
+
+exports[`user is exist 1`] = `
+Array [
+  Result {
+    "_id": 1,
+    "amount": 30,
+    "end": undefined,
+    "last": "October 14th 2020, 22:30:00",
+    "rank": "Doi Suthep",
+    "to": 50,
+  },
+]
+`;

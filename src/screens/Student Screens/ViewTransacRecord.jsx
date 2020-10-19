@@ -3,6 +3,7 @@ import axios from 'axios';
 import PrivateNavbar from './PrivateNavbar';
 import { isAuth } from '../../helpers/auth';
 import Moment from 'moment';
+import Table from 'react-bootstrap/Table'
 
 const Transaction = props => (
   <tr>
@@ -46,7 +47,11 @@ export default class ViewTransacRecordList extends Component {
       <div className="container">
         <PrivateNavbar />
         <div></div>
-        <table className="table table-bordered">
+        <Table
+          responsive="xl"
+          striped bordered hover
+          size="sm"
+          className="table table-bordered">
           <thead className="thead-light">
             <tr>
               <td>Sender</td>
@@ -58,7 +63,7 @@ export default class ViewTransacRecordList extends Component {
           <tbody>
             {this.transacRecordList()}
           </tbody>
-        </table>
+        </Table>
       </div>
     )
   }

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`there are no options 1`] = `Array []`;
+
+exports[`there are options 1`] = `
+Array [
+  Options {
+    "activityDate": "2020-10-30 08:00:00",
+    "activityName": "Talking Room",
+    "bidDate": "2020-10-15 08:30:00",
+    "id": "1",
+  },
+]
+`;

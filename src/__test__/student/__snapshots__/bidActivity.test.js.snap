@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`acticity name field is empty 1`] = `"This field is required"`;
+
+exports[`amount field is empty 1`] = `"This field is required"`;
+
+exports[`amount is equal to 0 1`] = `"Amount must be greater than 0"`;
+
+exports[`amount is not a number 1`] = `"Amount must be a digit"`;
+
+exports[`coins are not enough 1`] = `"Your coins are not enough!"`;
+
+exports[`successfully 1`] = `"Bid activity Doi Suthep successfully!"`;

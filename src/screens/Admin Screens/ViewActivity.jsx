@@ -5,10 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { setActivityLocalStorage } from '../../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
-import { green } from '@material-ui/core/colors';
-import Icon from '@material-ui/core/Icon';
 import Table from 'react-bootstrap/Table'
-import { Button } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
     fab: {
