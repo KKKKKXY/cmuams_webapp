@@ -84,7 +84,7 @@ exports.enrollActivityController = (req, res) => {
                                                 let recipientEmail = act.activityName
                                                 let transferDate = stu.transferDate
                                                 let amount = stu.amount
-                                                // user.coins = user.coins - amount
+                                                user.coins = user.coins - amount
                                                 blockChain.addNewTransaction({ senderEmail, recipientEmail, transferDate, amount });
                                                 blockChain.addNewBlock(null);
                                                 user.enrolled.push(enrollActivity)
@@ -129,7 +129,7 @@ exports.enrollActivityController = (req, res) => {
                                                 let recipientEmail = act.activityName
                                                 let transferDate = stu.transferDate
                                                 let amount = stu.amount
-                                                // user.coins = user.coins - amount
+                                                user.coins = user.coins - amount
                                                 blockChain.addNewTransaction({ senderEmail, recipientEmail, transferDate, amount });
                                                 blockChain.addNewBlock(null);
                                                 user.enrolled.push(enrollActivity)
