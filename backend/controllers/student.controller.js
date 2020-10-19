@@ -249,14 +249,19 @@ exports.transferController = (req, res) => {
                 User.findOne({ email: recipientEmail }).exec((err, recipient) => {
                     if (err || !recipient) {
                         return res.status(400).json({
-                            error: 'The recipient Email can not found'
+                            error: 'The recipient email can not be found.'
                         });
                     } else {
                         if (sender.coins < amount) {
                             return res.status(400).json({
-                                error: 'Coins is not enough!'
+                                error: 'Your available balance is insufficient.'
                             });
                         } else {
+                            if (amount == 0) {
+                                return res.status(400).json({
+                                    error:'Invalid amount.'
+                                })
+                            }else
                             sender.coins = parseInt(sender.coins) - parseInt(amount)
                             recipient.coins = parseInt(recipient.coins) + parseInt(amount)
                             blockChain.addNewTransaction({ senderEmail, recipientEmail, amount, transferDate });
@@ -265,7 +270,7 @@ exports.transferController = (req, res) => {
                             recipient.save()
                             return res.json({
                                 success: true,
-                                message: 'Transfer successfully',
+                                message: 'Transfer successfully.',
                                 transfer
                             });
                         }

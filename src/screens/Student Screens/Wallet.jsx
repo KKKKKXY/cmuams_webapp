@@ -125,7 +125,7 @@ const Wallet = ({ history }) => {
                     target='_self'
                   >
                     <i className='fad fa-history fa 1x w-6  -ml-2 text-indigo-500' />
-                    <span className='ml-4'>Transfer History</span>
+                    <span className='ml-4'>Transaction History</span>
                   </a>
                 </div>
               </form>
