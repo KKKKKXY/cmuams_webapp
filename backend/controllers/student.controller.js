@@ -11,6 +11,7 @@ exports.enrollActivityController = (req, res) => {
 
     const { activity, student } = req.body;
     const errors = validationResult(req);
+    let blockChain = new BlockChain();
 
     if (!errors.isEmpty()) {
         const firstError = errors.array().map(error => error.msg)[0];
@@ -32,6 +33,7 @@ exports.enrollActivityController = (req, res) => {
                         });
                     } else {
                         let students = act.students
+                        // let blockChain = new BlockChain();
 
                         if (students.length > 0) {
                             //sort students
@@ -53,8 +55,8 @@ exports.enrollActivityController = (req, res) => {
 
                             if (act.seats <= students.length) {
                                 for (var i = 0; i < act.seats; i++) {
-                                    let stu = students[i].student
-                                    User.findOne({ name: stu }).exec((err, user) => {
+                                    let stu = students[i]
+                                    User.findOne({ name: stu.student }).exec((err, user) => {
                                         if (err || !user) {
                                             // return res.status(400).json({
                                             //     error: 'User not found'
@@ -77,7 +79,19 @@ exports.enrollActivityController = (req, res) => {
                                                 // });
                                             }
                                             else {
+                                                // let blockChain = new BlockChain();
+                                                let senderEmail = user.email
+                                                let recipientEmail = act.activityName
+                                                let transferDate = stu.transferDate
+                                                let amount = stu.amount
+                                                // user.coins = user.coins - amount
+                                                blockChain.addNewTransaction({ senderEmail, recipientEmail, transferDate, amount });
+                                                blockChain.addNewBlock(null);
                                                 user.enrolled.push(enrollActivity)
+                                                
+
+                                                console.log(stu)
+
                                             }
                                         }
                                         user.save()
@@ -110,7 +124,17 @@ exports.enrollActivityController = (req, res) => {
                                                 // });
                                             }
                                             else {
+                                                // let blockChain = new BlockChain();
+                                                let senderEmail = user.email
+                                                let recipientEmail = act.activityName
+                                                let transferDate = stu.transferDate
+                                                let amount = stu.amount
+                                                // user.coins = user.coins - amount
+                                                blockChain.addNewTransaction({ senderEmail, recipientEmail, transferDate, amount });
+                                                blockChain.addNewBlock(null);
                                                 user.enrolled.push(enrollActivity)
+
+                                                console.log(stu)
                                             }
                                         }
                                         user.save()

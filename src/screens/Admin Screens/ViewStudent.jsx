@@ -23,12 +23,12 @@ export default class ViewStudent extends Component {
 
         this.state = {
             students: [],
-            activityId: ''
+            activityId: activityId()._id
         };
     }
 
     componentDidMount() {
-        axios.get(`${process.env.REACT_APP_API_URL}/activity/${this.state.activityId}`)
+        axios.get(${process.env.REACT_APP_API_URL}/activity/${this.state.activityId})
             .then(response => {
                 console.log(response.data)
                 this.setState({
