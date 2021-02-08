@@ -34,7 +34,8 @@ export default class EnrolledList extends Component {
         axios
             .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`)
             .then(response => {
-                if (response.data.enrolled == "") {
+                console.log(response.data.enrolled)
+                if (response.data.enrolled === []) {
                     toast.error("There are no enrolled activities");
                 }
                 this.setState({ userInfo: response.data.enrolled })
